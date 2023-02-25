@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/24 16:56:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:38:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("$> ");
+		handle_ctrld(line);
+		printf("you entered: %s\n", line);
 		free(line);
 	}
 	return (0);
