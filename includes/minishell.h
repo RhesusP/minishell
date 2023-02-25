@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/25 14:33:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/25 17:14:53 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ typedef struct s_global_env
 
 void	signal_handler(void);
 void	handle_ctrld(char *line);
+
+void	get_environment(t_var_env *var_env, char **env);
+
 
 # define SUCCESS	0
 # define FAILURE	-1

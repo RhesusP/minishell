@@ -60,7 +60,7 @@
 #.PHONY: all clean fclean re
 
 NAME = minishell
-SRCS = ./srcs/main.c ./srcs/signals.c
+SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 

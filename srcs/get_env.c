@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/25 17:15:08 by cbernot          ###   ########.fr       */
+/*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
+/*   Updated: 2023/02/25 17:19:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	get_environment(t_var_env *var_env, char **env)
 {
-	t_var_env	var_env;
-	char		*line;
+	int	i;
 
-	if (argc != 1)
+	i = 0;
+	while (env[i])
 	{
-		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
-		return (0);
+		printf("%s\n", env[i]);
+		i++;
 	}
-	signal_handler();
-	get_environment(&var_env, env);
-	while (1)
-	{
-		line = readline("$> ");
-		handle_ctrld(line);
-		printf("you entered: %s\n", line);
-		free(line);
-	}
-	return (0);
 }
