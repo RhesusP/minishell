@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/24 17:21:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:33:51 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-ls		cmd
--al		arg
-------------
-sortie cmd1 --> entree cmd2
-
-cmd2 < cmd1
-cmd1 > cmd2
-
-|		pipe
-------------
-echo	cmd
-bonjour	arg
-
-typedef enum e_type {WORD, ARG, PIPE, REDIR, VAR}, t_type;
+typedef enum e_type {WORD, ARG, PIPE, REDIR, VAR} t_type;
 
 typedef struct	s_word
 {
@@ -51,7 +38,7 @@ typedef struct	s_command
 	t_word	**words;	//chained list
 	int		fd_out;
 	int		fd_int;
-}
+}	t_command;
 
 typedef struct s_var_env
 {
