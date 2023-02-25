@@ -6,9 +6,10 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/25 17:18:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/26 00:27:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
+//s_var_env	*create_env_var()

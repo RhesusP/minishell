@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/25 17:15:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/26 00:27:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_var_env	var_env;
+	t_env_var	var_env;
 	char		*line;
 
 	if (argc != 1)

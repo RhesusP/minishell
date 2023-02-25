@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/25 17:14:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/26 00:27:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,24 @@ typedef struct	s_command
 	int		fd_int;
 }	t_command;
 
-typedef struct s_var_env
+typedef struct s_env_var
 {
     char                *key;
     char                **values;
-	struct s_var_env    *next;
-}	t_var_env;
+	struct s_env_var    *next;
+}	t_env_var;
 
-typedef struct s_global_env
+typedef struct s_global_var
 {
     char					*key;
     char					**values;
-	struct s_global_env		*next;
-}	t_global_env;
+	struct s_global_var		*next;
+}	t_global_var;
 
 void	signal_handler(void);
 void	handle_ctrld(char *line);
 
-void	get_environment(t_var_env *var_env, char **env);
-
+void	get_environment(t_env_var *var_env, char **env);
 
 # define SUCCESS	0
 # define FAILURE	-1
