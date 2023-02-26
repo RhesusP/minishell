@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/26 01:16:39 by cbernot          ###   ########.fr       */
+/*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
+/*   Updated: 2023/02/26 00:40:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+char	*ft_strndup(const char *s1, unsigned int size)
 {
-	t_env_var	*env_var;
-	char		*line;
+	char			*res;
+	unsigned int	i;
 
-	if (argc != 1)
+	res = malloc(sizeof(char) * (size + 1));
+	if (!res)
+		return (res);
+	i = 0;
+	while (i < size && s1[i] != '\0')
 	{
-		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
-		return (0);
+		res[i] = s1[i];
+		i++;
 	}
-	signal_handler();
-	env_var = get_environment(env);		//handle fail
-	print_env(env_var);
-	while (1)
-	{
-		line = readline("$> ");
-		handle_ctrld(line);
-		printf("you entered: %s\n", line);
-		free(line);
-	}
-	return (0);
+	res[i] = '\0';
+	return (res);
 }
