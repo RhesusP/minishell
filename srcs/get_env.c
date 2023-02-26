@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/26 01:29:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/26 01:45:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ t_env_var	*get_environment(char **env)
 	{
 		new_var = create_env_var(env[i]);	//handle fail
 		add_back_end_var(&res, new_var);
-		/*
-		printf("key: %s\n", temp->key);
-		int j = 0;
-		while (temp->values[j])
-		{
-			printf("%s ", temp->values[j]);
-			j++;
-		}
-		printf("\n");
-		*/
 		i++;
 	}
 	return (res);
