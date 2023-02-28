@@ -6,13 +6,16 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:37:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/02/28 13:42:12 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:44:05 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/exec.h"
 
+/*
+**	Strjoin but adds a space between joined strings
+*/
 char	*ft_strjoin_spaced(char const *s1, char const *s2)
 {
 	char	*res;
