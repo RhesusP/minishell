@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/02/28 14:05:25 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:38 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 /*
 **	Exec utils
 */
-char	*ft_strjoin_spaced(char const *s1, char const *s2);
-
+int		get_arg_len(t_word *parse);
+void	free_all(char **str);
 
 /*
 **	Execution functions
 */
-char	*get_full_cmd(t_word *parse);
+char	**get_full_cmd(t_word *parse);
 
 
 #endif
