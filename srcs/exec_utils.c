@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:37:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/02/28 13:44:05 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:44:30 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,38 @@
 #include "../includes/exec.h"
 
 /*
-**	Strjoin but adds a space between joined strings
+**	Get the number of args for the execution of one programm
 */
-char	*ft_strjoin_spaced(char const *s1, char const *s2)
+int	get_arg_len(t_word *parse)
 {
-	char	*res;
-	int		i;
-	int		j;
+	int	i;
 
-	if (!s1 || !s2)
-		return (0);
-	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1 + 1));
-	if (!res)
-		return (res);
 	i = 0;
-	while (s1[i] != '\0')
+	if (parse->type == WORD)
 	{
-		res[i] = s1[i];
+		i++;
+		parse=parse->next;
+		while (parse && parse->type == ARG)
+		{
+			i++;
+			parse=parse->next;
+		}
+	}
+	return (i);
+}
+
+/*
+**	Free char **
+*/
+void	free_all(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
 		i++;
 	}
-	res[i++] = ' ';
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
-	res[i] = '\0';
-	return (res);
+	free(str);
 }
