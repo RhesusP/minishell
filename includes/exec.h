@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 11:18:54 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:42:18 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ void		free_all(char **str);
 char		**get_full_cmd(t_word *parse);
 
 /*
+**	Builtins functions
+*/
+void		exec_echo(char **cmd);
+void		exec_exit(char **cmd);
+
+/*
 **	Metacharacter functions
 */
-int     single_right_arrow(char *file_path, char *to_write);
-int     double_right_arrow(char *file_path, char *to_write);
+int     	single_right_arrow(char *file_path, char *to_write);
+int     	double_right_arrow(char *file_path, char *to_write);
 
 /*
 **	Environment functions
