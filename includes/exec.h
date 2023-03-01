@@ -6,12 +6,14 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/02/28 15:25:21 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:16:29 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
+
+# include <fcntl.h>
 
 /*
 **	Exec utils
