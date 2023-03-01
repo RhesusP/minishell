@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 13:42:18 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:54:10 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 */
 int			get_arg_len(t_word *parse);
 void		free_all(char **str);
+int			is_builtin(char **cmd);
 
 /*
 **	Execution functions

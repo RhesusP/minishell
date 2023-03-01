@@ -6,12 +6,21 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 13:00:38 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:02:39 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
+
+
+/*
+**	Get the path of the command for execve -- TODO
+*/
+char	*get_cmd_path(char *cmd, char **env) //Utiliser t_env_var ??
+{
+	char	*path_env;
+}
 
 
 /*
@@ -42,16 +51,31 @@ char	**get_full_cmd(t_word *parse)
 	return (cmd);
 }
 
-void	execute_cmd(t_word word, char *path)
+/*
+**	Execute the command entered on the prompt
+*/
+void	execute_cmd(t_command *cmd, char **env)	//Utiliser t_env_var ??
 {
-	int	pid;
+	char	*path;
+	char	**cmd_arr;
+	int		pid;
 
+	cmd_arr = get_full_cmd(cmd);
 	pid = fork();
 	if (pid > 0)
+	{
 		wait(NULL);
+	}
 	if (pid == 0)
 	{
-
+		if (is_builtin(cmd) == FAILURE)
+		{
+			path = get_cmd_path(cmd_arr);
+			execve(path, cmd, env);
+			free_all(cmd);
+			//free struct WARNING : TODO
+			exit(EXIT_SUCCESS);
+		}
 	}
 }
 
@@ -82,7 +106,6 @@ int	main()
 	parse4.next = NULL;
 
 	res = get_full_cmd(&parse1);
-	//printf("%s\n", res[0]);
 	int	i = 0;
 	while (res[i])
 	{
