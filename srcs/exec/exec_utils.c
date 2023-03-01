@@ -6,30 +6,29 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:37:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 12:49:24 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:00:33 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/exec.h"
-
+#include "../../includes/minishell.h"
+#include "../../includes/exec.h"
 /*
 **	Check if the command is a builtin
 **	and execute it if it is indeed a builtin
 */
-int	is_builtin(char *cmd)
+int	is_builtin(char **cmd)
 {
-	if (cmd == "exit")
+	if (cmd[0] == "exit")
 		//return(exec_exit(), SUCCESS)
-	if (cmd == "export")
+	if (cmd[0] == "export")
 		//return(exec_export(), SUCCESS)
-	if (cmd == "pwd")
+	if (cmd[0] == "pwd")
 		//return(exec_pwd(), SUCCESS)
-	if (cmd == "unset")
+	if (cmd[0] == "unset")
 		//return(exec_unset(), SUCCESS)
-	if (cmd == "echo")
+	if (cmd[0] == "echo")
 		//return(exec_echo(), SUCCESS)
-	if (cmd == "env")
+	if (cmd[0] == "env")
 		//return(exec_env(), SUCCESS)
 	return (FAILURE);
 }

@@ -6,12 +6,12 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/02/28 14:43:54 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:00:38 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/exec.h"
+#include "../../includes/minishell.h"
+#include "../../includes/exec.h"
 
 
 /*
