@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:14:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 11:17:10 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:19:29 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /*
 **      Write something in the file needed
+**		">"
 */
 int     single_right_arrow(char *file_path, char *to_write)
 {
@@ -29,6 +30,7 @@ int     single_right_arrow(char *file_path, char *to_write)
 
 /*
 **      Write something in the file needed (append mode)
+**		">>"
 */
 int     double_right_arrow(char *file_path, char *to_write)
 {
