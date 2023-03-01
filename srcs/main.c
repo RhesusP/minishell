@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/26 13:35:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/02/27 21:54:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
+		parse_words(line);
 		free(line);
 	}
 	return (0);
