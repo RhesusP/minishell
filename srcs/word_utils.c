@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/01 01:35:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/02 15:02:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,22 @@ void	display_words(t_word **lst)
 		printf("%d\t%s\n", current->type, current->word);
 		current = current->next;
 	}
+}
+
+void	clear_word_lst(t_word **lst)
+{
+	t_word	*current;
+	t_word	*next;
+
+	if (!lst)
+		return ;
+	current = *lst;
+	while (current)
+	{
+		next = current->next;
+		free(current->word);
+		free(current);
+		current = next;
+	}
+	*lst = 0;
 }
