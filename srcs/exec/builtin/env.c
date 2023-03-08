@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 10:59:06 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:03:42 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 /*
 **	Print the environment on the terminal
 */
-void	exec_env(t_var_env *var_env)
+void	exec_env(t_env_var *env_var)
 {
 	int	i;
 
 	i = 0;
-	while (var_env)
+	while (env_var)
 	{
-		printf("%s", var_env->key);
+		printf("%s", env_var->key);
 		printf("=");
 		i = 0;
-		while (var_env->values[i])
+		while (env_var->values[i])
 		{
 			if (i > 0)
 				printf(":");
-			printf("%s",var_env->values[i]);
+			printf("%s",env_var->values[i]);
 			i++;
 		}
 		printf("\n");
-		var_env = var_env->next;
+		env_var = env_var->next;
 	}
 }
