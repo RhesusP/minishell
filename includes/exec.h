@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 11:12:10 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:22:45 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void		env_var_clear(t_env_var *env_var);
 void		env_var_add_back(t_env_var **env_var, t_env_var *new);
 t_env_var	*env_var_last(t_env_var *env_var);
 t_env_var	*env_var_new(char *env);
+t_env_var	*get_initial_env(char **env);
+
 
 
 
