@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:06:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:07:09 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:13:17 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_env_var	*get_initial_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		//printf("%d == %s\n", i, env[i]);
 		env_var_add_back(&env_var, env_var_new(env[i]));
 		i++;
 	}
