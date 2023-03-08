@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 14:05:35 by tbarde-c         ###   ########.fr       */
+/*   Created: 2023/03/08 13:28:46 by tbarde-c          #+#    #+#             */
+/*   Updated: 2023/03/08 14:00:03 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
-/**
-*	@brief Print the environment on the terminal
-**/
-void	exec_env(t_env_var *env_var)
+void	exec_pipe()
 {
-	int	i;
+	int	fd[2];
+	int	pid;
 
-	i = 0;
-	while (env_var)
+	
+	if (pipe(fd) == -1)
+		return(FAILURE);
+	pid = fork();
+	if (pid == -1)
+		return (FAILURE);
+	if (pid == 0)
 	{
-		printf("%s", env_var->key);
-		printf("=");
-		i = 0;
-		while (env_var->values[i])
-		{
-			if (i > 0)
-				printf(":");
-			printf("%s",env_var->values[i]);
-			i++;
-		}
-		printf("\n");
-		env_var = env_var->next;
+		
 	}
 }

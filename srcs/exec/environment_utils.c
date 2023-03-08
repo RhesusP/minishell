@@ -6,15 +6,15 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:12:14 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:03:00 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
-/*
-**	Create the beginning of the t_env_var chained list
-*/
+/**
+*	@brief Create the beginning of the t_env_var chained list
+**/
 t_env_var	*env_var_new(char *env)
 {
 	t_env_var	*env_var;
@@ -44,9 +44,9 @@ t_env_var	*env_var_new(char *env)
 	return (env_var);
 }
 
-/*
-**	Go to the end of the env_var chained list
-*/
+/**
+*	@brief Go to the end of the env_var chained list
+**/
 t_env_var	*env_var_last(t_env_var *env_var)
 {
 	t_env_var	*current;
@@ -59,9 +59,9 @@ t_env_var	*env_var_last(t_env_var *env_var)
 	return (current);
 }
 
-/*
-**	add back to t_env_var chained list
-*/
+/**
+*	@brief back to t_env_var chained list
+**/
 void	env_var_add_back(t_env_var **env_var, t_env_var *new)
 {
 	t_env_var	*last;
@@ -76,9 +76,9 @@ void	env_var_add_back(t_env_var **env_var, t_env_var *new)
 	last->next = new;
 }
 
-/*
-**	Clear the env_var chained list
-*/
+/**
+*	@brief Clear the env_var chained list
+**/
 void	env_var_clear(t_env_var *env_var)
 {
 	int	i;

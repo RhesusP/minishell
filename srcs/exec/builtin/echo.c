@@ -6,16 +6,16 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:44:13 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:05:26 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
-/*
-**	Echo with no option
-*/
+/**
+*	@brief Echo with no option
+**/
 static void	exec_echo_no_option(char **cmd)
 {
 	int	i;
@@ -31,9 +31,9 @@ static void	exec_echo_no_option(char **cmd)
 	printf("\n");
 }
 
-/*
-**	Echo -n
-*/
+/**
+*	@brief Echo -n
+**/
 static void	exec_echo_dash_n(char **cmd)
 {
 	int	i;
@@ -55,11 +55,11 @@ static void	exec_echo_dash_n(char **cmd)
 		}
 }
 
-/*
-**	Display the arg
-**	-n : no newline after display
-**	WARNING : DOESN'T WORK YET
-*/
+/**
+*	@brief Display the arg
+*	-n : no newline after display
+*	WARNING : DOESN'T WORK YET
+**/
 void	exec_echo(char **cmd)
 {
 	int	i;

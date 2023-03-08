@@ -6,16 +6,16 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:06:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:13:17 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:03:29 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
 
-/*
-**	Get values and keys from the initial environment where minishell starts
-*/
+/**
+*	@brief Get values and keys from the initial environment where minishell starts
+**/
 t_env_var	*get_initial_env(char **env)
 {
 	int			i;
@@ -31,10 +31,10 @@ t_env_var	*get_initial_env(char **env)
 	return (env_var);
 }
 
-/*
-**	Get the pointer to the correct variable we need
-**	in the minishell environment
-*/
+/**
+*	@brief Get the pointer to the correct variable we need
+*	in the minishell environment
+**/
 t_env_var	*get_env_custom(char *key_to_find, t_env_var *env)
 {
 	int			flag;

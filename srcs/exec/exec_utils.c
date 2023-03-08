@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:37:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 13:00:33 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:04:05 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
-/*
-**	Check if the command is a builtin
-**	and execute it if it is indeed a builtin
-*/
+/**
+*	@brief Check if the command is a builtin
+*	and execute it if it is indeed a builtin
+**/
 int	is_builtin(char **cmd)
 {
 	if (cmd[0] == "exit")
@@ -33,9 +33,9 @@ int	is_builtin(char **cmd)
 	return (FAILURE);
 }
 
-/*
-**	Get the number of args for the execution of one programm
-*/
+/**
+*	@brief Get the number of args for the execution of one programm
+**/
 int	get_arg_len(t_word *parse)
 {
 	int	i;
@@ -54,9 +54,9 @@ int	get_arg_len(t_word *parse)
 	return (i);
 }
 
-/*
-**	Free char **
-*/
+/**
+*	@brief Free char **
+**/
 void	free_all(char **str)
 {
 	int	i;

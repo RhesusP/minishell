@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   arrows.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:14:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 13:00:29 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:02:08 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
 
-/*
-**      Write something in the file needed
-**		">"
-*/
+/**
+*  @brief ">" (Write in file)
+**/
 int     single_right_arrow(char *file_path, char *to_write)
 {
         int     fd;
@@ -28,10 +27,9 @@ int     single_right_arrow(char *file_path, char *to_write)
         return (SUCCESS);
 }
 
-/*
-**      Write something in the file needed (append mode)
-**		">>"
-*/
+/**
+*	@brief ">>" (Write in file APPEND)
+**/
 int     double_right_arrow(char *file_path, char *to_write)
 {
         int     fd;

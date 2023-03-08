@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 10:55:47 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:04:40 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 #include "../../includes/exec.h"
 
 
-/*
-**	Get the path of the command for execve -- TODO
-*/
+/**
+*	@brief Get the path of the command for execve -- TODO
+**/
 char	*get_cmd_path(char *cmd, char **env) //Utiliser t_env_var ??
 {
 	char	*path_env;
 }
 
 
-/*
-**	Get the command with args from the parser into a char **
-**	Then we'll be able to pass the full command to execve()
-*/
+/**
+*	@brief Get the command with args from the parser into a char **
+*	Then we'll be able to pass the full command to execve()
+**/
 char	**get_full_cmd(t_word *parse)
 {
 	char	**cmd;
@@ -51,9 +51,9 @@ char	**get_full_cmd(t_word *parse)
 	return (cmd);
 }
 
-/*
-**	Execute the command entered on the prompt
-*/
+/**
+*	@brief Execute the command entered on the prompt
+**/
 void	execute_cmd(t_command *cmd, char **env)	//Utiliser t_env_var ??
 {
 	char	*path;
@@ -79,9 +79,9 @@ void	execute_cmd(t_command *cmd, char **env)	//Utiliser t_env_var ??
 	}
 }
 
-/*
-**	Test main ---WARNING : ERASE IT BEFORE PUSH
-*/
+/**
+*	Test main ---WARNING : ERASE IT BEFORE PUSH
+**/
 int	main()
 {
 	t_word	parse1;
