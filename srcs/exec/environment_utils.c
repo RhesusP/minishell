@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 11:11:25 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:41:07 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ t_env_var	*env_var_new(char *env)
 	t_env_var	*env_var;
 	int	i;
 	int	first_equal;
+
 	env_var = malloc(sizeof(t_env_var));
 	first_equal = 0;
 	i = 0;
 	while (env[first_equal]!= '=')
 		first_equal++;
-	env_var->key = malloc(sizeof(char) * i);
+	env_var->key = malloc(sizeof(char) * first_equal);
 	while (i < first_equal)
 	{
 		env_var->key[i] = env[i];
