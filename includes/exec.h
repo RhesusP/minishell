@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:36:39 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:26:01 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		exec_exit(char **cmd);
 void		exec_env(t_env_var *var_env);
 void		exec_pwd(t_env_var *env_var);
 void		exec_cd(char *path, t_env_var *env_var);
+void		exec_export(t_env_var *env_var, char *new_env);
+void		exec_unset(t_env_var *env_var, char *unset_key);
 
 /*
 **	Metacharacter functions
