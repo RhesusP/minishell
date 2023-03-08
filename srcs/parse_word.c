@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/02 15:57:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/08 18:44:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,30 @@ int	is_unquoted_metachar(char *line, int c_index)
 	nb_single_quote = 0;
 	if (!is_metachar(line[c_index]))
 		return (0);
+	i = 0;
+	while (line[i] != '\0' && i < c_index)
+	{
+		if (line[i] == '"')
+			nb_double_quote++;
+		else if (line[i] == '\'')
+			nb_single_quote++;
+		i++;
+	}
+	if (!nb_double_quote && !nb_single_quote)
+		return (1);
+	if (nb_double_quote % 2 != 0 || nb_single_quote % 2 != 0)
+		return (0);
+	return (1);
+}
+
+int	is_unquoted(char *line, int c_index)
+{
+	int	i;
+	int	nb_single_quote;
+	int	nb_double_quote;
+
+	nb_double_quote = 0;
+	nb_single_quote = 0;
 	i = 0;
 	while (line[i] != '\0' && i < c_index)
 	{
@@ -272,7 +296,6 @@ t_command	get_next_command(char *line, int *ret)
 		{
 			word = ft_strndup(&line[start], len);
 			printf("word detected: %s (%ld)\n", word, ft_strlen(word));
-			if (ft_strlen(word) == 1 && is_unquoted_metachar(libe))
 			add_back_word(words, create_word(word, 1));
 			len = 1;
 			start = i + 1;
@@ -291,6 +314,7 @@ t_command	get_next_command(char *line, int *ret)
 	return (cmd);
 }
 
+/*
 void	parse_words(char *line)
 {
 	t_command	*commands;
@@ -309,4 +333,22 @@ void	parse_words(char *line)
 	commands[0] = get_next_command(line, &start);
 	printf("next: %s\n", &line[start]);
 	commands[1] = get_next_command(&line[start], &start);
+}
+*/
+
+#include <string.h>
+
+void	parse_words(char *line)
+{
+	char	**tokens;
+
+	tokens = ft_strtok(line, " \n\t");
+	int i = 0;
+	printf("----------CUSTOM-----------\n");
+	while (tokens[i])
+	{
+		printf("%s\n", tokens[i]);
+		i++;
+	}
+	printf("---------------------------\n");
 }

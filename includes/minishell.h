@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/02 09:36:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:58:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	display_words(t_word **lst);
 void	clear_word_lst(t_word **lst);
 
 char	*ft_strndup(const char *s1, unsigned int size);
+char	**ft_strtok(char *str, char *charset);
+int	is_unquoted(char *line, int c_index);
 
 int	is_cmd_anonymous(char *cmd);
 
