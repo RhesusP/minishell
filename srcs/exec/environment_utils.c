@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 12:06:35 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:12:14 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@ t_env_var	*env_var_new(char *env)
 	}
 	return (env_var);
 }
-
-/*old function with split{
-	t_env_var	*env_var;
-	char		**split;
-	env_var = malloc(sizeof(t_env_var));
-	if (!env_var)
-		return (0);
-	split = ft_split(env, '=');
-	env_var->key = split[0];
-	env_var->values = ft_split(split[1], ':');
-	env_var->next = 0;
-	return (env_var);
-}*/
 
 /*
 **	Go to the end of the env_var chained list
