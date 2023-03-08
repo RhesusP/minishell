@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 13:14:08 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:44:13 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,13 @@ static void	exec_echo_dash_n(char **cmd)
 	else
 		while (cmd[i])
 		{
-			printf("%s", cmd[i]);
+			ft_putstr_fd(cmd[i], STDOUT_FILENO);
+			//printf("%s", cmd[i]);
 			if (cmd[i + 1])
-				printf(" ");
+			{
+				ft_putstr_fd(" ", STDOUT_FILENO);
+				//printf(" ");
+			}
 			i++;
 		}
 }
@@ -77,7 +81,7 @@ int main()
 	char **cmd;
 	cmd = malloc(sizeof(char *) * 4);
 	cmd[0] = "echo";
-	cmd[1] = "coucou";
+	cmd[1] = "-n";
 	cmd[2] = "coucou";
 	cmd[3] = NULL;
 	exec_echo(cmd);
