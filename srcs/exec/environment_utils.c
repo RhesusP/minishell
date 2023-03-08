@@ -6,60 +6,60 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 11:05:57 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:11:25 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
 /*
-**	Create the beginning of the t_var_env chained list
+**	Create the beginning of the t_env_var chained list
 */
-t_var_env	*var_env_new(char *env)
+t_env_var	*env_var_new(char *env)
 {
-	t_var_env	*var_env;
+	t_env_var	*env_var;
 	int	i;
 	int	first_equal;
-	var_env = malloc(sizeof(t_var_env));
+	env_var = malloc(sizeof(t_env_var));
 	first_equal = 0;
 	i = 0;
 	while (env[first_equal]!= '=')
 		first_equal++;
-	var_env->key = malloc(sizeof(char) * i);
+	env_var->key = malloc(sizeof(char) * i);
 	while (i < first_equal)
 	{
-		var_env->key[i] = env[i];
+		env_var->key[i] = env[i];
 		i++;
 	}
 	if (env[first_equal + 1])
-		var_env->values = ft_split(env + first_equal + 1, ':');
+		env_var->values = ft_split(env + first_equal + 1, ':');
 	else
-		var_env->values = NULL;
-	return (var_env);
+		env_var->values = NULL;
+	return (env_var);
 }
 
 /*old function with split{
-	t_var_env	*var_env;
+	t_env_var	*env_var;
 	char		**split;
-	var_env = malloc(sizeof(t_var_env));
-	if (!var_env)
+	env_var = malloc(sizeof(t_env_var));
+	if (!env_var)
 		return (0);
 	split = ft_split(env, '=');
-	var_env->key = split[0];
-	var_env->values = ft_split(split[1], ':');
-	var_env->next = 0;
-	return (var_env);
+	env_var->key = split[0];
+	env_var->values = ft_split(split[1], ':');
+	env_var->next = 0;
+	return (env_var);
 }*/
 
 /*
-**	Go to the end of the var_env chained list
+**	Go to the end of the env_var chained list
 */
-t_var_env	*var_env_last(t_var_env *var_env)
+t_env_var	*env_var_last(t_env_var *env_var)
 {
-	t_var_env	*current;
+	t_env_var	*current;
 
-	current = var_env;
-	if (var_env == 0)
+	current = env_var;
+	if (env_var == 0)
 		return (0);
 	while (current->next)
 		current = current->next;
@@ -67,43 +67,43 @@ t_var_env	*var_env_last(t_var_env *var_env)
 }
 
 /*
-**	add back to t_var_env chained list
+**	add back to t_env_var chained list
 */
-void	var_env_add_back(t_var_env **var_env, t_var_env *new)
+void	env_var_add_back(t_env_var **env_var, t_env_var *new)
 {
-	t_var_env	*last;
+	t_env_var	*last;
 	char		**split;
 
-	if (*var_env == 0)
+	if (*env_var == 0)
 	{
-		*var_env = new;
+		*env_var = new;
 		return ;
 	}
-	last = var_env_last(*var_env);
+	last = env_var_last(*env_var);
 	last->next = new;
 }
 
 /*
-**	Clear the var_env chained list
+**	Clear the env_var chained list
 */
-void	var_env_clear(t_var_env *var_env)
+void	env_var_clear(t_env_var *env_var)
 {
 	int	i;
-	t_var_env	*tmp;
+	t_env_var	*tmp;
 
-	tmp = var_env;
+	tmp = env_var;
 	while (tmp)
 	{
-		tmp = var_env->next;
-		free(var_env->key);
+		tmp = env_var->next;
+		free(env_var->key);
 		i = 0;
-		while (var_env->values[i])
+		while (env_var->values[i])
 		{
-			free(var_env->values[i]);
+			free(env_var->values[i]);
 			i++;
 		}
-		free(var_env->values);
-		free(var_env);
-		var_env = tmp;
+		free(env_var->values);
+		free(env_var);
+		env_var = tmp;
 	}
 }
