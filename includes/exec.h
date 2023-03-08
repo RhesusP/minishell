@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:51:50 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/01 15:54:10 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:12:10 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char		**get_full_cmd(t_word *parse);
 */
 void		exec_echo(char **cmd);
 void		exec_exit(char **cmd);
+void		exec_env(t_env_var *var_env);
 
 /*
 **	Metacharacter functions
@@ -43,6 +44,12 @@ int     	double_right_arrow(char *file_path, char *to_write);
 **	Environment functions
 */
 t_env_var	*get_env_custom(char *key_to_find, t_env_var *env);
+void		env_var_clear(t_env_var *env_var);
+void		env_var_add_back(t_env_var **env_var, t_env_var *new);
+t_env_var	*env_var_last(t_env_var *env_var);
+t_env_var	*env_var_new(char *env);
+
+
 
 
 #endif
