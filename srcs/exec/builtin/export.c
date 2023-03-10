@@ -24,6 +24,7 @@ static int	exportable_variable(char *new_env)
 			return (SUCCESS);
 		i++;
 	}
+	//si la variable existe déjà, il faut la remplacer
 	return (FAILURE);
 }
 

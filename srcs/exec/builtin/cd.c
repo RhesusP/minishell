@@ -30,4 +30,5 @@ void	exec_cd(char *path, t_env_var *env_var)
 		pwd->values[0] = ft_strjoin(tmp, path);
 		free(tmp);
 	}
+	//change old PWD
 }
