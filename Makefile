@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
+#    Updated: 2023/03/08 14:55:48 by cbernot          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # COLORS
 #DEF_COLOR = \033[0;39m
 #GRAY = \033[0;90m
@@ -60,7 +72,9 @@
 #.PHONY: all clean fclean re
 
 NAME = minishell
-SRCS = ./srcs/main.c ./srcs/signals.c
+SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
+		./srcs/utils.c ./srcs/history.c ./srcs/parse_word.c ./srcs/word_utils.c \
+		./srcs/ft_strtok.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 

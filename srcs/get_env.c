@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/27 21:54:04 by cbernot          ###   ########.fr       */
+/*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
+/*   Updated: 2023/02/26 01:45:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+t_env_var	*get_environment(char **env)
 {
-	t_env_var	*env_var;
-	char		*line;
+	int			i;
+	t_env_var	*res;
+	t_env_var	*new_var;
 
-	if (argc != 1)
-	{
-		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
+	res = malloc(sizeof(t_env_var));
+	if (!res)
 		return (0);
-	}
-	signal_handler();
-	env_var = get_environment(env);		//handle fail
-	print_env(env_var);
-	while (1)
+	res = 0;
+	i = 0;
+	while (env[i])
 	{
-		line = readline("$> ");
-		handle_ctrld(line);
-		if (!is_cmd_anonymous(line))
-			add_history(line);
-		printf("you entered: %s\n", line);
-		parse_words(line);
-		free(line);
+		new_var = create_env_var(env[i]);	//handle fail
+		add_back_end_var(&res, new_var);
+		i++;
 	}
-	return (0);
+	return (res);
 }
