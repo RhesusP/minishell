@@ -97,4 +97,7 @@ fclean: clean
 	make ${DIR_FLAG} fclean -C ./libft
 	rm -f ${NAME}
 
+test:
+	gcc srcs/exec.c srcs/exec_utils.c libft/ft_strdup.c libft/ft_strlen.c && ./a.out
+
 re: fclean all
