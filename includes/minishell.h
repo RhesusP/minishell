@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/08 14:58:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:22:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_env(t_env_var *env_var_lst);
 //t_word	**parse_words(char *line);
 void	parse_words(char *line);
 
-t_word	*create_word(char *cmd, t_type type);
+t_word	*create_word(char *cmd);
 t_word	*get_last_word(t_word *lst);
 void	add_back_word(t_word **lst, t_word *new);
 void	display_words(t_word **lst);

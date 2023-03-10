@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/08 18:44:39 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:02:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ void	handle_quotes(t_word **words, char *line)
 	}
 }
 
+/*
 void	tokenize(t_word **words, char *line)
 {
 	//handle_quotes(words, line);
@@ -236,7 +237,7 @@ void	tokenize(t_word **words, char *line)
 	display_words(words);
 	//get_next_token(line);
 }
-
+*/
 /*
 t_word	**parse_words(char *line)
 {
@@ -272,7 +273,7 @@ int	count_cmd(char *line)
 	}
 	return (nb_pipes + 1);
 }
-
+/*
 t_command	get_next_command(char *line, int *ret)
 {
 	t_command	cmd;
@@ -313,7 +314,7 @@ t_command	get_next_command(char *line, int *ret)
 	cmd.words = words;
 	return (cmd);
 }
-
+*/
 /*
 void	parse_words(char *line)
 {
@@ -336,19 +337,24 @@ void	parse_words(char *line)
 }
 */
 
-#include <string.h>
-
 void	parse_words(char *line)
 {
 	char	**tokens;
+	t_word	**words_lst;
+	t_word	*word;
+	int		i;
 
+	words_lst = malloc(sizeof(t_word *));
+	if (!words_lst)
+		return ;
+	*words_lst = 0;
 	tokens = ft_strtok(line, " \n\t");
-	int i = 0;
-	printf("----------CUSTOM-----------\n");
+	i = 0;
 	while (tokens[i])
 	{
-		printf("%s\n", tokens[i]);
+		word = create_word(tokens[i]);
+		add_back_word(words_lst, word);
 		i++;
 	}
-	printf("---------------------------\n");
+	display_words(words_lst);
 }

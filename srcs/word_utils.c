@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/02 15:02:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/10 09:59:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-t_word	*create_word(char *cmd, t_type type)
+t_word	*create_word(char *cmd)
 {
 	t_word	*word;
 
@@ -20,10 +20,11 @@ t_word	*create_word(char *cmd, t_type type)
 	if (!word)
 		return (0);
 	word->word = cmd;
-	word->type = type;
+	word->type = 0;
 	word->len = 0;
 	word->next = 0;
 	word->prev = 0;
+	return (word);
 }
 
 t_word	*get_last_word(t_word *lst)
@@ -44,6 +45,7 @@ void	add_back_word(t_word **lst, t_word *new)
 
 	if (*lst == 0)
 	{
+		printf("void lits --> lst = new_word\n");
 		*lst = new;
 		return ;
 	}
@@ -55,6 +57,7 @@ void	display_words(t_word **lst)
 {
 	t_word	*current;
 
+	printf("display words called\n");
 	if (!*lst)
 	{
 		printf("######   TOKEN LIST   ######\n");
