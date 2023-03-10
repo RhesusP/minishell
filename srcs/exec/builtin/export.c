@@ -13,6 +13,9 @@
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
+/**
+*	@brief check taht the variable we want to export is like TYPE=something
+**/
 static int	exportable_variable(char *new_env)
 {
 	int	i;
