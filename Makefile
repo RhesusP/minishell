@@ -97,9 +97,12 @@ fclean: clean
 	make ${DIR_FLAG} fclean -C ./libft
 	rm -f ${NAME}
 
-test:
+testexport:
 	gcc srcs/exec/builtin/export.c srcs/exec/builtin/unset.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c srcs/exec/exec_utils.c && ./a.out
 
 test2:
 	gcc srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c libft/ft_calloc.c libft/ft_memset.c && ./a.out
+
+testunset:
+	gcc srcs/exec/builtin/unset.c srcs/exec/exec_utils.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c && ./a.out
 re: fclean all
