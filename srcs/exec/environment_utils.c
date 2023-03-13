@@ -26,13 +26,12 @@ t_env_var	*env_var_new(char *env)
 	i = 0;
 	while (env[first_equal]!= '=')
 		first_equal++;
-	env_var->key = malloc(sizeof(char) * (first_equal + 1));
+	env_var->key = calloc((first_equal + 1), sizeof(char));
 	while (i < first_equal)
 	{
 		env_var->key[i] = env[i];
 		i++;
 	}
-	env[i] = '\0';
 	if (env[first_equal + 1])
 		env_var->values = ft_split(env + first_equal + 1, ':');
 	else
@@ -99,4 +98,37 @@ void	env_var_clear(t_env_var *env_var)
 		free(env_var);
 		env_var = tmp;
 	}
+}
+
+//MAIN TEST -- WARNING TO ERASE
+int main()
+{
+	t_env_var *env1;
+	t_env_var *env2;
+	t_env_var *env3;
+
+	env1 = malloc(sizeof(t_env_var));
+	env2 = malloc(sizeof(t_env_var));
+	env3 = malloc(sizeof(t_env_var));
+	env1->values = malloc(sizeof(char *));
+	env2->values = malloc(sizeof(char *));
+	env3->values = malloc(sizeof(char *));
+
+	env1->key = "ENV1";
+	env1->values[0] = "1st value";
+	env2->key = "ENV2";
+	env2->values[0] = "2nd value";
+	env3->key = "ENV3";
+	env3->values[0] = "3rd value";
+
+	env1->next = env2;
+	env2->next = env3;
+	env3->next = NULL;
+	env_var_add_back(&env1, env_var_new("ENV4=4th Value"));
+	while (env1)
+	{
+		printf("%s=%s\n", env1->key, env1->values[0]);
+		env1 = env1->next;
+	}
+	return 0;
 }
