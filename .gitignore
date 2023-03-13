@@ -7,3 +7,5 @@ libft/*.a
 libft/ft_printf/*.o
 libft/get_next_line/*.o
 .nfs*
+a.out
+test.c
