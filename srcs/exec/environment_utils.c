@@ -101,7 +101,7 @@ void	env_var_clear(t_env_var *env_var)
 }
 
 //MAIN TEST -- WARNING TO ERASE
-int main()
+/*int main()
 {
 	t_env_var *env1;
 	t_env_var *env2;
@@ -130,5 +130,6 @@ int main()
 		printf("%s=%s\n", env1->key, env1->values[0]);
 		env1 = env1->next;
 	}
+	env_var_clear(env1);
 	return 0;
-}
+}*/

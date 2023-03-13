@@ -98,7 +98,7 @@ fclean: clean
 	rm -f ${NAME}
 
 test:
-	gcc srcs/exec/builtin/export.c srcs/exec/builtin/unset.c srcs/exec/exec_utils.c  && ./a.out
+	gcc srcs/exec/builtin/export.c srcs/exec/builtin/unset.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c srcs/exec/exec_utils.c && ./a.out
 
 test2:
 	gcc srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c libft/ft_calloc.c libft/ft_memset.c && ./a.out
