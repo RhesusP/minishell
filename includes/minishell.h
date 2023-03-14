@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/12 16:43:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/14 23:40:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	add_back_end_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
 
 void	print_env(t_env_var *env_var_lst);
-//t_word	**parse_words(char *line);
 void	parse_words(char *line);
 
 t_word	*create_word(char *cmd);
@@ -74,10 +73,7 @@ void	clear_word_lst(t_word **lst);
 
 char	*ft_strndup(const char *s1, unsigned int size);
 char	**ft_strtok(char *str, char *charset);
-int	is_unquoted(char *line, int c_index);
-
-void	insert_word(t_word **lst, t_word *new, t_word *prev);
-void	delete_word(t_word **lst, t_word *to_del);
+int		is_unquoted(char *line, int c_index);
 
 int	is_unquoted_metachar(char *line, int c_index);
 char	**resplit(char *s);
