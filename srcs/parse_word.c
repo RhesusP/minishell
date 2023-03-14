@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/14 23:38:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/14 23:42:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ t_word	**detect_close_pipe(t_word **lst)
 		current = current->next;
 	}
 	free_word_lst(lst);
-	display_words(new_lst);
 	return (new_lst);
 }
 
@@ -166,5 +165,5 @@ void	parse_words(char *line)
 		i++;
 	}
 	words_lst = detect_close_pipe(words_lst);
-	//display_words(words_lst);
+	display_words(words_lst);
 }
