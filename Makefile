@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/03/08 14:55:48 by cbernot          ###   ########.fr        #
+#    Updated: 2023/03/12 16:27:23 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,13 +74,13 @@
 NAME = minishell
 SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/utils.c ./srcs/history.c ./srcs/parse_word.c ./srcs/word_utils.c \
-		./srcs/ft_strtok.c
+		./srcs/ft_strtok.c ./srcs/resplit.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 
 DIR_FLAG = --no-print-directory
 
-%.o: %.c ./includes/minishell.h 
+%.o: %.c ./includes/minishell.h Makefile
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
 ${NAME}: ${OBJS}

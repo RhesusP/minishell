@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/10 10:02:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/12 16:53:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	check_quotes_err(char *line)
 
 int	is_metachar(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '|' || c == '&' || \
-		c == ';' || c == '(' || c == ')' || c == '<' || c == '>')
+	if (c == '|' || c == ';' || c == '(' || c == ')' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -337,6 +336,36 @@ void	parse_words(char *line)
 }
 */
 
+t_word	**detect_close_pipe(t_word **lst)
+{
+	t_word	*current;
+	t_word	**new_lst;
+	char	**reparse;
+
+	if (!*lst)
+		return (0);
+	new_lst = malloc(sizeof(t_word *));
+	if (!new_lst)
+		return (0);
+	*new_lst = 0;
+	current = *lst;
+	while (current)
+	{
+		reparse = resplit(current->word);
+		int	i = 0;
+		while (reparse[i])
+		{
+			add_back_word(new_lst, create_word(reparse[i]));
+			//printf("%s --> %s\n", current->word, reparse[i]);
+			i++;
+		}
+		current = current->next;
+	}
+	free_word_lst(lst);
+	display_words(new_lst);
+	return (new_lst);
+}
+
 void	parse_words(char *line)
 {
 	char	**tokens;
@@ -356,5 +385,6 @@ void	parse_words(char *line)
 		add_back_word(words_lst, word);
 		i++;
 	}
-	display_words(words_lst);
+	words_lst = detect_close_pipe(words_lst);
+	//display_words(words_lst);
 }

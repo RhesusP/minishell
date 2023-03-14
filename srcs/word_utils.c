@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/10 09:59:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/12 16:43:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	add_back_word(t_word **lst, t_word *new)
 
 	if (*lst == 0)
 	{
-		printf("void lits --> lst = new_word\n");
 		*lst = new;
 		return ;
 	}
@@ -89,4 +88,49 @@ void	clear_word_lst(t_word **lst)
 		current = next;
 	}
 	*lst = 0;
+}
+
+void	insert_word(t_word **lst, t_word *new, t_word *prev)
+{
+	t_word	*next;
+
+	if (!lst || !prev)
+		return ;
+	next = prev->next;
+	prev->next = new;
+	new->next = next;
+}
+
+void	delete_word(t_word **lst, t_word *to_del)
+{
+	t_word	*next;
+	t_word	*current;
+	t_word	*prev;
+
+	if (!lst || !to_del)
+		return ;
+	current = *lst;
+	while (current->next != to_del)
+	{
+		prev = current;
+		current = current->next;
+	}
+	prev->next = to_del->next;
+	free(to_del);
+}
+
+void	free_word_lst(t_word **lst)
+{
+	t_word	*current;
+	t_word	*next;
+
+	current = *lst;
+	while (current)
+	{
+		next = current->next;
+		free(current->word);
+		free(current);
+		current = next;
+	}
+	free(lst);
 }
