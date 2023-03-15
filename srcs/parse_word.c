@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/14 23:42:58 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/15 15:19:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_quotes_err(char *line)
 
 int	is_metachar(char c)
 {
-	if (c == '|' || c == ';' || c == '(' || c == ')' || c == '<' || c == '>')
+	if (c == '|' || c == '(' || c == ')' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -145,7 +145,7 @@ t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
-void	parse_words(char *line)
+void	parse_words(char *line, t_env_var *envs, t_env_var *globals)
 {
 	char	**tokens;
 	t_word	**words_lst;
@@ -165,5 +165,5 @@ void	parse_words(char *line)
 		i++;
 	}
 	words_lst = detect_close_pipe(words_lst);
-	display_words(words_lst);
+	set_type(words_lst, envs, globals);
 }

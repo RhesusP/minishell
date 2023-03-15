@@ -6,11 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/14 23:03:01 by cbernot          ###   ########.fr       */
-=======
-/*   Updated: 2023/03/14 23:39:38 by cbernot          ###   ########.fr       */
->>>>>>> 8a2cbc0b4e1f1a78cc193043f865dd116345db6c
+/*   Updated: 2023/03/15 15:16:13 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +49,30 @@ void	add_back_word(t_word **lst, t_word *new)
 		return ;
 	}
 	last = get_last_word(*lst);
+	new->prev = last;
 	last->next = new;
+}
+
+char	*print_type(t_type type)
+{
+	if (type == CMD)
+		return ("CMD");
+	else if (type == ARG)
+		return ("ARG");
+	else if (type == PIPE)
+		return ("PIPE");
+	else if (type == RI)
+		return ("RI");
+	else if (type == RO)
+		return ("RO");
+	else if (type == ARO)
+		return ("ARO");
+	else if (type == HE)
+		return ("HE");
+	else if (type == FILEPATH)
+		return ("FILEPATH");
+	else if (type == DELIMITER)
+		return ("DELIMITER");
 }
 
 void	display_words(t_word **lst)
@@ -70,7 +89,7 @@ void	display_words(t_word **lst)
 	printf("######   TOKEN LIST   ######\n");
 	while (current)
 	{
-		printf("%d\t%s\n", current->type, current->word);
+		printf("%s\t%s\n", print_type(current->type), current->word);
 		current = current->next;
 	}
 }

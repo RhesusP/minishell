@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/10 11:14:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/15 10:27:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env_var	*env_var;
+	t_env_var	*env_vars;		//TODO rename type to a more generic name
+	t_env_var	*global_vars;
 	char		*line;
 
 	if (argc != 1)
@@ -23,8 +24,10 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	}
 	signal_handler();
-	env_var = get_environment(env);		//handle fail
-	print_env(env_var);
+	env_vars = get_environment(env);		//handle fail
+	global_vars = 0;
+	print_env(env_vars);
+	print_env(global_vars);
 	while (1)
 	{
 		line = readline("$> ");
@@ -32,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
-		parse_words(line);
+		parse_words(line, env_vars, global_vars);
 		free(line);
 	}
 	return (0);

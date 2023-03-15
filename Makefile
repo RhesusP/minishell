@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/03/12 16:27:23 by cbernot          ###   ########.fr        #
+#    Updated: 2023/03/15 09:52:12 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@
 NAME = minishell
 SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/utils.c ./srcs/history.c ./srcs/parse_word.c ./srcs/word_utils.c \
-		./srcs/ft_strtok.c ./srcs/resplit.c
+		./srcs/ft_strtok.c ./srcs/resplit.c ./srcs/set_type.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 

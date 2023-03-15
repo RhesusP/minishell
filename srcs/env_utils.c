@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/02/26 01:45:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/15 09:51:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	print_env(t_env_var *env_var_lst)
 
 	if (!env_var_lst)
 	{
-		printf("env_var_lst is empty.\n");
+		printf("list is empty.\n");
 		return ;
 	}
 	current = env_var_lst;

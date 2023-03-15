@@ -1,11 +1,25 @@
-## Detection tests for env variables
+## Tests for tokenization
 
 ```bash
-echo $TEST | echo "$TEST" | echo $'TEST' | echo "'$TEST'" | echo '"$TEST"' | echo
+> ls
 ```
-## Split tests
+Must create a file named `ls`
+```bash
+RO			>
+FILEPATH	ls
+```
+
 
 ```bash
-echo coucou salut
+echo "bonjour toi" | ls > file
 ```
-`get_next_token()` must print `4 11 17`
+
+```bash
+CMD			echo
+ARG			"bonjour toi"
+PIPE		|
+CMD			ls
+RO			>
+FILEPATH	file
+
+```
