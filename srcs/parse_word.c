@@ -337,24 +337,25 @@ void	parse_words(char *line)
 }
 */
 
-void	parse_words(char *line)
+t_word	*parse_words(char *line)
 {
 	char	**tokens;
-	t_word	**words_lst;
+	t_word	*words_lst;
 	t_word	*word;
 	int		i;
 
-	words_lst = malloc(sizeof(t_word *));
+	words_lst = malloc(sizeof(t_word));
 	if (!words_lst)
-		return ;
-	*words_lst = 0;
+		return (0);
+	words_lst = 0;
 	tokens = ft_strtok(line, " \n\t");
 	i = 0;
 	while (tokens[i])
 	{
 		word = create_word(tokens[i]);
-		add_back_word(words_lst, word);
+		add_back_word(&words_lst, word);
 		i++;
 	}
-	display_words(words_lst);
+	display_words(&words_lst);
+	return (words_lst);
 }

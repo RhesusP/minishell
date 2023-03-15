@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_env_var	*env_var;
+	t_word		*word;
 	char		*line;
 
 	if (argc != 1)
@@ -32,7 +33,8 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
-		parse_words(line);
+		word = parse_words(line);
+		//execute_line(env_var);
 		free(line);
 	}
 	return (0);

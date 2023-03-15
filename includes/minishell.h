@@ -63,8 +63,7 @@ void	add_back_end_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
 
 void	print_env(t_env_var *env_var_lst);
-//t_word	**parse_words(char *line);
-void	parse_words(char *line);
+t_word	*parse_words(char *line);
 
 t_word	*create_word(char *cmd);
 t_word	*get_last_word(t_word *lst);
