@@ -42,10 +42,26 @@ int	get_arg_len(t_word *word)
 	int	i;
 
 	i = 0;
-	while (word->type == CMD ||word->type == ARG)
+	while (word && (word->type == CMD || word->type == ARG))
 	{
 		i++;
 		word = word->next;
 	}
 	return (i);
+}
+
+/**
+*	@brief Free char **
+**/
+void	free_all(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }

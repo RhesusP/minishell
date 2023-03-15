@@ -34,27 +34,6 @@
 }*/
 
 /**
-*	@brief Get the number of args for the execution of one programm
-**/
-int	get_arg_len(t_word *parse)
-{
-	int	i;
-
-	i = 0;
-	if (parse->type == WORD)
-	{
-		i++;
-		parse=parse->next;
-		while (parse && parse->type == ARG)
-		{
-			i++;
-			parse=parse->next;
-		}
-	}
-	return (i);
-}
-
-/**
 *	@brief Free char **
 **/
 void	free_all(char **str)

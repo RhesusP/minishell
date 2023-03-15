@@ -56,17 +56,34 @@ char	**get_full_cmd(t_word *word)
 		cmd[i] = word->word;
 		i++;
 	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
+char	*get_execve_path(t_word *word, t_env_var *path)
+{
+	char		*execve_path;
+	int			i;
+
+	i = 0;
+	execve_path = NULL;
+	while (path->values[i])
+	{
+		execve_path = ft_strjoin_custom(path->values[i], word->word);
+		if (access(execve_path, X_OK) == 0)
+			return (execve_path);
+		free(execve_path);
+		i++;
+	}
+	return (NULL);
+
+}
 int	is_execve(t_word *word, t_env_var *path)
 {
 	char		*execve_path;
-	char		*tmp;
-	int			i;
+	char		**full_cmd;
 	int			pid;
 
-	i = 0;
 	pid = fork();
 	if (pid == -1)
 		return 1;
@@ -74,15 +91,12 @@ int	is_execve(t_word *word, t_env_var *path)
 		wait(NULL);
 	if (pid == 0)
 	{
-		while(path)
-		{
-			tmp = execve_path;
-			execve_path = ft_strjoin_custom(path->values[i], word->word);
-			free(tmp);
-			execve(execve_path, get_full_cmd(word), NULL);
-			i++;
-		}
+		full_cmd = get_full_cmd(word);
+		execve_path = get_execve_path(word, path);
+		execve(execve_path, full_cmd, NULL);
+		free_all(full_cmd);
 	}
+	return 0;
 }
 
 void	execute_line(t_word	*word, t_env_var *env)
