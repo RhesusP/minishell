@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-typedef enum e_type {WORD, ARG, PIPE, REDIR, VAR} t_type;
+typedef enum e_type {CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH} t_type;
 
 typedef struct	s_word
 {
@@ -76,6 +76,8 @@ char	**ft_strtok(char *str, char *charset);
 int	is_unquoted(char *line, int c_index);
 
 int	is_cmd_anonymous(char *cmd);
+
+void		execute_line(t_word	*word_lst, t_env_var *env);
 
 # define SUCCESS	0
 # define FAILURE	-1
