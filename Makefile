@@ -74,7 +74,8 @@
 NAME = minishell
 SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/utils.c ./srcs/history.c ./srcs/parse_word.c ./srcs/word_utils.c \
-		./srcs/ft_strtok.c
+		./srcs/ft_strtok.c \
+		./srcs/exec/exec_redo.c ./srcs/exec/environment_utils.c ./srcs/exec/environment.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 
