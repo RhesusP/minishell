@@ -13,6 +13,22 @@
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
 
+static int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (FAILURE);
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 /**
 *	@brief Get values and keys from the initial environment where minishell starts
 **/
@@ -44,7 +60,7 @@ t_env_var	*get_env_custom(char *key_to_find, t_env_var *env)
 	flag = 0;
 	while (cpy && flag == 0)
 	{
-		if (key_to_find == cpy->key)
+		if (ft_strcmp(key_to_find, cpy->key) == SUCCESS)
 		{
 			flag = 1;
 			break ;
@@ -83,7 +99,7 @@ t_env_var	*get_env_custom(char *key_to_find, t_env_var *env)
 	return 0;
 }*/
 
-int main(int argc, char **argv, char **env)
+/*int main(int argc, char **argv, char **env)
 {
 	t_env_var	*env_var;
 
@@ -91,4 +107,4 @@ int main(int argc, char **argv, char **env)
 	exec_env(env_var);
 	env_var_clear(env_var);
 	return (0);
-}
+}*/
