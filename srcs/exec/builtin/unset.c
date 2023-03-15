@@ -27,6 +27,7 @@ void	exec_unset(t_env_var *env_var, char *unset_key)
 		previous->next = env_var->next;
 	printf("%s\n", env_var->key);
 		//free(env_var->key);
+		free(env_var->values);
 		//free_all(env_var->values);
 	printf("yo\n");
 		free(env_var);

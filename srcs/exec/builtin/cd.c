@@ -34,10 +34,6 @@ static void	change_pwd(char *path, t_env_var *pwd)
 	}
 }
 
-static void	change_oldpwd(t_env_var *oldpwd, t_env_var *pwd)
-{
-	oldpwd->values = pwd->values;
-}
 /**
  * chdir checks that the path exists
  * then we change PWD and OLDPWD
@@ -52,6 +48,6 @@ void	exec_cd(char *path, t_env_var *env_var)
 	if (chdir(path) == 0)
 	{
 		change_oldpwd(oldpwd, pwd);
-		change_pwd(path, pwd);
+		oldpwd->values = pwd->values;
 	}
 }
