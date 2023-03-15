@@ -16,7 +16,7 @@
 *	@brief Check if the command is a builtin
 *	and execute it if it is indeed a builtin
 **/
-int	is_builtin(char **cmd)
+/*int	is_builtin(char **cmd)
 {
 	if (cmd[0] == "exit")
 		//return(exec_exit(), SUCCESS)
@@ -31,7 +31,7 @@ int	is_builtin(char **cmd)
 	if (cmd[0] == "env")
 		//return(exec_env(), SUCCESS)
 	return (FAILURE);
-}
+}*/
 
 /**
 *	@brief Get the number of args for the execution of one programm

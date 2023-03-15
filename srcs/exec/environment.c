@@ -13,7 +13,7 @@
 #include "../../includes/minishell.h"
 #include "../../includes/exec.h"
 
-static int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
