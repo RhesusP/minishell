@@ -103,8 +103,9 @@ int	is_execve(t_word *word, t_env_var *path)
 void	execute_line(t_word	*word, t_env_var *env)
 {
 	t_env_var	*path;
+	int			pipes_nbr;
 
-	
+	pipes_nbr = count_pipes(word);
 	path = get_env_custom("PATH", env);
 	if (word->type == CMD)
 	{

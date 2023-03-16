@@ -48,21 +48,3 @@ void	free_all(char **str)
 	}
 	free(str);
 }
-
-/**
- * @brief Counts the number of pipe that were parsed
- * @return Number of pipes counted
-**/
-int	count_pipes(t_word *word)
-{
-	int	pipe_nbr;
-
-	pipe_nbr = 0;
-	while (word)
-	{
-		if (word->type == PIPE)
-			pipe_nbr++;
-		word = word->next;
-	}
-	return (pipe_nbr);
-}
