@@ -55,6 +55,7 @@ char	**get_full_cmd(t_word *word)
 	{
 		cmd[i] = word->word;
 		i++;
+		word = word->next;
 	}
 	cmd[i] = NULL;
 	return (cmd);
