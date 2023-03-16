@@ -3,7 +3,8 @@
 
 /**
  * @brief strjoin but adds a '/' between the two char* joined
-*/
+ * @return joined char *
+**/
 char	*ft_strjoin_custom(char const *s1, char const *s2)
 {
 	char	*res;
