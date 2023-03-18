@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:19:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 13:36:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ int	is_metachar(char c)
 		return (1);
 	return (0);
 }
+
+/*
+int	is_metachar(char *s)
+{
+	if (ft_strcmp(s, "<<") == 0 || ft_strcmp(s, ">>") == 0)
+		return (1);
+	if (ft_strcmp(s, "|") == 0 || ft_strcmp(s, "(") == 0 || ft_strcmp(s, ")") == 0 || ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0)
+		return (1);
+	return (0);
+}
+*/
 
 int	is_unquoted_metachar(char *line, int c_index)
 {
@@ -132,14 +143,22 @@ t_word	**detect_close_pipe(t_word **lst)
 	current = *lst;
 	while (current)
 	{
-		reparse = resplit(current->word);
-		int	i = 0;
-		while (reparse[i])
+		if (ft_strcmp(current->word, "<<") == 0 || ft_strcmp(current->word, ">>") == 0)
 		{
-			add_back_word(new_lst, create_word(reparse[i]));
-			i++;
+			add_back_word(new_lst, create_word(ft_strdup(current->word)));
+			current = current->next;
 		}
-		current = current->next;
+		else
+		{
+			reparse = resplit(current->word);
+			int	i = 0;
+			while (reparse[i])
+			{
+				add_back_word(new_lst, create_word(reparse[i]));
+				i++;
+			}
+			current = current->next;
+		}
 	}
 	free_word_lst(lst);
 	return (new_lst);
@@ -164,6 +183,12 @@ void	parse_words(char *line, t_env_var *envs, t_env_var *globals)
 		add_back_word(words_lst, word);
 		i++;
 	}
+	/* 	ls<<here		-->		ls<<here
+		ls << here		-->		ls
+								<<
+								here
+	*/
 	words_lst = detect_close_pipe(words_lst);
-	set_type(words_lst, envs, globals);
+	display_words(words_lst);
+	//set_type(words_lst, envs, globals);
 }

@@ -6,11 +6,67 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/14 23:32:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 18:01:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+// int	is_unquoted_double_chevron(char *line, int c_index)
+// {
+// 	int	i;
+// 	int	nb_single_quote;
+// 	int	nb_double_quote;
+
+// 	nb_double_quote = 0;
+// 	nb_single_quote = 0;
+// 	if ((line[c_index] == '<' && line[c_index + 1] != '<') || (line[c_index] == '>' && line[c_index + 1] != '>'))
+// 		return (0);
+// 	i = 0;
+// 	while (line[i] != '\0' && i < c_index)
+// 	{
+// 		if (line[i] == '"')
+// 			nb_double_quote++;
+// 		else if (line[i] == '\'')
+// 			nb_single_quote++;
+// 		i++;
+// 	}
+// 	if (!nb_double_quote && !nb_single_quote)
+// 		return (1);
+// 	if (nb_double_quote % 2 != 0 || nb_single_quote % 2 != 0)
+// 		return (0);
+// 	return (1);
+// }
+
+int	is_unquoted_double_chevron(char *line, int c_index)
+{
+	int	i;
+	int	nb_single_quote;
+	int	nb_double_quote;
+
+	nb_double_quote = 0;
+	nb_single_quote = 0;
+	if (ft_strncmp(&line[c_index], "<<", 2) == 0 || ft_strncmp(&line[c_index], ">>", 2) == 0)
+	{
+		i = 0;
+		while (line[i] != '\0' && i < c_index)
+		{
+			if (line[i] == '"')
+				nb_double_quote++;
+			else if (line[i] == '\'')
+				nb_single_quote++;
+			i++;
+		}
+		if (!nb_double_quote && !nb_single_quote)
+			return (1);
+		if (nb_double_quote % 2 != 0 || nb_single_quote % 2 != 0)
+			return (0);
+		else
+			return (1);
+	}
+	else
+		return (0);
+}
 
 static int	ft_get_nb_w(char *s)
 {
@@ -24,8 +80,13 @@ static int	ft_get_nb_w(char *s)
 		if (!is_unquoted_metachar(s, i))
 		{
 			count++;
-			while (!is_unquoted_metachar(s, i) && s[i])
+			while (s[i] && !is_unquoted_metachar(s, i))
 				i++;
+		}
+		else if (is_unquoted_double_chevron(s, i))
+		{
+			count++;
+			i += 2;
 		}
 		else if (is_unquoted_metachar(s, i))
 		{
@@ -62,9 +123,16 @@ char	**resplit(char *s)
 	n_word = 0;
 	tab = ft_malloc((char *)s, &count);
 	i = 0;
+	printf("nb words: %d\n", count);
 	while (n_word < count && i < ft_strlen(s))
 	{
-		if (is_unquoted_metachar(s, i))
+		if (is_unquoted_double_chevron(s, i))
+		{
+			tab[n_word] = ft_strndup(&s[i], 2);
+			n_word++;
+			i += 2;
+		}
+		else if (is_unquoted_metachar(s, i))
 		{
 			tab[n_word] = ft_strndup(&s[i], 1);
 			n_word++;

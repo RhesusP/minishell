@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:16:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:23:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*print_type(t_type type)
 		return ("FILEPATH");
 	else if (type == DELIMITER)
 		return ("DELIMITER");
+	else if (type == IGN)
+		return ("IGN");
 }
 
 void	display_words(t_word **lst)

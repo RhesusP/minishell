@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 15:12:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:28:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-typedef enum e_type {CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER} t_type;
+typedef enum e_type {CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER, IGN} t_type;
 
 /*
 	POSSIBLE TYPES:
@@ -34,6 +34,7 @@ typedef enum e_type {CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER} t_typ
 		ARO			-->		appending redirecting output (>>)
 		HE			-->		here documents (<<)
 		FILEPATH	-->		file path (used for redirections)
+		DELIMITER	-->		come after a here document 
 		IGN			-->		ignore token (e.g. variable assignation followed by a pipe)
 */
 
