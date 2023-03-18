@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 18:01:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:28:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ static char	**ft_malloc(char *s, int *count)
 	tab = malloc((count_m + 1) * sizeof(char *));
 	if (!tab)
 		return (0);
+	tab[count_m] = NULL;
 	return (tab);
 }
 
@@ -122,8 +123,8 @@ char	**resplit(char *s)
 
 	n_word = 0;
 	tab = ft_malloc((char *)s, &count);
+	printf("nb word: %d\n", count);
 	i = 0;
-	printf("nb words: %d\n", count);
 	while (n_word < count && i < ft_strlen(s))
 	{
 		if (is_unquoted_double_chevron(s, i))

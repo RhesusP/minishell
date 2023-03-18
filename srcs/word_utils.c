@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/17 17:23:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 18:19:13 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_word	*create_word(char *cmd)
 	if (!word)
 		return (0);
 	word->word = cmd;
-	word->type = 0;
+	word->type = INIT;
 	word->len = 0;
 	word->next = 0;
 	word->prev = 0;
@@ -75,6 +75,8 @@ char	*print_type(t_type type)
 		return ("DELIMITER");
 	else if (type == IGN)
 		return ("IGN");
+	else if (type == INIT)
+		return ("INIT");
 }
 
 void	display_words(t_word **lst)

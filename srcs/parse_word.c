@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 13:36:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:34:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,6 @@ int	is_metachar(char c)
 		return (1);
 	return (0);
 }
-
-/*
-int	is_metachar(char *s)
-{
-	if (ft_strcmp(s, "<<") == 0 || ft_strcmp(s, ">>") == 0)
-		return (1);
-	if (ft_strcmp(s, "|") == 0 || ft_strcmp(s, "(") == 0 || ft_strcmp(s, ")") == 0 || ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0)
-		return (1);
-	return (0);
-}
-*/
 
 int	is_unquoted_metachar(char *line, int c_index)
 {
@@ -183,12 +172,7 @@ void	parse_words(char *line, t_env_var *envs, t_env_var *globals)
 		add_back_word(words_lst, word);
 		i++;
 	}
-	/* 	ls<<here		-->		ls<<here
-		ls << here		-->		ls
-								<<
-								here
-	*/
 	words_lst = detect_close_pipe(words_lst);
+	set_type(words_lst, envs, globals);
 	display_words(words_lst);
-	//set_type(words_lst, envs, globals);
 }

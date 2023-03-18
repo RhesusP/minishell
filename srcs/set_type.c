@@ -6,64 +6,107 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/17 17:23:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:29:46 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-void	give_meta_type(t_word *word)
+// TODO return error int when syntax error ? (e.g. missing HE delimiter)
+void	give_meta_type(t_word **lst)
 {
-	if (ft_strcmp(word->word, "|") == 0)
-		word->type = PIPE;
-	else if (ft_strcmp(word->word, "<") == 0)
-		word->type = RI;
-	else if (ft_strcmp(word->word, ">") == 0)
-		word->type = RO;
-	else if (ft_strcmp(word->word, ">>") == 0)
-		word->type = ARO;
-	else if (ft_strcmp(word->word, "<<") == 0)
-		word->type = HE;
+	t_word	*word;
+
+	if (!*lst)
+		return ;
+	word = *lst;
+	while (word)
+	{
+		if (word->type == INIT)
+		{
+			if (ft_strcmp(word->word, "|") == 0)
+				word->type = PIPE;
+			else if (ft_strcmp(word->word, "<") == 0)
+			{
+				word->type = RI;
+				if (!word->next)
+					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+				else
+					word->next->type = FILEPATH;
+			}
+			else if (ft_strcmp(word->word, ">") == 0)
+			{
+				word->type = RO;
+				if (!word->next)
+					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+				else
+					word->next->type = FILEPATH;	
+			}
+			else if (ft_strcmp(word->word, ">>") == 0)
+			{
+				word->type = ARO;
+				if (!word->next)
+					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+				else
+					word->next->type = FILEPATH;
+			}
+			else if (ft_strcmp(word->word, "<<") == 0)
+			{
+				word->type = HE;
+				if (!word->next)
+					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+				else
+					word->next->type = DELIMITER;
+			}
+		}
+		word = word->next;
+	}
 }
 
-void	give_filepath_type(t_word *word)
+void	give_cmd_type(t_word **lst)
 {
-	if (word->next && word->next->type == RI)
-		word->type = FILEPATH;
-	else if (word->prev && word->prev->type == RO)
-		word->type = FILEPATH;
-	else if (word->next && word->next->type == ARO)
-		word->type = FILEPATH;
-	else if(word->prev && word->prev->type == HE)
-		word->type = DELIMITER;
-	//TODO gestion du here document ?
-}
+	t_word	*word;
 
-void	detect_patterns(t_word *word)
-{
-	//TODO need to detect variable assignation
-	give_meta_type(word);
-	give_filepath_type(word);
-	/*
-	if (!word->prev || word->prev->type == PIPE)
-		word->type = CMD;
-	if (word->type == CMD && word->prev && (word->prev->type == CMD || word->prev->type == ARG))
-		word->type = ARG;
-	*/
+	if (!*lst)
+		return ;
+	word = *lst;
+	while (word)
+	{
+		if (!word->prev)
+		{
+			if (ft_strchr(word->word, '='))
+			{
+				printf("%s is a variable assignation\n", word->word);
+				//TODO add variable and free first word/token.
+				*lst = word->next;
+				printf("next is %s (%s)\n", word->next->word, print_type(word->next->type));
+				if (word->next->type == INIT)
+					word->next->type = CMD;
+				else if (word->next->type == PIPE)	//TODO need to free here lol
+					*lst = word->next->next;
+			}
+			else if (word->type == INIT)
+				word->type = CMD;
+		}
+		else if(word->prev->type == PIPE)
+			word->type = CMD;
+		word = word->next;
+	}
 }
-
 
 void	set_type(t_word **lst, t_env_var *envs, t_env_var *globals)
 {
 	t_word	*current;
 
+	give_meta_type(lst);
+	give_cmd_type(lst);
 	if (!*lst)
 		return ;
 	current = *lst;
 	while (current)
 	{
-		detect_patterns(current);
+		if (current->type == INIT)
+			current->type = ARG;
 		current = current->next;
 	}
-	display_words(lst);
 }

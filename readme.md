@@ -2,13 +2,18 @@
 
 ### Current progress
 
-- [ ]	Test #1
-- [ ]	Test #2
-- [ ]	Test #3
-- [ ]	Test #4
-- [ ]	Test #5
-- [ ]	Test #6
-- [ ]	Test #7
+- [x]	Test #1
+- [x]	Test #2
+- [x]	Test #3
+- [x]	Test #4
+- [x]	Test #5
+- [x]	Test #6
+- [x]	Test #7
+- [x]	Test #8
+- [ ]	Test #9		--> ok but segfault
+- [x]	Test #10
+- [x]	Test #11
+- [x]	Test #12
 
 ### Test #1
 ```bash
@@ -67,7 +72,7 @@ Must return
 ```bash
 CMD		echo
 ARG		"salut toi"
-ARG		bonjout
+ARG		bonjour
 PIPE		|
 CMD		ls
 ARG		-al
@@ -87,19 +92,17 @@ FILEPATH	ls
 
 ### Test #7
 ```bash
-ls -al << here
+>ls
 ```
 Must create a file named `ls`
 ```bash
-CMD		ls
-ARG		-al
-HE		<<
-DELIMITER	here
+RO		>
+FILEPATH	ls
 ```
 
 ### Test #8
 ```bash
-TOTO=toto
+ls -al << here
 ```
 Must create a file named `ls`
 ```bash
@@ -111,12 +114,39 @@ DELIMITER	here
 
 ### Test #9
 ```bash
-ls -al << here
+TOTO=toto
 ```
-Must create a file named `ls`
+Must return
 ```bash
 CMD		ls
 ARG		-al
 HE		<<
 DELIMITER	here
+```
+
+### Test #10
+```bash
+TOTO=toto ls
+```
+Must return
+```bash
+CMD		ls
+```
+
+### Test #11
+```bash
+TOTO=toto | ls
+```
+Must return
+```bash
+CMD		ls
+```
+
+### Test #12
+```bash
+TOTO=toto|ls
+```
+Must return
+```bash
+CMD		ls
 ```

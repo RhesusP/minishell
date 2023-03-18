@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/17 17:28:47 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 19:14:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-typedef enum e_type {CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER, IGN} t_type;
+typedef enum e_type {INIT, CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER, IGN} t_type;
 
 /*
 	POSSIBLE TYPES:
+		INIT		-->		given at initialization
 		CMD 		-->		command name (exec)
 		ARG			--> 	command's argument
 		PIPE		-->		pipe (|)
@@ -86,6 +87,7 @@ int	is_unquoted_metachar(char *line, int c_index);
 char	**resplit(char *s);
 void	free_word_lst(t_word **lst);
 void	set_type(t_word **lst, t_env_var *envs, t_env_var *globals);
+char	*print_type(t_type type);
 
 int	ft_strcmp(char *s1, char *s2);
 
