@@ -6,67 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 20:28:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:49:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
-
-// int	is_unquoted_double_chevron(char *line, int c_index)
-// {
-// 	int	i;
-// 	int	nb_single_quote;
-// 	int	nb_double_quote;
-
-// 	nb_double_quote = 0;
-// 	nb_single_quote = 0;
-// 	if ((line[c_index] == '<' && line[c_index + 1] != '<') || (line[c_index] == '>' && line[c_index + 1] != '>'))
-// 		return (0);
-// 	i = 0;
-// 	while (line[i] != '\0' && i < c_index)
-// 	{
-// 		if (line[i] == '"')
-// 			nb_double_quote++;
-// 		else if (line[i] == '\'')
-// 			nb_single_quote++;
-// 		i++;
-// 	}
-// 	if (!nb_double_quote && !nb_single_quote)
-// 		return (1);
-// 	if (nb_double_quote % 2 != 0 || nb_single_quote % 2 != 0)
-// 		return (0);
-// 	return (1);
-// }
-
-int	is_unquoted_double_chevron(char *line, int c_index)
-{
-	int	i;
-	int	nb_single_quote;
-	int	nb_double_quote;
-
-	nb_double_quote = 0;
-	nb_single_quote = 0;
-	if (ft_strncmp(&line[c_index], "<<", 2) == 0 || ft_strncmp(&line[c_index], ">>", 2) == 0)
-	{
-		i = 0;
-		while (line[i] != '\0' && i < c_index)
-		{
-			if (line[i] == '"')
-				nb_double_quote++;
-			else if (line[i] == '\'')
-				nb_single_quote++;
-			i++;
-		}
-		if (!nb_double_quote && !nb_single_quote)
-			return (1);
-		if (nb_double_quote % 2 != 0 || nb_single_quote % 2 != 0)
-			return (0);
-		else
-			return (1);
-	}
-	else
-		return (0);
-}
+#include "./../../includes/minishell.h"
 
 static int	ft_get_nb_w(char *s)
 {

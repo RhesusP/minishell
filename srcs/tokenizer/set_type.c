@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 20:29:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:43:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "./../../includes/minishell.h"
 
 // TODO return error int when syntax error ? (e.g. missing HE delimiter)
 void	give_meta_type(t_word **lst)

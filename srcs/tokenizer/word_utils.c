@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 18:19:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:48:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "./../../includes/minishell.h"
 
 t_word	*create_word(char *cmd)
 {
@@ -51,32 +51,6 @@ void	add_back_word(t_word **lst, t_word *new)
 	last = get_last_word(*lst);
 	new->prev = last;
 	last->next = new;
-}
-
-char	*print_type(t_type type)
-{
-	if (type == CMD)
-		return ("CMD");
-	else if (type == ARG)
-		return ("ARG");
-	else if (type == PIPE)
-		return ("PIPE");
-	else if (type == RI)
-		return ("RI");
-	else if (type == RO)
-		return ("RO");
-	else if (type == ARO)
-		return ("ARO");
-	else if (type == HE)
-		return ("HE");
-	else if (type == FILEPATH)
-		return ("FILEPATH");
-	else if (type == DELIMITER)
-		return ("DELIMITER");
-	else if (type == IGN)
-		return ("IGN");
-	else if (type == INIT)
-		return ("INIT");
 }
 
 void	display_words(t_word **lst)
@@ -121,6 +95,8 @@ void	free_word_lst(t_word **lst)
 	t_word	*current;
 	t_word	*next;
 
+	if (!*lst)
+		return ;
 	current = *lst;
 	while (current)
 	{
