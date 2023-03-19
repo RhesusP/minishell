@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 10:27:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:20:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	main(int argc, char **argv, char **env)
 	}
 	signal_handler();
 	env_vars = get_environment(env);		//handle fail
+	global_vars = malloc(sizeof(t_env_var));
 	global_vars = 0;
-	print_env(env_vars);
-	print_env(global_vars);
+	//add_back_env_var(&global_vars, create_env_var("TEST=test"));
 	while (1)
 	{
 		line = readline("$> ");
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
-		parse_words(line, env_vars, global_vars);
+		parse_words(line, env_vars, &global_vars);
 		free(line);
 	}
 	return (0);

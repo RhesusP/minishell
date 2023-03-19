@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 20:58:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:18:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		handle_ctrld(char *line);
 /* ENVIRONMENT */
 t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
-void		add_back_end_var(t_env_var **lst, t_env_var *new);
+void		add_back_env_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
 
 /* WORDS */
@@ -81,6 +81,8 @@ void		add_back_word(t_word **lst, t_word *new);
 void		display_words(t_word **lst);
 void		clear_word_lst(t_word **lst);
 void		free_word_lst(t_word **lst);
+void		delete_word(t_word *word, t_word **lst);
+void		reverse_display_words(t_word **lst);	//DEBUG
 
 /* UNQUOTED CHAR */
 int			is_unquoted(char *line, int c_index);
@@ -88,8 +90,8 @@ int			is_unquoted_metachar(char *line, int c_index);
 int			is_unquoted_double_chevron(char *line, int c_index);
 
 /* PARSING */
-void		parse_words(char *line, t_env_var *envs, t_env_var *globals);
-void		set_type(t_word **lst, t_env_var *envs, t_env_var *globals);
+void		parse_words(char *line, t_env_var *envs, t_env_var **globals);
+void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);
 

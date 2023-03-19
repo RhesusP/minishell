@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 09:51:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:16:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_env_var	*get_last_env_var(t_env_var *lst)
 	return (current);
 }
 
-void	add_back_end_var(t_env_var **lst, t_env_var *new)
+void	add_back_env_var(t_env_var **lst, t_env_var *new)
 {
 	t_env_var	*last;
 
@@ -85,7 +85,7 @@ void	print_env(t_env_var *env_var_lst)
 		return ;
 	}
 	current = env_var_lst;
-	while (current->next)
+	while (current)
 	{
 		printf("%s=", current->key);
 		i = 0;
@@ -99,6 +99,5 @@ void	print_env(t_env_var *env_var_lst)
 		}
 		printf("\n");
 		current = current->next;
-		
 	}
 }

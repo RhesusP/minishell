@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 20:48:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/19 18:19:22 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,44 @@ void	free_word_lst(t_word **lst)
 		current = next;
 	}
 	free(lst);
+}
+
+void	delete_word(t_word *word, t_word **lst)
+{
+	t_word	*prev;
+	t_word	*next;
+
+	prev = word->prev;
+	next = word->next;
+	if (!next)
+		prev->next = 0;
+	else if (!prev)
+	{
+		*lst = next;
+		next->prev = 0;
+	}
+	else
+	{
+		prev->next = next;
+		next->prev = prev;
+	}
+}
+
+void	reverse_display_words(t_word **lst)
+{
+	t_word	*last;
+
+	last = get_last_word(*lst);
+	if (!last)
+	{
+		printf("######   REVERSE TOKEN LIST   ######\n");
+		printf("Aucun commande.\n");
+		return ;
+	}
+	printf("######   REVERSE TOKEN LIST   ######\n");
+	while (last)
+	{
+		printf("%s\t%s\n", print_type(last->type), last->word);
+		last = last->prev;
+	}
 }
