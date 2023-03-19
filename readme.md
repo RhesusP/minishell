@@ -2,21 +2,21 @@
 
 ### Current progress
 
-- [ ]	Test #1
-- [ ]	Test #2
-- [ ]	Test #3
-- [ ]	Test #4
-- [ ]	Test #5
-- [ ]	Test #6
-- [ ]	Test #7
-- [ ]	Test #8
-- [ ]	Test #9
-- [ ]	Test #10
-- [ ]	Test #11
-- [ ]	Test #12
-- [ ]	Test #13
-- [ ]	Test #14
-- [ ]	Test #15
+- [x]	Test #1
+- [x]	Test #2
+- [x]	Test #3
+- [x]	Test #4
+- [x]	Test #5
+- [x]	Test #6
+- [x]	Test #7
+- [x]	Test #8
+- [x]	Test #9
+- [x]	Test #10
+- [x]	Test #11
+- [x]	Test #12
+- [x]	Test #13
+- [x]	Test #14
+- [x]	Test #15
 
 ### Test #1
 ```bash
