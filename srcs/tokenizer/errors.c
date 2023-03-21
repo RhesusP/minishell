@@ -1,44 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/15 12:46:38 by cbernot          ###   ########.fr       */
+/*   Created: 2023/03/18 20:45:18 by cbernot           #+#    #+#             */
+/*   Updated: 2023/03/18 20:46:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "./../../includes/minishell.h"
 
-char	*ft_strndup(const char *s1, unsigned int size)
+int	check_quotes_err(char *line)
 {
-	char			*res;
-	unsigned int	i;
-
-	res = malloc(sizeof(char) * (size + 1));
-	if (!res)
-		return (res);
-	i = 0;
-	while (i < size && s1[i] != '\0')
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
+	int	nb_single;
+	int	nb_double;
 	int	i;
 
+	nb_single = 0;
+	nb_double = 0;
 	i = 0;
-	while (s1[i] != '\0' && s1[i] == s2[i])
+	while (line[i] != '\0')
+	{
+		if (line[i] == '\'')
+			nb_single++;
+		else if (line[i] == '"')
+			nb_double++;
 		i++;
-	if (s1[i] == s2[i])
+	}
+	if (nb_double % 2 != 0 || nb_single % 2 != 0)
 		return (0);
-	else
-		return (s1[i] - s2[i]);
+	return (1);
 }

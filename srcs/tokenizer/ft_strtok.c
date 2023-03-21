@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:53:15 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/10 10:06:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/18 20:43:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "./../../includes/minishell.h"
 
 int	ft_get_next_word(char *str, char *charset, int *i)
 {
