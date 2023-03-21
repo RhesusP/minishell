@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 		printf("you entered: %s\n", line);
 		parse_words(line, env_vars, &global_vars);
+		//execute_line(); Where do I get my t_word now ??
 		free(line);
 	}
 	return (0);
