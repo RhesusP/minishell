@@ -100,11 +100,22 @@ int			ft_strcmp(char *s1, char *s2);
 char		*ft_strndup(const char *s1, unsigned int size);
 char		**ft_strtok(char *str, char *charset);
 
-/* HISTORY */
-int			is_cmd_anonymous(char *cmd);
+int	is_cmd_anonymous(char *cmd);
+
+/**
+ * Added in branch exec_redo
+**/
+
+void		execute_line(t_word	*word_lst, t_env_var *env);
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strjoin_custom(char const *s1, char const *s2);
+int			count_pipes(t_word *word);
 
 /* DEBUG */
 void		print_env(t_env_var *env_var_lst);
 char		*print_type(t_type type);
+
+# define SUCCESS	0
+# define FAILURE	-1
 
 #endif

@@ -27,7 +27,7 @@ char	*get_cmd_path(char *cmd, char **env) //Utiliser t_env_var ??
 *	@brief Get the command with args from the parser into a char **
 *	Then we'll be able to pass the full command to execve()
 **/
-char	**get_full_cmd(t_word *parse)
+/*char	**get_full_cmd(t_word *parse)
 {
 	char	**cmd;
 	char	*temp;
@@ -49,7 +49,7 @@ char	**get_full_cmd(t_word *parse)
 	}
 	cmd[i] = NULL;
 	return (cmd);
-}
+}*/
 
 /**
 *	@brief Execute the command entered on the prompt
@@ -72,7 +72,7 @@ void	execute_cmd(t_command *cmd, char **env)	//Utiliser t_env_var ??
 		{
 			path = get_cmd_path(cmd_arr);
 			execve(path, cmd, env);
-			free_all(cmd);
+			free_all(cmd_arr);
 			//free struct WARNING : TODO
 			exit(EXIT_SUCCESS);
 		}
