@@ -107,7 +107,6 @@ int	is_cmd_anonymous(char *cmd);
 **/
 
 void		execute_line(t_word	*word_lst, t_env_var *env);
-int			ft_strcmp(char *s1, char *s2);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 int			count_pipes(t_word *word);
 

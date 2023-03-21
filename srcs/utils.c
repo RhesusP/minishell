@@ -29,7 +29,7 @@ char	*ft_strndup(const char *s1, unsigned int size)
 	res[i] = '\0';
 	return (res);
 }
-
+/* WARNING ERASE ??
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -41,4 +41,4 @@ int	ft_strcmp(char *s1, char *s2)
 		return (0);
 	else
 		return (s1[i] - s2[i]);
-}
+}*/
