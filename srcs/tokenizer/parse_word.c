@@ -64,7 +64,7 @@ t_word	**parse_words(char *line, t_env_var *envs, t_env_var **globals)
 
 	words_lst = malloc(sizeof(t_word *));
 	if (!words_lst)
-		return ;
+		return (0);
 	*words_lst = 0;
 	tokens = ft_strtok(line, " \n\t");
 	i = 0;
