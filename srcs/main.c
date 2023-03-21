@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **env)
 	t_env_var	*env_vars;		//TODO rename type to a more generic name
 	t_env_var	*global_vars;
 	char		*line;
+	t_word		**words_lst;
 
 	if (argc != 1)
 	{
@@ -35,8 +36,8 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
-		parse_words(line, env_vars, &global_vars);
-		//execute_line(); Where do I get my t_word now ??
+		words_lst = parse_words(line, env_vars, &global_vars);
+		execute_line(*words_lst, env_vars);
 		free(line);
 	}
 	return (0);

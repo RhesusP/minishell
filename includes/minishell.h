@@ -90,7 +90,7 @@ int			is_unquoted_metachar(char *line, int c_index);
 int			is_unquoted_double_chevron(char *line, int c_index);
 
 /* PARSING */
-void		parse_words(char *line, t_env_var *envs, t_env_var **globals);
+t_word		**parse_words(char *line, t_env_var *envs, t_env_var **globals);
 void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);

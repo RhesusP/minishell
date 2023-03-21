@@ -55,7 +55,7 @@ t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
-void	parse_words(char *line, t_env_var *envs, t_env_var **globals)
+t_word	**parse_words(char *line, t_env_var *envs, t_env_var **globals)
 {
 	char	**tokens;
 	t_word	**words_lst;
@@ -81,4 +81,5 @@ void	parse_words(char *line, t_env_var *envs, t_env_var **globals)
 	//reverse_display_words(words_lst);
 	printf("GLOBAL VAR LIST\n");
 	print_env(*globals);
+	return (words_lst);
 }
