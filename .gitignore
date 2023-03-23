@@ -4,3 +4,4 @@ minishell
 libft/*.a
 .nfs*
 *.o
+TODO.txt
