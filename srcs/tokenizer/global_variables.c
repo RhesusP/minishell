@@ -1,21 +1,52 @@
 
 #include "./../../includes/minishell.h"
 
+static char	*ft_strdup_no_quotes(const char *s1)
+{
+	char			*res;
+	unsigned int	i;
+	unsigned int	j;
+
+
+	res = malloc(sizeof(char) * (ft_strlen(s1) + 1 - 2));
+	if (!res)
+		return (res);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		if (s1[i] != '\"')
+		{
+			res[j] = s1[i];
+			j++;
+		}
+		i++;
+	}
+	res[j] = '\0';
+	return (res);
+}
 
 void	replace_dollar_sign(t_env_var **globals, t_word *word)
 {
-	t_env_var	*current;
+	t_env_var	*current_global;
+	char		*tmp;
 
-	current = *globals;
-	while (current)
+	tmp = word->word;
+	current_global = *globals;
+	if (word->word[0] == '\"')
 	{
-		if (strcmp(word->word, current->key))
+		free(word->word);
+		word->word = ft_strdup_no_quotes(tmp);
+	}
+	while (current_global)
+	{
+		if (ft_strcmp(word->word + 1, current_global->key) == 0)
 		{
 			free(word->word);
-			word->word = ft_strdup(current->values[0]);
+			word->word = ft_strdup(current_global->values[0]);
 			return ;
 		}
-		current = current ->next;
+		current_global = current_global->next;
 	}
 }
 
