@@ -44,8 +44,8 @@ void	replace_dollar_sign(t_env_var **globals, t_word *word)
 	t_env_var	*current_global;
 	char		*dollar_key;
 
-	dollar_key = get_dollar_key(word->word);
-	printf("dollar key	%s\n", dollar_key);
+	//dollar_key = get_dollar_key(word->word);
+	//printf("dollar key	%s\n", dollar_key);
 	current_global = *globals;
 	while (current_global)
 	{
