@@ -42,3 +42,19 @@ int	ft_strcmp(char *s1, char *s2)
 	else
 		return (s1[i] - s2[i]);
 }
+
+/**
+*	@brief Free char ** TODO ERASE IT
+**/
+void	free_all(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
