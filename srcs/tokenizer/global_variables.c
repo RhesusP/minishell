@@ -1,43 +1,52 @@
 
 #include "./../../includes/minishell.h"
 
-static char	*ft_strdup_no_quotes(const char *s1)
+static char	*cpy_dollar_value(char *word, int dollar_position)
 {
-	char			*res;
-	unsigned int	i;
-	unsigned int	j;
+	int		size;
+	int		after_dollar;
+	char	*res;
 
-
-	res = malloc(sizeof(char) * (ft_strlen(s1) + 1 - 2));
-	if (!res)
-		return (res);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
+	after_dollar = dollar_position + 1;
+	while (word[dollar_position + 1] || word[dollar_position + 1] != '\'')
 	{
-		if (s1[i] != '\"')
-		{
-			res[j] = s1[i];
-			j++;
-		}
-		i++;
+		size++;
+		dollar_position++;
 	}
-	res[j] = '\0';
+	res = calloc(size, sizeof(char));
+	size = 0;
+	while (word[after_dollar] || word[after_dollar] != '\'')
+	{
+		res[size] = word[after_dollar];
+		size++;
+		after_dollar++;
+	}
+	return (res);
+}
+
+static char	*get_dollar_key(char *word)
+{
+	int		i;
+	char	*res;
+
+	i = 0;
+	while (word[i] && (word[i] != '\"' || word[i] != '$'))
+		i++;
+	if (word[i] == '\"')
+		return (NULL);
+	else if (word[i] == '$')
+		res = cpy_dollar_value(word, i);
 	return (res);
 }
 
 void	replace_dollar_sign(t_env_var **globals, t_word *word)
 {
 	t_env_var	*current_global;
-	char		*tmp;
+	char		*dollar_key;
 
-	tmp = word->word;
+	dollar_key = get_dollar_key(word->word);
+	printf("dollar key	%s\n", dollar_key);
 	current_global = *globals;
-	if (word->word[0] == '\"')
-	{
-		free(word->word);
-		word->word = ft_strdup_no_quotes(tmp);
-	}
 	while (current_global)
 	{
 		if (ft_strcmp(word->word + 1, current_global->key) == 0)
