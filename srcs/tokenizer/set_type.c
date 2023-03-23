@@ -76,13 +76,13 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 		if (word->type == INIT)
 		{
 			// VARIABLE ASSIGNATION CASE 
-			if (ft_strrchr(word->word, '='))
+			//word->word[0] != '=' added, because if we have no key, we must consider the =something as a command
+			if (ft_strrchr(word->word, '=') && word->word[0] != '=')
 			{
-				//printf("\033[31mvariable assignation detected\033[39m\n");
-				//word->word[0] != '=' added, because if we have no key, we must consider the =something as a command
-				if (!word->prev && !word->next && word->word[0] != '=')
+				printf("\033[31mvariable assignation detected\033[39m\n");
+				if (!word->prev && !word->next)
 				{
-					//printf("\033[32mwe can execute this assignation\033[39m\n");
+					printf("\033[32mwe can execute this assignation\033[39m\n");
 					//delete_word(word, lst);
 					if (actualize_global_var(globals, word->word) == FAILURE)
 					{
