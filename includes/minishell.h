@@ -73,7 +73,12 @@ t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
 void		add_back_env_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
+
+/* GLOBAL VARIABLES */
+
 int		actualize_global_var(t_env_var **globals, char *word);
+void	replace_global_variables(t_env_var **globals, t_word **words_lst);
+
 
 /* WORDS */
 t_word		*create_word(char *cmd);
