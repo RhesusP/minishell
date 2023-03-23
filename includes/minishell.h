@@ -73,6 +73,7 @@ t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
 void		add_back_env_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
+int		actualize_global_var(t_env_var **globals, char *word);
 
 /* WORDS */
 t_word		*create_word(char *cmd);
@@ -94,6 +95,7 @@ void		parse_words(char *line, t_env_var *envs, t_env_var **globals);
 void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);
+
 
 /* UTILS */
 int			ft_strcmp(char *s1, char *s2);

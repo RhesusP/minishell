@@ -101,3 +101,79 @@ void	print_env(t_env_var *env_var_lst)
 		current = current->next;
 	}
 }
+
+char	*get_word_key(char *word)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	while (word[i] != '=')
+		i++;
+	ret = calloc(i + 1, sizeof(char));
+	i = 0;
+	while (word[i] != '=')
+	{
+		ret[i] = word[i];
+		i++;
+	}
+	return (ret);
+}
+
+/**
+ * @brief change the value of the global variable in the structure to actualize it
+*/
+void	change_value(t_env_var *current, char *word)
+{
+	int	i;
+	int	value_position;
+	int	len_value;
+
+	i = 0;
+	while (word[i] != '=')
+		i++;
+	i++;
+	value_position = i;
+	current->values = malloc(sizeof(char *) * 2);
+	while(word[i])
+	{
+		i++;
+		len_value++;
+	}
+	current->values[1] = calloc(len_value, sizeof(char));
+	i = 0;
+	while (word[value_position])
+	{
+		current->values[i] = word[value_position];
+		value_position++;
+	}
+	current->values[1] = NULL;
+}
+
+/**
+ * @brief Check if the global variable already exists and actualize it if so
+ * @return SUCCESS if a variable was actualized // 
+ * @return FAILURE is not variable was actualized
+*/
+int	actualize_global_var(t_env_var **globals, char *word)
+{
+	t_env_var	*current;
+	char		*temp;
+	char		*word_key;
+
+	current = *globals;
+	word_key = get_word_key(word);
+	while (current)
+	{
+		if (ft_strcmp(current->key, word_key) == 0)
+		{
+			free_all(current->values);
+			change_value(current, word);
+			free(word_key);
+			return (SUCCESS);
+		}
+		current = current->next;
+	}
+	free(word_key);
+	return (FAILURE);
+}

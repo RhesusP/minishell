@@ -83,7 +83,8 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 				{
 					printf("\033[32mwe can execute this assignation\033[39m\n");
 					//delete_word(word, lst);
-					add_back_env_var(globals, create_env_var(word->word));
+					if (actualize_global_var(globals, word->word) == FAILURE);
+						add_back_env_var(globals, create_env_var(word->word));
 					clear_word_lst(lst);
 				}
 				// case		echo TOTO=toto
