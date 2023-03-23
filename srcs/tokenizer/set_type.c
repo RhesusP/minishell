@@ -78,13 +78,17 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 			// VARIABLE ASSIGNATION CASE 
 			if (ft_strrchr(word->word, '='))
 			{
-				printf("\033[31mvariable assignation detected\033[39m\n");
+				//printf("\033[31mvariable assignation detected\033[39m\n");
 				if (!word->prev && !word->next)
 				{
-					printf("\033[32mwe can execute this assignation\033[39m\n");
+					//printf("\033[32mwe can execute this assignation\033[39m\n");
 					//delete_word(word, lst);
+					printf("RESUUUULT === %d\n", actualize_global_var(globals, word->word) == FAILURE);
 					if (actualize_global_var(globals, word->word) == FAILURE);
+					{
+						printf("ADDBACK\n");
 						add_back_env_var(globals, create_env_var(word->word));
+					}
 					clear_word_lst(lst);
 				}
 				// case		echo TOTO=toto

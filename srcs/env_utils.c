@@ -102,6 +102,10 @@ void	print_env(t_env_var *env_var_lst)
 	}
 }
 
+/**
+ * @brief Get only the key from the cmd KEY=value
+ * @return Return a char * containing the KEY
+*/
 char	*get_word_key(char *word)
 {
 	int		i;
@@ -119,6 +123,23 @@ char	*get_word_key(char *word)
 	}
 	return (ret);
 }
+
+/**
+*	@brief Free char ** TODO ERASE IT
+**/
+void	free_all(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
 
 /**
  * @brief change the value of the global variable in the structure to actualize it
@@ -140,12 +161,13 @@ void	change_value(t_env_var *current, char *word)
 		i++;
 		len_value++;
 	}
-	current->values[1] = calloc(len_value, sizeof(char));
+	current->values[0] = calloc(len_value, sizeof(char));
 	i = 0;
 	while (word[value_position])
 	{
-		current->values[i] = word[value_position];
+		current->values[0][i] = word[value_position];
 		value_position++;
+		i++;
 	}
 	current->values[1] = NULL;
 }
@@ -167,6 +189,7 @@ int	actualize_global_var(t_env_var **globals, char *word)
 	{
 		if (ft_strcmp(current->key, word_key) == 0)
 		{
+			//printf("ENTERED\n");
 			free_all(current->values);
 			change_value(current, word);
 			free(word_key);
