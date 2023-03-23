@@ -101,6 +101,7 @@ int			is_metachar(char c);
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_strndup(const char *s1, unsigned int size);
 char		**ft_strtok(char *str, char *charset);
+void		free_all(char **str);
 
 /* HISTORY */
 int			is_cmd_anonymous(char *cmd);
