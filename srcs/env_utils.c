@@ -125,50 +125,18 @@ char	*get_word_key(char *word)
 }
 
 /**
-*	@brief Free char ** TODO ERASE IT
-**/
-void	free_all(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-
-/**
  * @brief change the value of the global variable in the structure to actualize it
 */
 void	change_value(t_env_var *current, char *word)
 {
 	int	i;
-	int	value_position;
-	int	len_value;
 
 	i = 0;
 	while (word[i] != '=')
 		i++;
 	i++;
-	value_position = i;
 	current->values = malloc(sizeof(char *) * 2);
-	while(word[i])
-	{
-		i++;
-		len_value++;
-	}
-	current->values[0] = calloc(len_value, sizeof(char));
-	i = 0;
-	while (word[value_position])
-	{
-		current->values[0][i] = word[value_position];
-		value_position++;
-		i++;
-	}
+	current->values[0] = ft_strdup(word + i);
 	current->values[1] = NULL;
 }
 
