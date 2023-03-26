@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/03/18 20:50:16 by cbernot          ###   ########.fr        #
+#    Updated: 2023/03/23 17:44:23 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,8 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/tokenizer/set_type.c ./srcs/tokenizer/errors.c \
 		./srcs/tokenizer/type_utils.c ./srcs/tokenizer/unquoted.c \
 		./srcs/exec/exec_redo.c ./srcs/exec/exec_redo_utils.c \
-		./srcs/exec/environment_utils.c ./srcs/exec/environment.c
+		./srcs/exec/environment_utils.c ./srcs/exec/environment.c \
+		./srcs/exec/get_next_cmd.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 

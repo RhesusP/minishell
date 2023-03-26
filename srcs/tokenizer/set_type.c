@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/19 19:18:47 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:53:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,36 +89,36 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 				// case		echo TOTO=toto
 				else if (word->prev && word->prev->type == CMD)
 				{
-					printf("here 1 (%s)\n", word->word);
+					//printf("here 1 (%s)\n", word->word);
 					word->type = ARG;
 				}
 				// case		TOTO=toto ls
 				else if (!word->prev && word->next && word->next->type == INIT)
 				{
-					printf("here 2 (%s)\n", word->word);
+					//printf("here 2 (%s)\n", word->word);
 					word->next->type = CMD;
 					delete_word(word, lst);
 				}
 				// case		... | TOTO=toto 
 				if (word->prev && word->prev->type == PIPE)
 				{
-					printf("here 3 (%s)\n", word->word);
+					//printf("here 3 (%s)\n", word->word);
 					delete_word(word->prev, lst);
 					if (word->next)
 					{
-						printf("here 4 (%s)\n", word->word);
+						//printf("here 4 (%s)\n", word->word);
 						delete_word(word, lst);
 					}
 					else
 					{
-						printf("here 5 (%s)\n", word->word);
+						//printf("here 5 (%s)\n", word->word);
 						word->prev->next = 0;
 					}
 				}
 				if (!word->prev && word->next && word->next->type == PIPE)
 				{
 					//same here
-					printf("here 6 (%s)\n", word->word);
+					//printf("here 6 (%s)\n", word->word);
 					delete_word(word->next, lst);
 					delete_word(word, lst);
 				}
@@ -126,7 +126,7 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 			// COMMAND CASE
 			else if (!word->prev || word->prev->type == PIPE)
 			{
-				printf("here 7 (%s)\n", word->word);
+				//printf("here 7 (%s)\n", word->word);
 				word->type = CMD;
 			}
 		}

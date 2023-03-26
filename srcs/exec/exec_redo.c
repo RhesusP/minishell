@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_redo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 14:04:40 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:06:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,46 +42,52 @@
 *	Then we'll be able to pass the full command to execve()
 **/
 
-char	**get_full_cmd(t_word *word)
+char	**lst_to_string(t_word **lst)
 {
-	char	**cmd;
+	char	**tab;
+	int		len;
+	t_word	*current;
 	int		i;
-	int		arg_len;
 
-	arg_len = get_arg_len(word);
 	i = 0;
-	cmd = malloc(sizeof(char *) * (arg_len + 1));
-	while(i < arg_len)
+	len = get_exec_len(lst);
+	tab = malloc(sizeof(t_word *) * (len + 1));
+	if (!tab)
+		return (0);		//TODO better error handling 
+	current = *lst;
+	while (i < len)
 	{
-		cmd[i] = word->word;
+		tab[i] = ft_strdup(current->word);
+		current = current->next;
 		i++;
-		word = word->next;
 	}
-	cmd[i] = NULL;
-	return (cmd);
+	tab[i] = NULL;
+	return (tab);
 }
 
-char	*get_execve_path(t_word *word, t_env_var *path)
+char	*get_execve_path(char *cmd, t_env_var *path_var)
 {
-	char		*execve_path;
-	int			i;
+	int		i;
+	char	*temp;
+	char	*potential_path;
 
 	i = 0;
-	execve_path = NULL;
-	while (path->values[i])
+	while (path_var->values[i])
 	{
-		execve_path = ft_strjoin_custom(path->values[i], word->word);
-		if (access(execve_path, X_OK) == 0)
-			return (execve_path);
-		free(execve_path);
+		temp = ft_strjoin(path_var->values[i], "/");
+		potential_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(potential_path, X_OK) == 0)
+			return (potential_path);
+		free(potential_path);
 		i++;
 	}
 	return (NULL);
 
 }
-int	is_execve(t_word *word, t_env_var *path)
+int	ft_execve(t_word **lst, t_env_var *path)		//TODO why returning int ?
 {
-	char		*execve_path;
+	char		*exec_path;
 	char		**full_cmd;
 	int			pid;
 
@@ -92,20 +98,39 @@ int	is_execve(t_word *word, t_env_var *path)
 		wait(NULL);
 	if (pid == 0)
 	{
-		full_cmd = get_full_cmd(word);
-		execve_path = get_execve_path(word, path);
-		execve(execve_path, full_cmd, NULL);
-		free_all(full_cmd);
+		full_cmd = lst_to_string(lst);
+		exec_path = get_execve_path(full_cmd[0], path);
+		if (!exec_path)
+			execve(full_cmd[0], full_cmd, NULL);
+		execve(exec_path, full_cmd, NULL);
 	}
-	return 0;
+	return (0);
 }
 
-void	execute_line(t_word	*word, t_env_var *env)
+void	execute_line(t_word	**word, t_env_var *env)
 {
 	t_env_var	*path;
 	int			pipes_nbr;
+	t_word		**cmd;
 
 	pipes_nbr = count_pipes(word);
+	printf("%d pipes\n", pipes_nbr);
+	cmd = malloc(sizeof(t_word *));
+	if (!cmd)		//TODO catch error
+		return ;
+	*cmd = 0;
+	while (get_next_cmd(word, &cmd))
+	{
+		path = get_env_custom("PATH", env);
+		ft_execve(cmd, path);		
+
+		// printf("\033[95m------ CMD ------\n");
+		// display_words(cmd);
+		// printf("\033[39m\n");
+		clear_word_lst(cmd);
+	}
+
+	/*
 	path = get_env_custom("PATH", env);
 	if (word->type == CMD)
 	{
@@ -113,5 +138,5 @@ void	execute_line(t_word	*word, t_env_var *env)
 			is_execve(word, path);
 		//then advance till the next command ?
 	}
-
+	*/
 }

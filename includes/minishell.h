@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/19 19:18:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:09:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,13 @@ int	is_cmd_anonymous(char *cmd);
  * Added in branch exec_redo
 **/
 
-void		execute_line(t_word	*word_lst, t_env_var *env);
+void		execute_line(t_word	**word_lst, t_env_var *env);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
-int			count_pipes(t_word *word);
+int			count_pipes(t_word **word);
+int			get_exec_len(t_word **lst);
+
+t_word	**get_next_cmd(t_word **lst, t_word*** new_lst);
+
 
 /* DEBUG */
 void		print_env(t_env_var *env_var_lst);
