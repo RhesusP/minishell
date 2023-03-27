@@ -62,3 +62,14 @@ int	count_unquoted_dollars(char *word)
 		i++;
 	}
 }
+
+/**
+ * @brief Check if the character can mark the end of the $VAR
+ * @return SUCCESS if a limit character was found, FAILURE if not
+*/
+int	check_var_end(char c)
+{
+	if (c == '\"' || c == '\'' || c == '$' || c == ' ' || c == '\0')
+		return (SUCCESS);
+	return (FAILURE);
+}
