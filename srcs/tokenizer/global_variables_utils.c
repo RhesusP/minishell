@@ -73,3 +73,39 @@ int	check_var_end(char c)
 		return (SUCCESS);
 	return (FAILURE);
 }
+
+/**
+ * @brief Make a copy of $KEY without the dollar
+**/
+char	*copy_var_key(char *word, int i)
+{
+	char	*key;
+	int		j;
+
+	key = calloc(allocate_key_memory(word, i), sizeof(char));
+	j = 0;
+	i++;
+	while (check_var_end(word[i]) == FAILURE)
+	{
+		key[j] = word[i];
+		j++;
+		i++;
+	}
+	return (key);
+}
+
+/**
+ * @brief Allocate memory to make a copy of $KEY without the dollar
+**/
+int	allocate_key_memory(char *word, int i)
+{
+	int	size;
+
+	size = 0;
+	while (check_var_end(word[i]) == FAILURE)
+	{
+		i++;
+		size++;
+	}
+	return (size);
+}
