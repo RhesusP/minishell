@@ -81,6 +81,8 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst);
 int		count_unquoted_dollars(char *word);
 int		max_size_global_var(t_env_var **globals);
 void	update_flag_quotes(char c, int *flag_quotes);
+int		check_var_end(char c);
+
 
 /* WORDS */
 t_word		*create_word(char *cmd);
