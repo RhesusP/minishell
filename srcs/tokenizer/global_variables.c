@@ -221,4 +221,91 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 	- Si on rencontre un ' : on met un flag = 1 jusqu'à ce qu'on rencontr le prochain
 	- Quand flag = 1, on ne remplace pas les $
 	- Quand on rencontre le second ', on repasse le flag = 0
-	*/
+*/
+
+/**
+ * @brief Allocate memory to make a copy of $KEY without the dollar
+**/
+int	allocate_key_memory(char *word, int i)
+{
+	int	size;
+
+	size = 0;
+	while (word[i] && word[i] != '\"' && word[i] !='\'' && word[i] != ' ' && word[i] != '$')
+	{
+		i++;
+		size++;
+	}
+	return (size);
+}
+
+/**
+ * @brief Make a copy of $KEY without the dollar
+**/
+char	*copy_var_key(char *word, int i)
+{
+	char	*key;
+	int		j;
+
+	key = calloc(allocate_key_memory(word, i), sizeof(char));
+	j = 0;
+	i++;
+	while (word[i] && word[i] != '\"' && word[i] !='\'' && word[i] != ' ' && word[i] != '$')
+	{
+		key[j] = word[i];
+		j++;
+		i++;
+	}
+	return (key);
+}
+
+/**
+ * @brief look if there is any corresponding global variable to the $VAR
+ * @return NULL if no match is found, else t_env_var * of the key found 
+*/
+t_env_var	*look_for_global_var(char *word, t_env_var **globals, int i)
+{
+	char		*key;
+	t_env_var	*current;
+
+	current = *globals;
+	key = copy_var_key(word, i);
+	while (current)
+	{
+		if (ft_strcmp(key, current->key))
+		{
+			free(key);
+			return (current);
+		}
+		current = current->next;
+	}
+	free(key);
+	return (NULL);
+}
+
+void	replace_global_variables(t_env_var **globals, t_word **words_lst)
+{
+	t_word		*current;
+	int			flag_quotes;
+	int			i;
+	char		*word_cpy;
+
+	current = *words_lst;
+	//calloc word_cpy = ft_strlen(current->word) + (nbr $ pas entre guillemets * taille max var struct)
+	word_cpy = calloc(ft_strlen(current->word) + (count_unquoted_dollars(current->word) * max_size_global_var(globals)));
+	while (current)
+	{
+		i = 0;
+		flag_quotes = 0;
+		while (current->word[i])
+		{
+			update_flag_quotes(current->word[i], &flag_quotes);
+			if (current->word[i] == '$' && flag_quotes == 0)
+			{
+				look_for_global_var(current->word, globals, i);
+			}
+				//replace dollar sign
+			i++;
+		}
+	}
+}

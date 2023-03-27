@@ -78,7 +78,9 @@ t_env_var	*get_last_env_var(t_env_var *lst);
 
 int		actualize_global_var(t_env_var **globals, char *word);
 void	replace_global_variables(t_env_var **globals, t_word **words_lst);
-
+int		count_unquoted_dollars(char *word);
+int		max_size_global_var(t_env_var **globals);
+void	update_flag_quotes(char c, int *flag_quotes);
 
 /* WORDS */
 t_word		*create_word(char *cmd);
