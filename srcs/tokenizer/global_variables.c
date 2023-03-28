@@ -87,8 +87,9 @@ void	replace_dollar_sign(t_env_var **globals, t_word *word)
 	}
 }
 
+
 /* OLD FUNCTION*/
-void	replace_global_variables(t_env_var **globals, t_word **words_lst)
+/*void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 {
 	t_word	*current;
 
@@ -106,13 +107,13 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 		}
 		current = current->next;
 	}
-}
+}*/
 //////////////////////////////////////////////////////////////////
 /**
  * @brief Count the number of dollar signs to know how many $VAR we have
  * Doesn't count the $ if there are no char after it
 */
-int	count_dollar_nbr(char *word)
+/*int	count_dollar_nbr(char *word)
 {
 	int	i;
 	int	dollar_nbr;
@@ -126,13 +127,13 @@ int	count_dollar_nbr(char *word)
 		i++
 	}
 	return (dollar_nbr);
-}
+}*/
 
 /**
  * @brief Check if the $VAR is in between quotes ' ' or not
  * @return FAILURE if no quotes // SUCCESS if quotes
 */
-int	check_quotes(char *word, int dollar_pos)
+/*int	check_quotes(char *word, int dollar_pos)
 {
 	int	cpy;
 	int	flag;
@@ -165,12 +166,12 @@ int	check_quotes(char *word, int dollar_pos)
 	if (flag == 2)
 		return (SUCCESS);
 	return (FAILURE);
-}
+}*/
 
 /**
  * @brief Replace the $VAR, but not if there is '$VAR '
 */
-void	replace_dollar_sign(char *word, int dollar_pos)
+/*void	replace_dollar_sign(char *word, int dollar_pos)
 {
 	if (check_quotes(word, dollar_pos) == FAILURE)
 	{
@@ -182,13 +183,13 @@ void	replace_dollar_sign(char *word, int dollar_pos)
 		// Copie de ce qu'on a aprèsle dollar étudié
 	}
 
-}
+}*/
 
 /* NEW FUNCTION*/
 /**
  * @brief Check each $VAR and replace it if necessary by its value
 */
-void	replace_global_variables(t_env_var **globals, t_word **words_lst)
+/*void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 {
 	t_word	*current;
 	int		dollar_nbr;
@@ -212,7 +213,7 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 	//Il faudrait compter le nombre de $ total dans la phrase
 	//Il faut à chaque fois check si on est entre guillemets
 
-}
+}*/
 
 
 /*AUTRE IDEE --> remplacement au fur et à mesure
@@ -231,7 +232,7 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
  * @brief look if there is any corresponding global variable to the $VAR
  * @return NULL if no match is found, else t_env_var * of the key found 
 */
-t_env_var	*look_for_global_var(char *word, t_env_var **globals, int i)
+/*t_env_var	*look_for_global_var(char *word, t_env_var **globals, int i)
 {
 	char		*key;
 	t_env_var	*current;
@@ -249,12 +250,12 @@ t_env_var	*look_for_global_var(char *word, t_env_var **globals, int i)
 	}
 	free(key);
 	return (NULL);
-}
+}*/
 
 /**
  * @brief copy the translation of $VAR into the new string
 */
-void	copy_global_var(t_env_var *global_var, char *word_cpy, int *j)
+/*void	copy_global_var(t_env_var *global_var, char *word_cpy, int *j)
 {
 	int	i;
 
@@ -298,12 +299,12 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 		current = current->next;
 	}
 }
-
+*/
 //////////////////////
 /**
  * @brief	Finds the size needed to malloc the copy of current->word
 */
-int	allocate_copy_memory(t_env_var **globals, char *word)
+/*int	allocate_copy_memory(t_env_var **globals, char *word)
 {
 	int	i;
 	int	size;
@@ -336,4 +337,4 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 	{
 		allocate_copy_memory();
 	}
-}
+}*/

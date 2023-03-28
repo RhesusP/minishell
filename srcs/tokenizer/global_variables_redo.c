@@ -66,9 +66,10 @@ char	*var_value(t_env_var **globals, char *word, int i)
 
 	current = *globals;
 	key = copy_var_key(word, i);
+	printf("#### KEY ####\n     %s\n", key);
 	while (current)
 	{
-		if (ft_strcmp(key, current->key))
+		if (ft_strcmp(key, current->key) == 0)
 		{
 			free(key);
 			return (current->values[0]);
@@ -107,11 +108,14 @@ void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 		{
 			i++;
 			value = var_value(globals, word, i);
-			while (value[k])
+			if (value)
 			{
-				word_cpy[j] = value[k];
-				j++;
-				k++;
+				while (value[k])
+				{
+					word_cpy[j] = value[k];
+					j++;
+					k++;
+				}
 			}
 			while (check_var_end(word[i]) == FAILURE)
 				i++;
@@ -131,7 +135,8 @@ void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 		word_cpy = calloc(copy_memory(globals, current->word), sizeof(char));
 		copy_filling(globals, current->word, word_cpy);
 		free(current->word);
-		current->word = word_cpy;
+		current->word = ft_strdup(word_cpy);
+		free(word_cpy);
 		current = current->next;
 	}
 }

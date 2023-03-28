@@ -84,7 +84,6 @@ char	*copy_var_key(char *word, int i)
 
 	key = calloc(allocate_key_memory(word, i), sizeof(char));
 	j = 0;
-	i++;
 	while (check_var_end(word[i]) == FAILURE)
 	{
 		key[j] = word[i];
