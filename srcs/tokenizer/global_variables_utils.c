@@ -2,10 +2,18 @@
 
 /**
  * @brief Flag = 1 if we are between ' ' // Flag = 0 if we are not between ' '
+ * 		  Flag = 2 if we are between " "
 */
 void	update_flag_quotes(char c, int *flag_quotes)
 {
-	if (c == '\'')
+	if (c == '\"')
+	{
+		if (*flag_quotes == 0)
+			*flag_quotes = 2;
+		else if (*flag_quotes == 2)
+			*flag_quotes = 0;
+	}
+	else if (c == '\'')
 	{
 		if (*flag_quotes == 0)
 			*flag_quotes = 1;

@@ -45,7 +45,7 @@ int	copy_memory(t_env_var **globals, char *word)
 			size++;
 			i++;
 		}
-		if (flag_quotes == 0 && word[i] == '$')
+		if (flag_quotes != 1 && word[i] == '$')
 		{
 			i++;
 			size += check_var_size(globals, word, i);
@@ -96,14 +96,16 @@ void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 	flag_quotes = 0;
 	while (word[i])
 	{
+		//printf("word[i] == %c\n", word[i]);
 		update_flag_quotes(word[i], &flag_quotes);
+		//printf("flag == %d\n", flag_quotes);
 		if (flag_quotes == 1 || word[i] != '$')
 		{
 			word_cpy[j] = word[i];
 			i++;
 			j++;
 		}
-		if (flag_quotes == 0 && word[i] == '$')
+		if (flag_quotes != 1 && word[i] == '$')
 		{
 			i++;
 			value = var_value(globals, word, i);
