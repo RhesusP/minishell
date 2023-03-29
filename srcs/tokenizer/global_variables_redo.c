@@ -93,7 +93,6 @@ void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 
 	i = 0;
 	j = 0;
-	k = 0;
 	flag_quotes = 0;
 	while (word[i])
 	{
@@ -110,6 +109,7 @@ void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 			value = var_value(globals, word, i);
 			if (value)
 			{
+				k = 0;
 				while (value[k])
 				{
 					word_cpy[j] = value[k];
