@@ -32,6 +32,13 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("$> ");
+		handle_ctrld(line);
+		while (line[0] == '\0')
+		{
+			free(line);
+			line = readline("$> ");
+			handle_ctrld(line);
+		}
 		while (check_quotes_err(line) == 0)
 			{
 				tmp = line;
@@ -41,7 +48,6 @@ int	main(int argc, char **argv, char **env)
 				line = ft_strjoin(line, readline(">"));
 				free(tmp);
 			}
-		handle_ctrld(line);
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);
