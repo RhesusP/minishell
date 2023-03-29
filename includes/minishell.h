@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/23 18:09:25 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:32:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct	s_word
 {
 	char			*word;
 	t_type			type;
-	int				len;		//TODO remove
 	struct s_word	*next;
 	struct s_word	*prev;
 }	t_word;

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/19 18:19:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:38:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_word	*create_word(char *cmd)
 		return (0);
 	word->word = cmd;
 	word->type = INIT;
-	word->len = 0;
 	word->next = 0;
 	word->prev = 0;
 	return (word);
