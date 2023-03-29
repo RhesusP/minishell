@@ -105,7 +105,7 @@ void		parse_words(char *line, t_env_var *envs, t_env_var **globals);
 void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);
-
+int			check_quotes_err(char *line);
 
 /* UTILS */
 int			ft_strcmp(char *s1, char *s2);
