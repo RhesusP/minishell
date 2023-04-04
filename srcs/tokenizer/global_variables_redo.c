@@ -2,45 +2,21 @@
 #include "./../../includes/minishell.h"
 
 /**
- * @brief check if the global variable exists
- * @return ft_strlen of the value of the VAR if it exists, else returns 0
-*/
-int	check_var_size(t_env_var **globals, char *word, int i)
-{
-	char		*key;
-	t_env_var	*current;
-
-	current = *globals;
-	key = copy_var_key(word, i);
-	while (current)
-	{
-		if (ft_strcmp(key, current->key))
-		{
-			free(key);
-			return (ft_strlen(current->values[0]));
-		}
-		current = current->next;
-	}
-	free(key);
-	return (0);
-}
-
-/**
  * @brief Find the size need for the malloc of word_cpy
 **/
-int	copy_memory(t_env_var **globals, char *word)
+static int	copy_memory(t_env_var **globals, char *word)
 {
 	int	i;
 	int	size;
 	int	flag_quotes;
-
 
 	i = 0;
 	flag_quotes = 0;
 	while (word[i])
 	{
 		update_flag_quotes(word[i], &flag_quotes);
-		if (flag_quotes == 1 || word[i] != '$' || (word[i] == '$' && word[i + 1] == '\0'))
+		if (flag_quotes == 1 || word[i] != '$' \
+		|| (word[i] == '$' && word[i + 1] == '\0'))
 		{
 			size++;
 			i++;
@@ -59,7 +35,7 @@ int	copy_memory(t_env_var **globals, char *word)
 /**
  * @return the value of the $VAR // NULL if there is no value associated
 */
-char	*var_value(t_env_var **globals, char *word, int i)
+static char	*var_value(t_env_var **globals, char *word, int i)
 {
 	char		*key;
 	t_env_var	*current;
@@ -80,24 +56,29 @@ char	*var_value(t_env_var **globals, char *word, int i)
 	return (0);
 }
 
+static void	copy_filling_init(int *i, int*j, int *flag_quotes)
+{
+	*i = 0;
+	*j = 0;
+	*flag_quotes = 0;
+}
+
 /**
  * @brief copy the string with replacement of $VAR
 **/
-void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
+static void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 {
 	int		i;
 	int		j;
-	int		k;
 	int		flag_quotes;
 	char	*value;
 
-	i = 0;
-	j = 0;
-	flag_quotes = 0;
+	copy_filling_init(&i, &j, &flag_quotes);
 	while (word[i])
 	{
 		update_flag_quotes(word[i], &flag_quotes);
-		if (flag_quotes == 1 || word[i] != '$' || (word[i] == '$' && word[i + 1] == '\0'))
+		if (flag_quotes == 1 || word[i] != '$' \
+		|| (word[i] == '$' && word[i + 1] == '\0'))
 		{
 			word_cpy[j] = word[i];
 			i++;
@@ -107,22 +88,12 @@ void	copy_filling(t_env_var **globals, char *word, char *word_cpy)
 		{
 			i++;
 			value = var_value(globals, word, i);
-			if (value)
-			{
-				k = 0;
-				while (value[k])
-				{
-					word_cpy[j] = value[k];
-					j++;
-					k++;
-				}
-			}
+			replace_in_copy(&i, &j, value, word_cpy);
 			while (check_var_end(word[i]) == FAILURE)
 				i++;
 		}
 	}
 }
-
 
 void	replace_global_variables(t_env_var **globals, t_word **words_lst)
 {

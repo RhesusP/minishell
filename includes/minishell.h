@@ -84,6 +84,10 @@ void	update_flag_quotes(char c, int *flag_quotes);
 int		check_var_end(char c);
 char	*copy_var_key(char *word, int i);
 int		allocate_key_memory(char *word, int i);
+void	replace_in_copy(int *i, int *j, char *value, char *word_cpy);
+int		check_var_size(t_env_var **globals, char *word, int i);
+
+
 
 /* WORDS */
 t_word		*create_word(char *cmd);
