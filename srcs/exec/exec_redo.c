@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/29 16:00:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/03/29 17:06:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,18 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 
 }
 
+void	get_redir(t_word **lst)
+{
+	t_word	*current;
+
+	if (!*lst)
+		return ;
+	current = *lst;
+	while (current && current->type != RI || current->type != RO || current->type != ARO || current->type != HE)
+		current = current->next;
+	printf("redir start at: %s\n", current->word);
+}
+
 void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes)
 {
 	char		*exec_path;
@@ -121,6 +133,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
+		get_redir(lst);
 		exec_path = get_execve_path(full_cmd[0], path);
 		if (!exec_path)
 			execve(full_cmd[0], full_cmd, NULL);
@@ -154,8 +167,6 @@ void	execute_line(t_word	**word, t_env_var *env)
 	t_word		**cmd;
 	int			**tubes;
 	int			count;
-	int 		fd_in;
-	int			fd_out;
 
 	count = 0;
 	pipes_nbr = count_pipes(word);
@@ -166,6 +177,8 @@ void	execute_line(t_word	**word, t_env_var *env)
 	*cmd = 0;
 	while (get_next_cmd(word, &cmd))		//we execute each command
 	{
+		printf("CMD LIST\n");
+		display_words(cmd);
 		path = get_env_custom("PATH", env);
 		ft_execve(cmd, path, tubes, count, pipes_nbr);
 		clear_word_lst(cmd);
