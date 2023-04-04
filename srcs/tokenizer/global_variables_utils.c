@@ -1,27 +1,6 @@
 #include "./../../includes/minishell.h"
 
 /**
- * @brief Flag = 1 if we are between ' ' // Flag = 0 if we are not between ' '
- * 		  Flag = 2 if we are between " "
-*/
-void	update_flag_quotes(char c, int *flag_quotes)
-{
-	if (c == '\"')
-	{
-		if (*flag_quotes == 0)
-			*flag_quotes = 2;
-		else if (*flag_quotes == 2)
-			*flag_quotes = 0;
-	}
-	else if (c == '\'')
-	{
-		if (*flag_quotes == 0)
-			*flag_quotes = 1;
-		else if (*flag_quotes == 1)
-			*flag_quotes = 0;
-	}
-}
-/**
  * @brief Counts the maximum size of the values in the global variable structure
  * @return Max size 
 **/
@@ -77,7 +56,8 @@ int	count_unquoted_dollars(char *word)
 */
 int	check_var_end(char c)
 {
-	if (c == '\"' || c == '\'' || c == '$' || c == ' ' || c == '\0')
+	if (c == '\"' || c == '\'' || c == '$' || c == ' ' \
+	|| c == '\0' || c == '\n')
 		return (SUCCESS);
 	return (FAILURE);
 }
