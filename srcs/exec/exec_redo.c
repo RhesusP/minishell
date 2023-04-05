@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/29 17:06:25 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:28:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,31 @@
  * @brief check if the CMD is a builtin
  * UNTESTED YET
 */
-/*static int	is_builtin(t_word *word)
+int	execute_builtin(t_word **lst)
 {
-	if (ft_strcmp(word->word, "exit") == SUCCESS)
-		//return(exec_exit(), SUCCESS)
-	if (ft_strcmp(word->word, "export") == SUCCESS)
-		//return(exec_export(), SUCCESS)
-	if (ft_strcmp(word->word, "pwd") == SUCCESS)
-		//return(exec_pwd(), SUCCESS)
-	if (ft_strcmp(word->word, "unset") == SUCCESS)
-		//return(exec_unset(), SUCCESS)
-	if (ft_strcmp(word->word, "echo") == SUCCESS)
-		//return(exec_echo(), SUCCESS)
-	if (ft_strcmp(word->word, "env") == SUCCESS)
-		//return(exec_env(), SUCCESS)
+	t_word	*curr;
+
+	curr = *lst;
+	if (ft_strcmp(curr->word , "exit") == SUCCESS)
+	{
+		//TODO call exit
+		return(SUCCESS);
+	}
+	else if (ft_strcmp(curr->word, "export") == SUCCESS)
+		return(SUCCESS);
+	else if (ft_strcmp(curr->word, "pwd") == SUCCESS)
+		return(SUCCESS);
+	else if (ft_strcmp(curr->word, "unset") == SUCCESS)
+		return(SUCCESS);
+	else if (ft_strcmp(curr->word, "echo") == SUCCESS)
+		return(SUCCESS);
+	else if (ft_strcmp(curr->word, "env") == SUCCESS)
+		return(SUCCESS);
+	else if (ft_strcmp(curr->word, "cd") == SUCCESS)
+		return(SUCCESS);
 	return (FAILURE);
 
-}*/
-
-
+}
 
 /**
 *	@brief Get the command with args from the parser into a char **
@@ -86,16 +92,78 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 
 }
 
-void	get_redir(t_word **lst)
+t_word	**get_redir(t_word **lst)
 {
 	t_word	*current;
 
 	if (!*lst)
-		return ;
+		return (0);
 	current = *lst;
-	while (current && current->type != RI || current->type != RO || current->type != ARO || current->type != HE)
+	while (current->next && current->next->type != RO && current->next->type != RI && current->next->type != ARO)
 		current = current->next;
-	printf("redir start at: %s\n", current->word);
+	if (current->next)
+	{
+		printf("redir begin at: ");
+		display_words(&current->next);
+		return (&current->next);
+	}
+	return (0);
+}
+
+char	*get_filepath(t_word **lst)
+{
+	t_word	*current;
+	
+	current = *lst;
+	while (current->next && current->next->type != FILEPATH)
+		current = current->next;
+	return (current->next->word);
+}
+
+void	handle_redirection(t_word **lst)
+{
+	t_word	*current;
+	int		fd;
+
+	current = *lst;
+	if (current->type == RI)
+	{
+		printf("filepath is %s\n", get_filepath(lst));
+		fd = open(get_filepath(lst), O_RDONLY);
+		if (fd == -1)
+		{
+			perror("unable to open file");
+			return ;
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	else if (current->type == RO)
+	{
+		fd = open(get_filepath(lst), O_CREAT | O_WRONLY, 0644);
+		if (fd == -1)
+		{
+			perror("unable to open file");
+			return ;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (current->type == ARO)
+	{
+		fd = open(get_filepath(lst), O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (fd == -1)
+		{
+			perror("unable to open file");
+			return ;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (current->type == HE)
+	{
+		
+	}
 }
 
 void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes)
@@ -103,8 +171,10 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	char		*exec_path;
 	char		**full_cmd;
 	int			pid;
+	t_word		**redir;
 
 	pid = fork();
+	redir = get_redir(lst);
 	if (pid == -1)
 	{
 		perror("failed to fork\n");
@@ -122,22 +192,27 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	{
 		if (count > 0)
 		{
-			dup2(tubes[count - 1][0], STDIN_FILENO);
-			close(tubes[count - 1][0]);
+			dup2(tubes[count - 1][0], STDIN_FILENO);	//duplique la sortie du précedent sur l'entree de l'actuel
+			close(tubes[count - 1][0]);					//ferme l'entrée / sortie du précédent
 			close(tubes[count - 1][1]);
 		}
 		if (count < nb_pipes)
 		{
-			dup2(tubes[count][1], STDOUT_FILENO);
+			dup2(tubes[count][1], STDOUT_FILENO);	//duplique pour le suivant
 			close(tubes[count][0]);
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
-		get_redir(lst);
+		if (redir)
+			handle_redirection(redir);
 		exec_path = get_execve_path(full_cmd[0], path);
-		if (!exec_path)
-			execve(full_cmd[0], full_cmd, NULL);
-		execve(exec_path, full_cmd, NULL);
+		
+		if (execute_builtin(lst) != SUCCESS)
+		{
+			if (!exec_path)
+				execve(full_cmd[0], full_cmd, NULL);
+			execve(exec_path, full_cmd, NULL);
+		}
 	}
 }
 
@@ -151,8 +226,6 @@ int	**create_tubes(int nb_tubes)
 	while (i < nb_tubes)
 	{
 		tubes[i] = malloc(sizeof(int) * 2);
-		// tubes[i][0] = STDIN_FILENO;
-		// tubes[i][1] = STDOUT_FILENO;
 		if (pipe(tubes[i]) == -1)
 			perror("pipe failed.\n");		//TODO secure
 		i++;
@@ -180,6 +253,7 @@ void	execute_line(t_word	**word, t_env_var *env)
 		printf("CMD LIST\n");
 		display_words(cmd);
 		path = get_env_custom("PATH", env);
+		//get_redir(cmd);
 		ft_execve(cmd, path, tubes, count, pipes_nbr);
 		clear_word_lst(cmd);
 		count++;
