@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/29 14:32:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:36:35 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ typedef struct	s_command
 	int		fd_out;
 	int		fd_int;
 }	t_command;
+
+typedef struct	s_redir
+{
+	t_type			type;
+	char			*filepath;
+	struct s_redir	*next;
+}	t_redir;
 
 typedef struct s_env_var				//TODO rename to a more generic name
 {

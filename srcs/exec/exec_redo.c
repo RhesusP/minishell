@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/05 15:28:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:59:10 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	execute_builtin(t_word **lst)
 	else if (ft_strcmp(curr->word, "cd") == SUCCESS)
 		return(SUCCESS);
 	return (FAILURE);
-
 }
 
 /**
@@ -92,22 +91,90 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 
 }
 
-t_word	**get_redir(t_word **lst)
+t_redir	*create_redir(t_type type, char *path)
+{
+	t_redir	*redir;
+
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
+		return (0);
+	redir->type = type;
+	redir->filepath = path;
+	redir->next = 0;
+	return (redir);
+}
+
+t_redir	*get_last_redir(t_redir *lst)
+{
+	t_redir	*current;
+
+	if (!lst)
+		return (0);
+	current = lst;
+	while (current->next)
+		current = current->next;
+	return (current);
+}
+
+void	add_back_redir(t_redir **lst, t_redir *new)
+{
+	t_redir	*last;
+
+	if (*lst == 0)
+	{
+		*lst = new;
+		return ;
+	}
+	last = get_last_redir(*lst);
+	last->next = new;
+}
+
+void	display_redirs(t_redir **lst)
+{
+	t_redir	*current;
+
+	if (!*lst)
+	{
+		printf("######   REDIR LIST   ######\n");
+		printf("Aucun commande.\n");
+		return ;
+	}
+	current = *lst;
+	printf("######   REDIR LIST   ######\n");
+	while (current)
+	{
+		printf("%s\t%s\n", print_type(current->type), current->filepath);
+		current = current->next;
+	}
+}
+
+t_redir	**get_redir(t_word **lst)
 {
 	t_word	*current;
+	t_redir	**redir;
 
 	if (!*lst)
 		return (0);
 	current = *lst;
-	while (current->next && current->next->type != RO && current->next->type != RI && current->next->type != ARO)
-		current = current->next;
-	if (current->next)
+	redir = malloc(sizeof(t_redir *));
+	if (!redir)
+		return (0);
+	*redir = 0;
+	while (current->next)
 	{
-		printf("redir begin at: ");
-		display_words(&current->next);
-		return (&current->next);
+		if (current->next->type == RO || current->next->type == RI || current->next->type == ARO || current->next->type == HE)
+		{
+			if (current->next->next && (current->next->next->type == FILEPATH || current->next->next->type == DELIMITER))
+				add_back_redir(redir, create_redir(current->next->type, current->next->next->word));
+			else
+			{
+				perror("syntax error ?\n");
+				return (0);
+			}
+		}
+		current = current->next;
 	}
-	return (0);
+	return (redir);
 }
 
 char	*get_filepath(t_word **lst)
@@ -120,50 +187,54 @@ char	*get_filepath(t_word **lst)
 	return (current->next->word);
 }
 
-void	handle_redirection(t_word **lst)
+void	handle_redirection(t_redir **lst)
 {
-	t_word	*current;
+	t_redir	*current;
 	int		fd;
 
 	current = *lst;
-	if (current->type == RI)
+	while (current)
 	{
-		printf("filepath is %s\n", get_filepath(lst));
-		fd = open(get_filepath(lst), O_RDONLY);
-		if (fd == -1)
+		if (current->type == RI)
 		{
-			perror("unable to open file");
-			return ;
+			fd = open(current->filepath, O_RDONLY);
+			if (fd == -1)
+			{
+				perror("unable to open file");
+				return ;
+			}
+			dup2(fd, STDIN_FILENO);
+			close(fd);
 		}
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-	else if (current->type == RO)
-	{
-		fd = open(get_filepath(lst), O_CREAT | O_WRONLY, 0644);
-		if (fd == -1)
+		else if (current->type == RO)
 		{
-			perror("unable to open file");
-			return ;
+			fd = open(current->filepath, O_CREAT | O_WRONLY, 0644);
+			if (fd == -1)
+			{
+				perror("unable to open file");
+				return ;
+			}
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
 		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-	else if (current->type == ARO)
-	{
-		fd = open(get_filepath(lst), O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (fd == -1)
+		else if (current->type == ARO)
 		{
-			perror("unable to open file");
-			return ;
+			fd = open(current->filepath, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror("unable to open file");
+				return ;
+			}
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
 		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		else if (current->type == HE)
+		{
+			
+		}
+		current = current->next;
 	}
-	else if (current->type == HE)
-	{
-		
-	}
+	
 }
 
 void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes)
@@ -171,10 +242,11 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	char		*exec_path;
 	char		**full_cmd;
 	int			pid;
-	t_word		**redir;
+	t_redir		**redir;
 
 	pid = fork();
 	redir = get_redir(lst);
+	display_redirs(redir);
 	if (pid == -1)
 	{
 		perror("failed to fork\n");
