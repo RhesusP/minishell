@@ -21,14 +21,16 @@ static void	sig_handler(int sig)
 }
 
 /**
- * @brief Handle Ctrl-D "signal"
+ * @brief Handle Ctrl-D "signal" - Free everything we have to
  * 
  * @param line User input. 
  */
-void	handle_ctrld(char *line)
+void	handle_ctrld(char *line, t_env_var *env_var, t_env_var *global_var)
 {
 	if (!line)
 	{
+		free_env_var(env_var);
+		free_env_var(global_var);
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}

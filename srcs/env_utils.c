@@ -168,3 +168,20 @@ int	actualize_global_var(t_env_var **globals, char *word)
 	free(word_key);
 	return (FAILURE);
 }
+
+/**
+ * @brief free a t_env_var
+*/
+void	free_env_var(t_env_var *env_var)
+{
+	t_env_var	*tmp;
+
+	while (env_var)
+	{
+		tmp = env_var->next;
+		free(env_var->key);
+		free_all(env_var->values);
+		free(env_var);
+		env_var = tmp;
+	}
+}

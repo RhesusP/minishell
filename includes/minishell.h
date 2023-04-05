@@ -66,13 +66,15 @@ typedef struct s_env_var				//TODO rename to a more generic name
 
 /* SIGNALS */
 void		signal_handler(void);
-void		handle_ctrld(char *line);
+void		handle_ctrld(char *line, t_env_var *env_var, t_env_var *global_var);
 
 /* ENVIRONMENT */
 t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
 void		add_back_env_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
+void		free_env_var(t_env_var *env_var);
+
 
 /* GLOBAL VARIABLES */
 
