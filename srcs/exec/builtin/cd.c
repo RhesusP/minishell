@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 12:18:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/07 12:37:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,9 @@ void	exec_cd(char *path, t_env_var *env_var)
 		change_oldpwd(oldpwd, pwd);
 		oldpwd->values = pwd->values;
 	}
+}
+
+void	ft_cd(t_word **lst, t_env_var *env)
+{
+	
 }
