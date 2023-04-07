@@ -6,18 +6,37 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 11:34:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/07 11:43:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
-void	ft_env(t_env_var *env)
+int	cmd_have_arg(t_word **lst)
+{
+	t_word	*current;
+
+	current = *lst;
+	while (current)
+	{
+		if (current->type == ARG)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
+void	ft_env(t_word **lst, t_env_var *env)
 {
 	t_env_var	*current;
 	int			i;
 
+	if (cmd_have_arg(lst))
+	{
+		perror("env command does not take any argument.");
+		return ;
+	}
 	current = env;
 	while (current)
 	{
