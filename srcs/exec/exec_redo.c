@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/05 23:20:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/07 11:12:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	execute_builtin(t_word **lst)
 	else if (ft_strcmp(curr->word, "unset") == SUCCESS)
 		return(SUCCESS);
 	else if (ft_strcmp(curr->word, "echo") == SUCCESS)
+	{
+		
 		return(SUCCESS);
+	}
 	else if (ft_strcmp(curr->word, "env") == SUCCESS)
 		return(SUCCESS);
 	else if (ft_strcmp(curr->word, "cd") == SUCCESS)
@@ -236,6 +239,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	int		fd;
 	char	*new_arg;
 	char	**new_full_cmd;
+	t_redir	*temp;
 
 	new_full_cmd = full_cmd;
 	current = *lst;
@@ -277,8 +281,19 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 		else if (current->type == HE)
 		{
 			new_arg = here_doc(current->filepath);
-			printf("i'm between them\n");
-			new_full_cmd = copy_and_add_cmd(new_full_cmd, new_arg);
+			fd = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+			if (fd == -1)
+			{
+				perror("unable to open file");
+				return (0);
+			}
+			ft_putstr_fd(new_arg, fd);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			temp = current->next;
+			current->next = create_redir(RI, ".tmp");
+			current->next->next = temp;			
+			//new_full_cmd = copy_and_add_cmd(new_full_cmd, new_arg);
 		}
 		current = current->next;
 	}
@@ -294,7 +309,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 	pid = fork();
 	redir = get_redir(lst);
-	display_redirs(redir);
+	//display_redirs(redir);
 	if (pid == -1)
 	{
 		perror("failed to fork\n");
@@ -326,12 +341,6 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 		if (redir)
 			full_cmd = handle_redirection(redir, full_cmd);
-		int i = 0;
-		while (full_cmd[i])
-		{
-			printf("full_cmd[%d]: %s\n", i, full_cmd[i]);
-			i++;
-		}
 		exec_path = get_execve_path(full_cmd[0], path);
 		
 		if (execute_builtin(lst) != SUCCESS)
@@ -377,8 +386,8 @@ void	execute_line(t_word	**word, t_env_var *env)
 	*cmd = 0;
 	while (get_next_cmd(word, &cmd))		//we execute each command
 	{
-		printf("CMD LIST\n");
-		display_words(cmd);
+		//printf("CMD LIST\n");
+		//display_words(cmd);
 		path = get_env_custom("PATH", env);
 		//get_redir(cmd);
 		ft_execve(cmd, path, tubes, count, pipes_nbr);
