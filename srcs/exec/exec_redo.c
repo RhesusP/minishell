@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 11:12:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/07 12:20:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @brief check if the CMD is a builtin
  * UNTESTED YET
 */
-int	execute_builtin(t_word **lst)
+int	execute_builtin(t_word **lst, t_env_var *env)
 {
 	t_word	*curr;
 
@@ -25,23 +25,30 @@ int	execute_builtin(t_word **lst)
 	if (ft_strcmp(curr->word , "exit") == SUCCESS)
 	{
 		//TODO call exit
-		return(SUCCESS);
+		return (SUCCESS);
 	}
 	else if (ft_strcmp(curr->word, "export") == SUCCESS)
-		return(SUCCESS);
+	{
+		ft_export(lst, env);
+		return (SUCCESS);
+	}
+		
 	else if (ft_strcmp(curr->word, "pwd") == SUCCESS)
-		return(SUCCESS);
+		return (SUCCESS);
 	else if (ft_strcmp(curr->word, "unset") == SUCCESS)
-		return(SUCCESS);
+		return (SUCCESS);
 	else if (ft_strcmp(curr->word, "echo") == SUCCESS)
 	{
-		
-		return(SUCCESS);
+		ft_echo(lst);
+		return (SUCCESS);
 	}
 	else if (ft_strcmp(curr->word, "env") == SUCCESS)
-		return(SUCCESS);
+	{
+		ft_env(lst, env);
+		return (SUCCESS);
+	}
 	else if (ft_strcmp(curr->word, "cd") == SUCCESS)
-		return(SUCCESS);
+		return (SUCCESS);
 	return (FAILURE);
 }
 
@@ -300,7 +307,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	return (new_full_cmd);
 }
 
-void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes)
+void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes, t_env_var *env)
 {
 	char		*exec_path;
 	char		**full_cmd;
@@ -343,7 +350,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			full_cmd = handle_redirection(redir, full_cmd);
 		exec_path = get_execve_path(full_cmd[0], path);
 		
-		if (execute_builtin(lst) != SUCCESS)
+		if (execute_builtin(lst, env) != SUCCESS)
 		{
 			if (!exec_path)
 				execve(full_cmd[0], full_cmd, NULL);
@@ -390,7 +397,7 @@ void	execute_line(t_word	**word, t_env_var *env)
 		//display_words(cmd);
 		path = get_env_custom("PATH", env);
 		//get_redir(cmd);
-		ft_execve(cmd, path, tubes, count, pipes_nbr);
+		ft_execve(cmd, path, tubes, count, pipes_nbr, env);
 		clear_word_lst(cmd);
 		count++;
 	}
