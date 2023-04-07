@@ -3,37 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 14:05:35 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:34:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
-/**
-*	@brief Print the environment on the terminal
-**/
-void	exec_env(t_env_var *env_var)
+void	ft_env(t_env_var *env)
 {
-	int	i;
+	t_env_var	*current;
+	int			i;
 
-	i = 0;
-	while (env_var)
+	current = env;
+	while (current)
 	{
-		printf("%s", env_var->key);
-		printf("=");
+		printf("%s=", current->key);
 		i = 0;
-		while (env_var->values[i])
+		while (current->values[i])
 		{
-			if (i > 0)
-				printf(":");
-			printf("%s",env_var->values[i]);
+			if (current->values[i + 1])
+				printf("%s:", current->values[i]);
+			else
+					printf("%s", current->values[i]);
 			i++;
 		}
 		printf("\n");
-		env_var = env_var->next;
+		current = current->next;
 	}
 }
