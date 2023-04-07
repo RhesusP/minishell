@@ -3,88 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/08 14:05:26 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:17:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/exec.h"
 
-/**
-*	@brief Echo with no option
-**/
-static void	exec_echo_no_option(char **cmd)
+void	ft_echo(t_word **lst)
 {
-	int	i;
+	t_word	*current;
+	int		newline;
 
-	i = 1;
-	while (cmd[i])
+	newline = 0;
+	current = *lst;
+	while (current)
 	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
-		i++;
+		if (ft_strcmp(current->word, "-n") == 0)
+			newline = 1;
+		else
+			printf("%s ", current->word);
+		current = current->next;
 	}
-	printf("\n");
-}
-
-/**
-*	@brief Echo -n
-**/
-static void	exec_echo_dash_n(char **cmd)
-{
-	int	i;
-
-	i = 3;
-	if (!cmd[2])
-		return ;
-	else
-		while (cmd[i])
-		{
-			ft_putstr_fd(cmd[i], STDOUT_FILENO);
-			//printf("%s", cmd[i]);
-			if (cmd[i + 1])
-			{
-				ft_putstr_fd(" ", STDOUT_FILENO);
-				//printf(" ");
-			}
-			i++;
-		}
-}
-
-/**
-*	@brief Display the arg
-*	-n : no newline after display
-*	WARNING : DOESN'T WORK YET
-**/
-void	exec_echo(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd[1])
+	if (!newline)
 		printf("\n");
-	else if (cmd[1] == "-n")
-		exec_echo_dash_n(cmd);
-	else
-		exec_echo_no_option(cmd);
-}
-
-/*
-**	Main test	WARNING : TO ERASE
-*/
-int main()
-{
-	char **cmd;
-	cmd = malloc(sizeof(char *) * 4);
-	cmd[0] = "echo";
-	cmd[1] = "-n";
-	cmd[2] = "coucou";
-	cmd[3] = NULL;
-	exec_echo(cmd);
-	free(cmd);
-	return 0;
 }
