@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/05 17:59:10 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/05 23:20:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,11 +187,57 @@ char	*get_filepath(t_word **lst)
 	return (current->next->word);
 }
 
-void	handle_redirection(t_redir **lst)
+char	*here_doc(char *delim)
+{
+	char	*line;
+	char	*concat;
+	t_word	*arg;
+	int		i;
+
+	concat = "";
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line)
+			break ;
+		if (ft_strcmp(line, delim) == 0)
+			break ;
+		// printf("concatening %s and %s\n", concat, line);
+		concat = ft_strjoin(concat, line);
+		concat = ft_strjoin(concat, "\n");
+	}
+	return (concat);
+}
+
+char	**copy_and_add_cmd(char **full_cmd, char *new_arg)
+{
+	int	i;
+	int	size;
+	char	**new_cmd;
+
+	size = 0;
+	while (full_cmd[size])
+		size++;
+	new_cmd = malloc(sizeof(char *) * (size + 1));
+	i = 0;
+	while (i < size)
+	{
+		new_cmd[i] = full_cmd[i];
+		i++;
+	}
+	new_cmd[i] = ft_strdup(new_arg);
+	free(full_cmd);
+	return (new_cmd);
+}
+
+char	**handle_redirection(t_redir **lst, char **full_cmd)
 {
 	t_redir	*current;
 	int		fd;
+	char	*new_arg;
+	char	**new_full_cmd;
 
+	new_full_cmd = full_cmd;
 	current = *lst;
 	while (current)
 	{
@@ -201,7 +247,7 @@ void	handle_redirection(t_redir **lst)
 			if (fd == -1)
 			{
 				perror("unable to open file");
-				return ;
+				return (0);
 			}
 			dup2(fd, STDIN_FILENO);
 			close(fd);
@@ -212,7 +258,7 @@ void	handle_redirection(t_redir **lst)
 			if (fd == -1)
 			{
 				perror("unable to open file");
-				return ;
+				return (0);
 			}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
@@ -223,18 +269,20 @@ void	handle_redirection(t_redir **lst)
 			if (fd == -1)
 			{
 				perror("unable to open file");
-				return ;
+				return (0);
 			}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
 		else if (current->type == HE)
 		{
-			
+			new_arg = here_doc(current->filepath);
+			printf("i'm between them\n");
+			new_full_cmd = copy_and_add_cmd(new_full_cmd, new_arg);
 		}
 		current = current->next;
 	}
-	
+	return (new_full_cmd);
 }
 
 void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes)
@@ -275,8 +323,15 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
+
 		if (redir)
-			handle_redirection(redir);
+			full_cmd = handle_redirection(redir, full_cmd);
+		int i = 0;
+		while (full_cmd[i])
+		{
+			printf("full_cmd[%d]: %s\n", i, full_cmd[i]);
+			i++;
+		}
 		exec_path = get_execve_path(full_cmd[0], path);
 		
 		if (execute_builtin(lst) != SUCCESS)
