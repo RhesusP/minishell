@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/05 10:47:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 14:51:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(int argc, char **argv, char **env)
 	//add_back_env_var(&global_vars, create_env_var("TEST=test"));
 	while (1)
 	{
-		line = readline("$> ");
+		printf("\033[1;34m%s\033[00m", get_pwd(env_vars)->values[0]);
+		line = readline("$ ");
 		handle_ctrld(line);
 		if (!is_cmd_anonymous(line))
 			add_history(line);

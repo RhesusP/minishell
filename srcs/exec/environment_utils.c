@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/03/23 17:47:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 12:03:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,16 @@ void	env_var_clear(t_env_var *env_var)
 		free(env_var);
 		env_var = tmp;
 	}
+}
+
+char	*get_home(t_env_var *env)
+{
+	t_env_var	*current;
+
+	if (!env)
+		return (0);
+	current = env;
+	while (current && ft_strcmp(current->key, "HOME") != 0)
+		current = current->next;
+	return (current->values[0]);
 }

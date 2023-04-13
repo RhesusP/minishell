@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/07 12:36:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 12:56:10 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ void	ft_cd(t_word **lst, t_env_var *env);
 /* DEBUG */
 void		print_env(t_env_var *env_var_lst);
 char		*print_type(t_type type);
+
+char	*get_home(t_env_var *env);
+t_env_var	*get_pwd(t_env_var *env);
 
 # define SUCCESS	0
 # define FAILURE	-1

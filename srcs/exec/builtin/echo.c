@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 11:17:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 11:36:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_echo(t_word **lst)
 
 	newline = 0;
 	current = *lst;
-	while (current)
+	while (current && current->type != ARG)
+		current = current->next;
+	while (current && current->type == ARG)
 	{
 		if (ft_strcmp(current->word, "-n") == 0)
 			newline = 1;

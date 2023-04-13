@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 12:35:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 13:33:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,7 +319,6 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 	pid = fork();
 	redir = get_redir(lst);
-	//display_redirs(redir);
 	if (pid == -1)
 	{
 		perror("failed to fork\n");
@@ -353,12 +352,13 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			full_cmd = handle_redirection(redir, full_cmd);
 		exec_path = get_execve_path(full_cmd[0], path);
 		
-		if (execute_builtin(lst, env) != SUCCESS)
-		{
+		// if (execute_builtin(lst, env) != SUCCESS)
+		// {
 			if (!exec_path)
 				execve(full_cmd[0], full_cmd, NULL);
 			execve(exec_path, full_cmd, NULL);
-		}
+		// }
+		exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
 	}
 }
 
@@ -400,7 +400,8 @@ void	execute_line(t_word	**word, t_env_var *env)
 		//display_words(cmd);
 		path = get_env_custom("PATH", env);
 		//get_redir(cmd);
-		ft_execve(cmd, path, tubes, count, pipes_nbr, env);
+		if (execute_builtin(cmd, env) != SUCCESS)
+			ft_execve(cmd, path, tubes, count, pipes_nbr, env);
 		clear_word_lst(cmd);
 		count++;
 	}
