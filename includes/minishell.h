@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/13 12:56:10 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 16:07:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	ft_echo(t_word **lst);
 void	ft_env(t_word **lst, t_env_var *env);
 void	ft_export(t_word **lst, t_env_var *env);
 void	ft_cd(t_word **lst, t_env_var *env);
+void	ft_pwd(t_env_var *env);
 
 /* DEBUG */
 void		print_env(t_env_var *env_var_lst);
