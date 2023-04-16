@@ -53,21 +53,21 @@ int	get_exec_len(t_word **lst)
 	return (len);
 }
 
-/**
-*	@brief Free char **
-**/
-void	free_all(char **str)
-{
-	int	i;
+// /**
+// *	@brief Free char **
+// **/
+// void	free_all(char **str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		free(str[i]);
+// 		i++;
+// 	}
+// 	free(str);
+// }
 
 /**
  * @brief Counts the number of pipe that were parsed

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/05 10:47:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/16 17:42:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **env)
 	t_env_var	*global_vars;
 	char		*line;
 	char		*tmp;
+	t_word		**words_lst;
 
 	if (argc != 1)
 	{
