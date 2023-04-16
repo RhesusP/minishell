@@ -38,17 +38,19 @@ char	*ft_strjoin_custom(char const *s1, char const *s2)
 /**
 *	@brief Get the number of args for the execution of one programm
 **/
-int	get_arg_len(t_word *word)
+int	get_exec_len(t_word **lst)
 {
-	int	i;
+	int		len;
+	t_word	*current;
 
-	i = 0;
-	while (word && (word->type == CMD || word->type == ARG))
+	len = 0;
+	current = *lst;
+	while (current && (current->type == CMD || current->type == ARG))
 	{
-		i++;
-		word = word->next;
+		len++;
+		current = current->next;
 	}
-	return (i);
+	return (len);
 }
 
 /**
@@ -71,16 +73,20 @@ void	free_all(char **str)
  * @brief Counts the number of pipe that were parsed
  * @return Number of pipes counted
 **/
-int	count_pipes(t_word *word)
+int	count_pipes(t_word **word)
 {
-	int	pipe_nbr;
+	int		pipe_nbr;
+	t_word	*current;
 
 	pipe_nbr = 0;
-	while (word)
+	if (!*word)
+		return (0);
+	current = *word;
+	while (current)
 	{
-		if (word->type == PIPE)
+		if (current->type == PIPE)
 			pipe_nbr++;
-		word = word->next;
+		current = current->next;
 	}
 	return (pipe_nbr);
 }

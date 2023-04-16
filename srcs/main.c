@@ -6,11 +6,27 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/19 19:20:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/05 10:47:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+int	check_pipe_syntax(t_word **lst)
+{
+	return (1);		//TODO maybe useful ? (need to check execve behavior)
+	// t_word	*current;
+
+	// if (!*lst)
+	// 	return (0);
+	// current = *lst;
+	// if (current->type == PIPE)
+	// while (current)
+	// {
+	// 	if ()
+	// 	current = current->next;
+	// }
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -50,9 +66,10 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (!is_cmd_anonymous(line))
 			add_history(line);
-		printf("you entered: %s\n", line);
 		words_lst = parse_words(line, env_vars, &global_vars);
-		execute_line(*words_lst, env_vars);
+		//display_words(words_lst); 
+		if (check_pipe_syntax(words_lst))
+			execute_line(words_lst, env_vars);
 		free(line);
 	}
 	return (0);
