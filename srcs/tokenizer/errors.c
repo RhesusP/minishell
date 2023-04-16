@@ -12,6 +12,10 @@
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Checks that all quotes are closed
+ * @return 1 if there is an unclosed quote, else returns 0
+*/
 int	check_quotes_err(char *line)
 {
 	int	nb_single;

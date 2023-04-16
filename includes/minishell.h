@@ -66,13 +66,30 @@ typedef struct s_env_var				//TODO rename to a more generic name
 
 /* SIGNALS */
 void		signal_handler(void);
-void		handle_ctrld(char *line);
+void		handle_ctrld(char *line, t_env_var *env_var, t_env_var *global_var);
 
 /* ENVIRONMENT */
 t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
 void		add_back_env_var(t_env_var **lst, t_env_var *new);
 t_env_var	*get_last_env_var(t_env_var *lst);
+void		free_env_var(t_env_var *env_var);
+
+
+/* GLOBAL VARIABLES */
+
+int		actualize_global_var(t_env_var **globals, char *word);
+void	replace_global_variables(t_env_var **globals, t_word **words_lst);
+int		count_unquoted_dollars(char *word);
+int		max_size_global_var(t_env_var **globals);
+void	update_flag_quotes(char c, int *flag_quotes);
+int		check_var_end(char c);
+char	*copy_var_key(char *word, int i);
+int		allocate_key_memory(char *word, int i);
+void	replace_in_copy(int *i, int *j, char *value, char *word_cpy);
+int		check_var_size(t_env_var **globals, char *word, int i);
+
+
 
 /* WORDS */
 t_word		*create_word(char *cmd);
@@ -94,11 +111,13 @@ t_word		**parse_words(char *line, t_env_var *envs, t_env_var **globals);
 void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);
+int			check_quotes_err(char *line);
 
 /* UTILS */
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_strndup(const char *s1, unsigned int size);
 char		**ft_strtok(char *str, char *charset);
+void		free_all(char **str);
 
 int	is_cmd_anonymous(char *cmd);
 

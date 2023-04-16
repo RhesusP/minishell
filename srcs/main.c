@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **env)
 	t_env_var	*env_vars;		//TODO rename type to a more generic name
 	t_env_var	*global_vars;
 	char		*line;
-	t_word		**words_lst;
+	char		*tmp;
 
 	if (argc != 1)
 	{
@@ -32,7 +32,22 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("$> ");
-		handle_ctrld(line);
+		handle_ctrld(line, env_vars, global_vars);
+		while (line[0] == '\0')
+		{
+			free(line);
+			line = readline("$> ");
+			handle_ctrld(line, env_vars, global_vars);
+		}
+		while (check_quotes_err(line) == 0)
+		{
+			tmp = line;
+			line = ft_strjoin(line, "\n");
+			free(tmp);
+			tmp = line;
+			line = ft_strjoin(line, readline("> "));
+			free(tmp);
+		}
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		printf("you entered: %s\n", line);

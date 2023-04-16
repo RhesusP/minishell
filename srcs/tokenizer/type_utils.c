@@ -37,4 +37,3 @@ char	*print_type(t_type type)
 	else if (type == INIT)
 		return ("INIT");
 }
-

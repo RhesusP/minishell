@@ -79,7 +79,9 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/tokenizer/set_type.c ./srcs/tokenizer/errors.c \
 		./srcs/tokenizer/type_utils.c ./srcs/tokenizer/unquoted.c \
 		./srcs/exec/exec_redo.c ./srcs/exec/exec_redo_utils.c \
-		./srcs/exec/environment_utils.c ./srcs/exec/environment.c
+		./srcs/exec/environment_utils.c ./srcs/exec/environment.c \
+		./srcs/tokenizer/global_variables_redo.c ./srcs/tokenizer/global_variables_utils.c ./srcs/tokenizer/global_variables_utils_02.c
+
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 

@@ -76,14 +76,19 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 		if (word->type == INIT)
 		{
 			// VARIABLE ASSIGNATION CASE 
-			if (ft_strrchr(word->word, '='))
+			//word->word[0] != '=' added, because if we have no key, we must consider the =something as a command
+			if (ft_strrchr(word->word, '=') && word->word[0] != '=')
 			{
 				printf("\033[31mvariable assignation detected\033[39m\n");
 				if (!word->prev && !word->next)
 				{
 					printf("\033[32mwe can execute this assignation\033[39m\n");
 					//delete_word(word, lst);
-					add_back_env_var(globals, create_env_var(word->word));
+					if (actualize_global_var(globals, word->word) == FAILURE)
+					{
+						printf("ADDBACK\n");
+						add_back_env_var(globals, create_env_var(word->word));
+					}
 					clear_word_lst(lst);
 				}
 				// case		echo TOTO=toto
