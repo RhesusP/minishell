@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/13 14:51:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/16 17:51:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **env)
 	t_env_var	*env_vars;		//TODO rename type to a more generic name
 	t_env_var	*global_vars;
 	char		*line;
+	char		*tmp;
 	t_word		**words_lst;
 
 	if (argc != 1)
@@ -50,6 +51,21 @@ int	main(int argc, char **argv, char **env)
 		printf("\033[1;34m%s\033[00m", get_pwd(env_vars)->values[0]);
 		line = readline("$ ");
 		handle_ctrld(line);
+		// while (line[0] == '\0')
+		// {
+		// 	free(line);
+		// 	line = readline("$> ");
+		// 	handle_ctrld(line, env_vars, global_vars);
+		// }
+		// while (check_quotes_err(line) == 0)
+		// {
+		// 	tmp = line;
+		// 	line = ft_strjoin(line, "\n");
+		// 	free(tmp);
+		// 	tmp = line;
+		// 	line = ft_strjoin(line, readline("> "));
+		// 	free(tmp);
+		// }
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		words_lst = parse_words(line, env_vars, &global_vars);

@@ -76,5 +76,12 @@ t_word	**parse_words(char *line, t_env_var *envs, t_env_var **globals)
 	}
 	words_lst = detect_close_pipe(words_lst);
 	set_type(words_lst, envs, globals);
+	//print_env(envs);
+	replace_global_variables(globals, words_lst); //TODO
+	display_words(words_lst);
+	//reverse_display_words(words_lst);
+	printf("GLOBAL VAR LIST\n");
+	print_env(*globals);
 	return (words_lst);
 }
+

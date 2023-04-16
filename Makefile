@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/04/13 16:56:30 by cbernot          ###   ########.fr        #
+#    Updated: 2023/04/16 17:46:40 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,8 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/exec/environment_utils.c ./srcs/exec/environment.c \
 		./srcs/exec/get_next_cmd.c ./srcs/exec/builtin/echo.c ./srcs/exec/builtin/env.c \
 		./srcs/exec/builtin/export.c ./srcs/exec/builtin/cd.c ./srcs/exec/builtin/pwd.c
+		./srcs/tokenizer/global_variables_redo.c ./srcs/tokenizer/global_variables_utils.c \
+		./srcs/tokenizer/global_variables_utils_02.c ./srcs/exec/get_next_cmd.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = 
@@ -104,12 +106,13 @@ fclean: clean
 	make ${DIR_FLAG} fclean -C ./libft
 	rm -f ${NAME}
 
-testexport:
-	gcc srcs/exec/builtin/export.c srcs/exec/builtin/unset.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c srcs/exec/exec_utils.c && ./a.out
+# testexport:
+# 	gcc srcs/exec/builtin/export.c srcs/exec/builtin/unset.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c srcs/exec/exec_utils.c && ./a.out
 
-test2:
-	gcc srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c libft/ft_calloc.c libft/ft_memset.c && ./a.out
+# test2:
+# 	gcc srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c libft/ft_calloc.c libft/ft_memset.c && ./a.out
 
-testunset:
-	gcc srcs/exec/builtin/unset.c srcs/exec/exec_utils.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c && ./a.out
+# testunset:
+# 	gcc srcs/exec/builtin/unset.c srcs/exec/exec_utils.c srcs/exec/environment_utils.c libft/ft_split.c libft/ft_substr.c  libft/ft_strlen.c && ./a.out
+
 re: fclean all
