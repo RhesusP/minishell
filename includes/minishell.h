@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/13 16:07:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/13 17:17:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,9 @@ char		*print_type(t_type type);
 
 char	*get_home(t_env_var *env);
 t_env_var	*get_pwd(t_env_var *env);
+
+char	*get_var_key(char *str);
+char	**get_var_values(char *str);
 
 # define SUCCESS	0
 # define FAILURE	-1
