@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/16 17:50:47 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/19 15:20:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ int			get_exec_len(t_word **lst);
 t_word	**get_next_cmd(t_word **lst, t_word*** new_lst);
 
 /* BUILTIN */
-void	ft_echo(t_word **lst);
+// void	ft_echo(t_word **lst);
+void	ft_echo(t_word **lst, int **tubes, int count, int nb_pipes);
 void	ft_env(t_word **lst, t_env_var *env);
 void	ft_export(t_word **lst, t_env_var *env);
 void	ft_cd(t_word **lst, t_env_var *env);
@@ -154,6 +155,12 @@ t_env_var	*get_pwd(t_env_var *env);
 
 char	*get_var_key(char *str);
 char	**get_var_values(char *str);
+
+t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars);
+
+char	**handle_redirection(t_redir **lst, char **full_cmd);
+char	**lst_to_string(t_word **lst);
+t_redir	**get_redir(t_word **lst);
 
 # define SUCCESS	0
 # define FAILURE	-1

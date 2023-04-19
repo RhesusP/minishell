@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/16 19:28:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/19 08:19:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_word	**parse_words(char *line, t_env_var *envs, t_env_var **globals)
 	words_lst = detect_close_pipe(words_lst);
 	set_type(words_lst, envs, globals);
 	//print_env(envs);
-	replace_global_variables(globals, words_lst); //TODO
+	// replace_global_variables(globals, words_lst); //TODO
 	display_words(words_lst);
 	//reverse_display_words(words_lst);
 	printf("GLOBAL VAR LIST\n");

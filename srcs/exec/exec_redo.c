@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/14 14:12:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:25:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
  * @brief check if the CMD is a builtin
  * UNTESTED YET
 */
-int	execute_builtin(t_word **lst, t_env_var *env)
+int	execute_builtin(t_word **lst, t_env_var *env, int **tubes, int count, int nb_pipes)
 {
 	t_word	*curr;
 
 	curr = *lst;
 
+	printf("here\n");
 	display_words(lst);
 
 	if (ft_strcmp(curr->word , "exit") == SUCCESS)
@@ -44,7 +45,7 @@ int	execute_builtin(t_word **lst, t_env_var *env)
 		return (SUCCESS);
 	else if (ft_strcmp(curr->word, "echo") == SUCCESS)		// ok
 	{
-		ft_echo(lst);
+		ft_echo(lst, tubes, count, nb_pipes);
 		return (SUCCESS);
 	}
 	else if (ft_strcmp(curr->word, "env") == SUCCESS)		// ok
@@ -265,7 +266,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 			fd = open(current->filepath, O_RDONLY);
 			if (fd == -1)
 			{
-				perror("unable to open file");
+				perror(current->filepath);
 				return (0);
 			}
 			dup2(fd, STDIN_FILENO);
@@ -276,7 +277,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 			fd = open(current->filepath, O_CREAT | O_WRONLY, 0644);
 			if (fd == -1)
 			{
-				perror("unable to open file");
+				perror(current->filepath);
 				return (0);
 			}
 			dup2(fd, STDOUT_FILENO);
@@ -287,7 +288,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 			fd = open(current->filepath, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 			{
-				perror("unable to open file");
+				perror(current->filepath);
 				return (0);
 			}
 			dup2(fd, STDOUT_FILENO);
@@ -299,7 +300,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 			fd = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 			{
-				perror("unable to open file");
+				perror(current->filepath);
 				return (0);
 			}
 			ft_putstr_fd(new_arg, fd);
@@ -360,7 +361,13 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 		// if (execute_builtin(lst, env) != SUCCESS)
 		// {
 			if (!exec_path)
-				execve(full_cmd[0], full_cmd, NULL);
+			{
+				if (execve(full_cmd[0], full_cmd, NULL) == -1);		//TODO check error msg
+				{
+					ft_putstr_fd(full_cmd[0], 2);
+					ft_putendl_fd(": command not found", 2);
+				}
+			}
 			execve(exec_path, full_cmd, NULL);
 		// }
 		exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
@@ -405,7 +412,7 @@ void	execute_line(t_word	**word, t_env_var *env)
 		//display_words(cmd);
 		path = get_env_custom("PATH", env);
 		//get_redir(cmd);
-		if (execute_builtin(cmd, env) != SUCCESS)
+		if (execute_builtin(cmd, env, tubes, count, pipes_nbr) != SUCCESS)
 			ft_execve(cmd, path, tubes, count, pipes_nbr, env);
 		clear_word_lst(cmd);
 		count++;
