@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/25 11:20:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 19:28:13 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,12 @@ char	*get_values(char *key, t_env_var **lst)
 	stop = 0;
 	if (!*lst || !key)
 		return (0);
+	if (ft_strcmp(key, "$") == 0)
+	{
+		printf("key is a dollar symbol\n");
+		return ("$");
+	}
+	key = &key[1];
 	current = *lst;
 	while (current && !stop)
 	{
@@ -185,16 +191,21 @@ char	*get_vars(char *str, t_env_var **env)
 	char	*res;
 	char	*temp;
 
+	if (ft_strlen(str) == 1 && str[0] == '$')
+		return (str);
 	tab = get_key_name(str);
+	printf("before: %s\n", tab[0]);
+	printf("key: %s\n", tab[1]);
+	printf("after: %s\n", tab[2]);
 	if (tab[1])
-		res = ft_strjoin(tab[0], get_values(&tab[1][1], env));
+		res = ft_strjoin(tab[0], get_values(tab[1], env));
 	else
 		res = ft_strjoin(tab[0], "");
 	while (tab[2])
 	{
 		tab = get_key_name(tab[2]);
 		if (tab[1])
-			temp = ft_strjoin(tab[0], get_values(&tab[1][1], env));
+			temp = ft_strjoin(tab[0], get_values(tab[1], env));
 		else
 			temp = ft_strjoin(tab[0], "");
 		res = ft_strjoin(res, temp);
