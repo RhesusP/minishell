@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/23 22:25:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:20:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **
 	t_word	*current;
 	int		quoted_case;
 
-	if (!*words_lst)
+	if (!words_lst || !*words_lst)
 		return (words_lst);
 	current = *words_lst;
 	while (current)

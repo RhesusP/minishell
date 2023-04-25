@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/23 13:53:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:18:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	give_meta_type(t_word **lst)
 {
 	t_word	*word;
 
-	if (!*lst)
+	if (!lst || !*lst)
 		return ;
 	word = *lst;
 	while (word)
@@ -68,7 +68,7 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 {
 	t_word	*word;
 
-	if (!*lst)
+	if (!lst || !*lst)
 		return ;
 	word = *lst;
 	while (word)
@@ -146,7 +146,7 @@ void	set_type(t_word **lst, t_env_var *envs, t_env_var **globals)
 	give_meta_type(lst);
 	give_cmd_type(lst, globals);
 
-	if (!*lst)
+	if (!lst || !*lst)
 		return ;
 	current = *lst;
 	while (current)

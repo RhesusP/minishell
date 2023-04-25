@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/19 10:04:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:20:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,12 @@ int	main(int argc, char **argv, char **env)
 		printf("\033[1;34m%s\033[00m", get_pwd(env_vars)->values[0]);
 		line = readline("$ ");
 		handle_ctrld(line);
-		// while (line[0] == '\0')
-		// {
-		// 	free(line);
-		// 	line = readline("$> ");
-		// 	handle_ctrld(line, env_vars, global_vars);
-		// }
-		// while (check_quotes_err(line) == 0)
-		// {
-		// 	tmp = line;
-		// 	line = ft_strjoin(line, "\n");
-		// 	free(tmp);
-		// 	tmp = line;
-		// 	line = ft_strjoin(line, readline("> "));
-		// 	free(tmp);
-		// }
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		words_lst = parse_words(line, env_vars, &global_vars);
 		display_words(words_lst);
 		var_expansion(words_lst, &global_vars, &env_vars);
-		if (*words_lst && check_pipe_syntax(words_lst))
+		if (words_lst && *words_lst && check_pipe_syntax(words_lst))
 			execute_line(words_lst, env_vars);
 		free(line);
 	}

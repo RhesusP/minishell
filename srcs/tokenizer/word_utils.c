@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/29 14:38:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 11:16:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	display_words(t_word **lst)
 {
 	t_word	*current;
 
-	if (!*lst)
+	if (!lst || !*lst)
 	{
 		printf("######   TOKEN LIST   ######\n");
 		printf("Aucun commande.\n");
