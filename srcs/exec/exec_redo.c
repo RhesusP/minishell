@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/19 16:25:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/04/25 09:48:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	execute_builtin(t_word **lst, t_env_var *env, int **tubes, int count, int nb
 
 	if (ft_strcmp(curr->word , "exit") == SUCCESS)
 	{
-		//TODO call exit
+		ft_exit(lst);
 		return (SUCCESS);
 	}
 	else if (ft_strcmp(curr->word, "export") == SUCCESS)
