@@ -6,12 +6,12 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:06:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/13 17:08:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:45:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/exec.h"
+// #include "../../includes/exec.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

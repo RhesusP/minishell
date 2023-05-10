@@ -6,12 +6,12 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/07 12:29:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:45:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-#include "../../../includes/exec.h"
+// #include "../../../includes/exec.h"
 
 int	cmd_have_arg(t_word **lst)
 {

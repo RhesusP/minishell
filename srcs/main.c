@@ -6,11 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/04 14:15:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 18:12:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+int	g_status = 0;
 
 int	check_pipe_syntax(t_word **lst)
 {
@@ -45,7 +47,7 @@ int	main(int argc, char **argv, char **env)
 	env_vars = get_environment(env);		//handle fail
 	global_vars = malloc(sizeof(t_env_var));
 	global_vars = 0;
-	//add_back_env_var(&global_vars, create_env_var("TEST=test"));
+	add_back_env_var(&global_vars, create_env_var("TEST=test"));
 	while (1)
 	{
 		line = readline("\033[1;36mminishell $>\033[00m ");

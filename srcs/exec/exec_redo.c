@@ -6,18 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/25 09:48:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 20:10:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/exec.h"
+// #include "../../includes/exec.h"
 
 /**
  * @brief check if the CMD is a builtin
  * UNTESTED YET
 */
-int	execute_builtin(t_word **lst, t_env_var *env, int **tubes, int count, int nb_pipes)
+int	execute_builtin(t_word **lst, t_env_var *env, int nb_pipes)
 {
 	t_word	*curr;
 
@@ -26,39 +26,55 @@ int	execute_builtin(t_word **lst, t_env_var *env, int **tubes, int count, int nb
 	printf("here\n");
 	display_words(lst);
 
-	if (ft_strcmp(curr->word , "exit") == SUCCESS)
+	if (ft_strcmp(curr->word, "export") == 0)
 	{
-		ft_exit(lst);
-		return (SUCCESS);
+		if (nb_pipes != 0)
+			ft_export(lst, env, nb_pipes);
+		return (1);
 	}
-	else if (ft_strcmp(curr->word, "export") == SUCCESS)
-	{
-		ft_export(lst, env);
-		return (SUCCESS);
-	}
-	else if (ft_strcmp(curr->word, "pwd") == SUCCESS)
+	if (ft_strcmp(curr->word, "pwd") == 0)
 	{
 		ft_pwd(env);
-		return (SUCCESS);
+		return (1);
 	}
-	else if (ft_strcmp(curr->word, "unset") == SUCCESS)
-		return (SUCCESS);
-	else if (ft_strcmp(curr->word, "echo") == SUCCESS)		// ok
+	else if (ft_strcmp(curr->word, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(curr->word, "echo") == 0)		// ok
 	{
-		ft_echo(lst, tubes, count, nb_pipes);
-		return (SUCCESS);
+		ft_echo(lst);
+		return (1);
 	}
-	else if (ft_strcmp(curr->word, "env") == SUCCESS)		// ok
+	else if (ft_strcmp(curr->word, "env") == 0)		// ok
 	{
 		ft_env(lst, env);
-		return (SUCCESS);
+		return (1);
 	}
-	else if (ft_strcmp(curr->word, "cd") == SUCCESS)
+	return (0);
+}
+
+int	execute_non_fork_builtin(t_word **lst, t_env_var *env, int nb_pipes)
+{
+	t_word	*curr;
+
+	curr = *lst;
+	if (ft_strcmp(curr->word , "exit") == 0)
+	{
+		ft_exit(lst);
+		return (1);
+	}
+	else if (ft_strcmp(curr->word, "export") == 0)
+	{
+		ft_export(lst, env, nb_pipes);
+		return (0);
+	}
+	else if (ft_strcmp(curr->word, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(curr->word, "cd") == 0)
 	{
 		ft_cd(lst, env);
-		return (SUCCESS);
+		return (1);
 	}
-	return (FAILURE);
+	return (0);
 }
 
 /**
@@ -199,7 +215,8 @@ t_redir	**get_redir(t_word **lst)
 char	*get_filepath(t_word **lst)
 {
 	t_word	*current;
-	
+	// #include "../../../includes/exec.h"
+
 	current = *lst;
 	while (current->next && current->next->type != FILEPATH)
 		current = current->next;
@@ -322,6 +339,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	char		**full_cmd;
 	int			pid;
 	t_redir		**redir;
+	int	status;
 
 	pid = fork();
 	redir = get_redir(lst);
@@ -336,7 +354,13 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count - 1][0]);
 			close(tubes[count - 1][1]);
 		}
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) )
+		{
+			g_status = WEXITSTATUS(status);
+			printf("exit status was %d\n", g_status);
+		}
+		// wait(NULL);
 	}
 	if (pid == 0)		//child process
 	{
@@ -353,23 +377,29 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
-
+		int i = 0;
+		while (full_cmd[i])
+		{
+			printf("\033[92mfull_cmd[%d]: %s\033[39m\n", i, full_cmd[i]);
+			i++;
+		}
 		if (redir)
 			full_cmd = handle_redirection(redir, full_cmd);
+
+		if (execute_builtin(lst, env, nb_pipes))
+			exit(EXIT_SUCCESS);
+
 		exec_path = get_execve_path(full_cmd[0], path);
-		
-		// if (execute_builtin(lst, env) != SUCCESS)
-		// {
-			if (!exec_path)
+
+		if (!exec_path)
+		{
+			if (execve(full_cmd[0], full_cmd, NULL) == -1);		//TODO check error msg
 			{
-				if (execve(full_cmd[0], full_cmd, NULL) == -1);		//TODO check error msg
-				{
-					ft_putstr_fd(full_cmd[0], 2);
-					ft_putendl_fd(": command not found", 2);
-				}
+				ft_putstr_fd(full_cmd[0], 2);
+				ft_putendl_fd(": command not found", 2);
 			}
-			execve(exec_path, full_cmd, NULL);
-		// }
+		}
+		execve(exec_path, full_cmd, NULL);
 		exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
 	}
 }
@@ -401,18 +431,15 @@ void	execute_line(t_word	**word, t_env_var *env)
 
 	count = 0;
 	pipes_nbr = count_pipes(word);
-	tubes = create_tubes(pipes_nbr);	//create fd array and pipes
+	tubes = create_tubes(pipes_nbr);
 	cmd = malloc(sizeof(t_word *));
-	if (!cmd)		//TODO catch error
+	if (!cmd)
 		return ;
 	*cmd = 0;
-	while (get_next_cmd(word, &cmd))		//we execute each command
+	while (get_next_cmd(word, &cmd))
 	{
-		//printf("CMD LIST\n");
-		//display_words(cmd);
 		path = get_env_custom("PATH", env);
-		//get_redir(cmd);
-		if (execute_builtin(cmd, env, tubes, count, pipes_nbr) != SUCCESS)
+		if (!execute_non_fork_builtin(cmd, env, pipes_nbr))
 			ft_execve(cmd, path, tubes, count, pipes_nbr, env);
 		clear_word_lst(cmd);
 		count++;

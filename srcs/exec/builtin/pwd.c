@@ -6,12 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:19:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/13 16:07:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:22:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-#include "../../../includes/exec.h"
 
 void	ft_pwd(t_env_var *env)
 {

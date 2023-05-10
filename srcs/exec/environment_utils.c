@@ -6,12 +6,12 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/13 17:08:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:45:28 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/exec.h"
+// #include "../../includes/exec.h"
 /**
 *	@brief Create the beginning of the t_env_var chained list
 **/

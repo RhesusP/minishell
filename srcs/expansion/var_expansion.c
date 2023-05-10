@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/03 22:59:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 18:23:06 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	**get_key_name(char *str)
 	tab[0] = ft_strndup(str, i);
 	len = i;
 	len += 1;
-	while (str[len] != '\0' && (str[len] == '_' || ft_isalnum(str[len])))
+	while (str[len] != '\0' && (str[len] == '_' || str[len] == '?' || ft_isalnum(str[len])))
 		len++;
 	if (i < ft_strlen(str) - 1)
 		tab[1] = ft_strndup(&str[i], len - i);
@@ -171,6 +171,11 @@ char	*get_values(char *key, t_env_var **lst)
 	{
 		printf("key is a dollar symbol\n");
 		return ("$");
+	}
+	else if (ft_strcmp(key, "$?") == 0)
+	{
+		printf("\033[92mkey IS A QUESTION MARK\n\033[39m");
+		return (ft_itoa(g_status));
 	}
 	key = &key[1];
 	current = *lst;
@@ -406,8 +411,6 @@ char	*get_quoted(char *str, t_env_var **env)
 
 char	*simplify_quotes(char *str, t_env_var **env)
 {
-	
-	
 	return (get_quoted(str, env));
 }
 

@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-#include "../../includes/exec.h"
+// #include "../../includes/exec.h"
 
 /**
  * @brief strjoin but adds a '/' between the two char* joined
