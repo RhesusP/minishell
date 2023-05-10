@@ -6,30 +6,25 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 10:51:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:30:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-// #include "../../../includes/exec.h"
 
-void	exec_unset(t_env_var *env_var, char *unset_key)
+void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global)
 {
-	// t_env_var	*previous;
+	t_word		*current;
 
-	// while (env_var && (env_var->key != unset_key))
-	// {
-	// 	previous = env_var;
-	// 	env_var = env_var->next;
-	// }
-	// if (env_var != NULL)
-	// {
-	// 	previous->next = env_var->next;
-	// printf("%s\n", env_var->key);
-	// 	//free(env_var->key);
-	// 	free(env_var->values);
-	// 	//free_all(env_var->values);
-	// printf("yo\n");
-	// 	free(env_var);
-	// }
+	if (!*lst)
+		return ;
+	current = *lst;
+	while (current && current->type != ARG)
+		current = current->next;
+	while (current && current->type == ARG)
+	{
+		delete_existing_key(env, current->word);
+		delete_existing_key(global, current->word);
+		current = current->next;
+	}
 }

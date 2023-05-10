@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 20:10:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:29:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @brief check if the CMD is a builtin
  * UNTESTED YET
 */
-int	execute_builtin(t_word **lst, t_env_var *env, int nb_pipes)
+int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 {
 	t_word	*curr;
 
@@ -29,16 +29,16 @@ int	execute_builtin(t_word **lst, t_env_var *env, int nb_pipes)
 	if (ft_strcmp(curr->word, "export") == 0)
 	{
 		if (nb_pipes != 0)
-			ft_export(lst, env, nb_pipes);
+			ft_export(lst, env);
 		return (1);
 	}
 	if (ft_strcmp(curr->word, "pwd") == 0)
 	{
-		ft_pwd(env);
+		ft_pwd(*env);
 		return (1);
 	}
-	else if (ft_strcmp(curr->word, "unset") == 0)
-		return (1);
+	// else if (ft_strcmp(curr->word, "unset") == 0)
+	// 	return (1);
 	else if (ft_strcmp(curr->word, "echo") == 0)		// ok
 	{
 		ft_echo(lst);
@@ -46,13 +46,13 @@ int	execute_builtin(t_word **lst, t_env_var *env, int nb_pipes)
 	}
 	else if (ft_strcmp(curr->word, "env") == 0)		// ok
 	{
-		ft_env(lst, env);
+		ft_env(lst, *env);
 		return (1);
 	}
 	return (0);
 }
 
-int	execute_non_fork_builtin(t_word **lst, t_env_var *env, int nb_pipes)
+int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global)
 {
 	t_word	*curr;
 
@@ -64,14 +64,17 @@ int	execute_non_fork_builtin(t_word **lst, t_env_var *env, int nb_pipes)
 	}
 	else if (ft_strcmp(curr->word, "export") == 0)
 	{
-		ft_export(lst, env, nb_pipes);
+		ft_export(lst, env);		//TODO change env
 		return (0);
 	}
 	else if (ft_strcmp(curr->word, "unset") == 0)
+	{
+		ft_unset(lst, env, global);	//TODO change env
 		return (1);
+	}
 	else if (ft_strcmp(curr->word, "cd") == 0)
 	{
-		ft_cd(lst, env);
+		ft_cd(lst, *env);
 		return (1);
 	}
 	return (0);
@@ -333,7 +336,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	return (new_full_cmd);
 }
 
-void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes, t_env_var *env)
+void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes, t_env_var **env)
 {
 	char		*exec_path;
 	char		**full_cmd;
@@ -421,7 +424,7 @@ int	**create_tubes(int nb_tubes)
 	return (tubes);
 }
 
-void	execute_line(t_word	**word, t_env_var *env)
+void	execute_line(t_word	**word, t_env_var **env, t_env_var **global)
 {
 	t_env_var	*path;
 	int			pipes_nbr;
@@ -438,8 +441,8 @@ void	execute_line(t_word	**word, t_env_var *env)
 	*cmd = 0;
 	while (get_next_cmd(word, &cmd))
 	{
-		path = get_env_custom("PATH", env);
-		if (!execute_non_fork_builtin(cmd, env, pipes_nbr))
+		path = get_env_custom("PATH", *env);
+		if (!execute_non_fork_builtin(cmd, env, global))
 			ft_execve(cmd, path, tubes, count, pipes_nbr, env);
 		clear_word_lst(cmd);
 		count++;

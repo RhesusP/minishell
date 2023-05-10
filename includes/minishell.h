@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/10 19:59:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:23:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	is_cmd_anonymous(char *cmd);
  * Added in branch exec_redo
 **/
 
-void		execute_line(t_word	**word_lst, t_env_var *env);
+void		execute_line(t_word	**word, t_env_var **env, t_env_var **global);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 int			count_pipes(t_word **word);
 int			get_exec_len(t_word **lst);
@@ -141,13 +141,13 @@ int			get_exec_len(t_word **lst);
 t_word	**get_next_cmd(t_word **lst, t_word*** new_lst);
 
 /* BUILTIN */
-// void	ft_echo(t_word **lst);
 void	ft_echo(t_word **lst);
 void	ft_env(t_word **lst, t_env_var *env);
-void	ft_export(t_word **lst, t_env_var *env, int nb_pipes);
+void	ft_export(t_word **lst, t_env_var **env);
 void	ft_cd(t_word **lst, t_env_var *env);
 void	ft_pwd(t_env_var *env);
 void	ft_exit(t_word **lst);
+void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
 
 /* DEBUG */
 void		print_env(t_env_var *env_var_lst);
@@ -170,6 +170,8 @@ char	*ft_strnchr(const char *s, int c, int pos);
 t_env_var	*get_env_custom(char *key_to_find, t_env_var *env);
 void		env_var_add_back(t_env_var **env_var, t_env_var *new);
 t_env_var	*env_var_new(char *env);
+
+void	delete_existing_key(t_env_var **env, char *key);
 
 # define SUCCESS	0
 # define FAILURE	-1

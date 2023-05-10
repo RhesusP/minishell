@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 20:14:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:29:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,29 @@ int	is_syntax_valid(char *str)
 	return (is_valid);
 }
 
-void	delete_existing_key(t_env_var *env, char *key)
+void	delete_existing_key(t_env_var **env, char *key)
 {
 	t_env_var	*current;
 	t_env_var	*prev;
 	t_env_var	*next;
 
-	if (!env)
+	if (!env || !*env)
 		return ;
 	prev = 0;
 	next = 0;
-	current = env;
+	current = *env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			prev->next = current->next;
+			if (prev)
+				prev->next = current->next;
+			else
+			{	
+				*env = malloc(sizeof(t_env_var));
+				*env = 0;
+				return ;
+			}
 			current->next = 0;
 			free(current);
 			return ;
@@ -88,13 +95,13 @@ void	delete_existing_key(t_env_var *env, char *key)
 	}
 }
 
-void	export_vars(t_word **lst, t_env_var *env)
+void	export_vars(t_word **lst, t_env_var **env)
 {
 	t_word		*current;
 	t_env_var	*new;
 	int			status;
 
-	if (!*lst  || !env)
+	if (!*lst  || !env ||!*env)
 		return ; 
 	current = *lst;
 	while (current && current->type != ARG)
@@ -107,7 +114,7 @@ void	export_vars(t_word **lst, t_env_var *env)
 			printf("%s IS VALID\n", current->word);
 			new = create_env_var(current->word);
 			delete_existing_key(env, new->key);
-			add_back_env_var(&env, new);
+			add_back_env_var(env, new);
 		}
 		else if (status == 0)
 		{
@@ -119,7 +126,7 @@ void	export_vars(t_word **lst, t_env_var *env)
 	}
 }
 
-void	ft_export(t_word **lst, t_env_var *env, int nb_pipes)
+void	ft_export(t_word **lst, t_env_var **env)
 {
 	int		nb_arg;
 	t_word	*current;
@@ -134,7 +141,7 @@ void	ft_export(t_word **lst, t_env_var *env, int nb_pipes)
 		current = current->next;
 	}
 	if (nb_arg == 0)
-		print_export(env);
+		print_export(*env);
 	else
 		export_vars(lst, env);
 }
