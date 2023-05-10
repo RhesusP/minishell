@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/25 11:42:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/03 10:42:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **
 char	**handle_redirection(t_redir **lst, char **full_cmd);
 char	**lst_to_string(t_word **lst);
 t_redir	**get_redir(t_word **lst);
+
+char	*ft_strnchr(const char *s, int c, int pos);
+
 
 # define SUCCESS	0
 # define FAILURE	-1

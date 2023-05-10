@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/25 11:05:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:36:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void	ft_exit(t_word **lst)
 
 	printf("exit\n");
 	nb_arg = get_nb_arg(lst);
+	if (nb_arg == 0)
+		exit (0);
+	current = *lst;
 	if (nb_arg == 1)
 	{
-		current = *lst;
 		if (ft_int_limit_error(current->next->word) == 0)
 			exit_value = ft_atoi(current->next->word);
 		else
@@ -91,5 +93,13 @@ void	ft_exit(t_word **lst)
 		exit(exit_value);
 	}
 	else
-		ft_putendl_fd("exit: too many arguments", 2);
+	{
+		if (ft_int_limit_error(current->next->word) == 0)
+			ft_putendl_fd("exit: too many arguments", 2);
+		else
+		{
+			ft_putendl_fd("exit: numeric argument required", 2);
+			exit(0);
+		}
+	}
 }

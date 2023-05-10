@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/04/13 16:05:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:42:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,176 @@ void	go_back_in_pwd(t_env_var *env)
 		perror(res);
 }
 
+int	count_dir(char *path)
+{
+	int	i;
+	int	reset;
+	int	nb;
+
+	reset = 1;
+	nb = 0;
+	i = 0;
+	while (path[i] != '\0')
+	{
+		if (path[i] != '/' && reset)
+		{
+			nb++;
+			reset = 0;
+		}
+		else if (path[i] == '/')
+			reset = 1;
+		i++;
+	}
+	return (nb);
+}
+
+char	**create_dir_tab(char *str, int nb_dir)
+{
+	char	**tab;
+	int		i;
+	int		j;
+	int		cell;
+
+	tab = malloc(sizeof(char *) * (nb_dir + 1));
+	if (!tab)
+		return (0);
+	// tab[0] = ft_strdup("/");
+	cell = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		j = i;
+		while(str[j] != '/' && str[j] != '\0')
+			j++;
+		if (j != i)
+		{
+			tab[cell] = ft_strndup(&str[i], j - i);
+			cell++;
+		}
+		i = j + 1;
+	}
+	tab[nb_dir] = 0;
+	// i = 0;
+	// while (tab[i])
+	// {
+	// 	printf("tab[%d]: %s\n", i, tab[i]);
+	// 	i++;
+	// }
+	return (tab);
+}
+
+char	*recreate_new_path(char **tab, int size)
+{
+	int	i;
+	int	j;
+	char	*res;
+	char	*temp;
+
+	i = 0;
+	while (tab[i] && i < size)
+	{
+		if (tab[i] && ft_strcmp(tab[i], ".") == 0)
+		{
+			free(tab[i]);
+			tab[i] = 0;
+		}
+		else if (tab[i] && ft_strcmp(tab[i], "..") == 0)
+		{
+			j = i - 1;
+			while (!tab[j])
+				j--;
+			if (j >= 0)
+			{
+				free(tab[j]);
+				tab[j] = 0;
+			}
+			free(tab[i]);
+			tab[i] = 0;
+		}
+		i++;
+	}
+	
+	if (!tab[0])
+		res = "/";
+	else
+		res = "";
+	i = 0;
+	while (i < size)
+	{
+		if (tab[i])
+		{
+			temp = ft_strjoin("/", tab[i]);
+			res = ft_strjoin(res, temp);
+		}
+		i++;
+	}
+	return (res);
+}
+
+void	change_directory(char *path, t_env_var *env)
+{
+	t_env_var	*old_pwd;
+	t_env_var	*pwd;
+
+	printf("change directory to %s\n", path);
+	if (chdir(path) != 0)
+	{
+		perror(path);
+		return ;
+	}
+	old_pwd = get_old_pwd(env);
+	pwd = get_pwd(env);
+	old_pwd->values[0] = pwd->values[0];
+	pwd->values[0] = path;
+}
+
+void	switch_old_curr_pwd(t_env_var *env)
+{
+	t_env_var	*old_pwd;
+	t_env_var	*pwd;
+	char		*temp;
+	char		*path;
+
+	old_pwd = get_old_pwd(env);
+	if (chdir(old_pwd->values[0]) != 0)
+	{
+		perror(old_pwd->values[0]);
+		return ;
+	}
+	pwd = get_pwd(env);
+	temp = old_pwd->values[0];
+	old_pwd->values[0] = pwd->values[0];
+	pwd->values[0] = temp;
+}
+
+void	simplify_path(char *str, t_env_var *env)
+{
+	char	*res;
+	char	*temp;
+	char	**tab;
+	char	*path;
+
+	if (str[0] == '-' && ft_strlen(str) == 1)
+	{
+		switch_old_curr_pwd(env);
+		return ;
+	}
+	if (str[0] != '/')
+	{
+		temp = ft_strjoin(get_pwd(env)->values[0], "/");
+		temp = ft_strjoin(temp, str);
+	}
+	else
+		temp = ft_strdup(str);
+	printf("abs path is %s\n", temp);
+	printf("there are %d directories\n", count_dir(temp));
+	tab = create_dir_tab(temp, count_dir(temp));
+	path = recreate_new_path(tab, count_dir(temp));
+	printf("here HERE\n");
+	change_directory(path, env);
+	return ;
+}
+
 void	ft_cd(t_word **lst, t_env_var *env)
 {
 	t_word	*current;
@@ -122,14 +292,10 @@ void	ft_cd(t_word **lst, t_env_var *env)
 		path = current;
 		current = current->next;
 	}
-	if (nb_arg == 0 || (nb_arg == 1 && ft_strcmp(path->word, "~") == 0))
+	if (nb_arg == 0)
 		change_pwd(env, get_home(env));
-	else if (nb_arg == 1 && ft_strcmp(path->word, ".") == 0)
-	 	return ;
-	else if (nb_arg == 1 && ft_strcmp(path->word, "..") == 0)
-		go_back_in_pwd(env);
 	else if (nb_arg == 1)
-		change_pwd(env, path->word);
+		simplify_path(path->word, env);
 	else
-		perror("Too many arguments");	// wtf ?
+		ft_putendl_fd("cd: too many arguments", 2);
 }

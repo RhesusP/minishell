@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/04/16 17:50:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/03 11:06:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,35 @@ char	*ft_strndup(const char *s1, unsigned int size)
 	res[i] = '\0';
 	return (res);
 }
-/* WARNING ERASE ??
-int	ft_strcmp(char *s1, char *s2)
+
+char	*ft_strnchr(const char *s, int c, int pos)
 {
 	int	i;
+	int nb_occur;
 
+	nb_occur = 0;
 	i = 0;
-	while (s1[i] != '\0' && s1[i] == s2[i])
+	while ((unsigned char)s[i] != '\0')
+	{
+		// printf("searching... (%c)\n", s[i]);
+		if ((unsigned char)s[i] == (unsigned char)c)
+			nb_occur++;
+		if (pos == nb_occur)
+		{
+			// printf("returning finding result\n");
+			return ((char *)&(s[i]));
+		}
 		i++;
-	if (s1[i] == s2[i])
-		return (0);
-	else
-		return (s1[i] - s2[i]);
+	}
+	if ((unsigned char)c == '\0')
+	{
+		// printf("returning \\0 string\n");
+		return ((char *)&(s[i]));
+	}
+	// printf("returning void string\n");
+	return (0);
 }
 
-/**
-*	@brief Free char ** TODO ERASE IT
-**/
 void	free_all(char **str)
 {
 	int	i;
