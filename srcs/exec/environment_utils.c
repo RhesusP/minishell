@@ -6,42 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 10:45:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:35:40 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-// #include "../../includes/exec.h"
-/**
-*	@brief Create the beginning of the t_env_var chained list
-**/
-t_env_var	*env_var_new(char *env)
-{
-	t_env_var	*env_var;
-	int	i;
-	int	first_equal;
-
-	env_var = malloc(sizeof(t_env_var));
-	first_equal = 0;
-	i = 0;
-	while (env[first_equal]!= '=')
-		first_equal++;
-	env_var->key = calloc((first_equal + 1), sizeof(char));
-	while (i < first_equal)
-	{
-		env_var->key[i] = env[i];
-		i++;
-	}
-	if (env[first_equal + 1])
-		env_var->values = ft_split(env + first_equal + 1, ':');
-	else
-	{
-		env_var->values = malloc(sizeof(char *));
-		env_var->values[0] = malloc(sizeof(char));
-		env_var->values[0] = '\0';
-	}
-	return (env_var);
-}
 
 /**
 *	@brief Go to the end of the env_var chained list

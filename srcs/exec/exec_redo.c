@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 22:29:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 13:05:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,12 +198,27 @@ t_redir	**get_redir(t_word **lst)
 	if (!redir)
 		return (0);
 	*redir = 0;
-	while (current->next)
+	// while (current->next)
+	// {
+	// 	if (current->next->type == RO || current->next->type == RI || current->next->type == ARO || current->next->type == HE)
+	// 	{
+	// 		if (current->next->next && (current->next->next->type == FILEPATH || current->next->next->type == DELIMITER))
+	// 			add_back_redir(redir, create_redir(current->next->type, current->next->next->word));
+	// 		else
+	// 		{
+	// 			perror("syntax error ?\n");
+	// 			return (0);
+	// 		}
+	// 	}
+	// 	current = current->next;
+	// }
+
+	while (current)
 	{
-		if (current->next->type == RO || current->next->type == RI || current->next->type == ARO || current->next->type == HE)
+		if (current->type == RO || current->type == RI || current->type == ARO || current->type == HE)
 		{
-			if (current->next->next && (current->next->next->type == FILEPATH || current->next->next->type == DELIMITER))
-				add_back_redir(redir, create_redir(current->next->type, current->next->next->word));
+			if (current->next && (current->next->type == FILEPATH || current->next->type == DELIMITER))
+				add_back_redir(redir, create_redir(current->type, current->next->word));
 			else
 			{
 				perror("syntax error ?\n");
@@ -212,6 +227,7 @@ t_redir	**get_redir(t_word **lst)
 		}
 		current = current->next;
 	}
+
 	return (redir);
 }
 
@@ -346,6 +362,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 	pid = fork();
 	redir = get_redir(lst);
+	display_redirs(redir);
 	if (pid == -1)
 	{
 		perror("failed to fork\n");
@@ -380,6 +397,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
+		printf("here in ft_execve\n");
 		int i = 0;
 		while (full_cmd[i])
 		{
@@ -393,16 +411,16 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			exit(EXIT_SUCCESS);
 
 		exec_path = get_execve_path(full_cmd[0], path);
-
-		if (!exec_path)
+	
+		if (full_cmd[0] && !exec_path)
 		{
-			if (execve(full_cmd[0], full_cmd, NULL) == -1);		//TODO check error msg
+			if (execve(full_cmd[0], full_cmd, env_to_tab(*env)) == -1)	//TODO check error msg
 			{
 				ft_putstr_fd(full_cmd[0], 2);
 				ft_putendl_fd(": command not found", 2);
 			}
 		}
-		execve(exec_path, full_cmd, NULL);
+		execve(exec_path, full_cmd, env_to_tab(*env));
 		exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
 	}
 }

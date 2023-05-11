@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/10 22:29:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 12:14:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,124 @@
 
 int	g_status = 0;
 
-int	check_pipe_syntax(t_word **lst)
+int	type_is_redir(t_word *word)
 {
-	return (1);		//TODO maybe useful ? (need to check execve behavior)
-	// t_word	*current;
+	if(word->type == RI || word->type == RO || word->type == ARO || word->type == HE)
+		return (1);
+	return (0);
+}
 
-	// if (!*lst)
-	// 	return (0);
-	// current = *lst;
-	// if (current->type == PIPE)
-	// while (current)
-	// {
-	// 	if ()
-	// 	current = current->next;
-	// }
+int	is_bad_filepath(t_word *word)
+{
+	if (word->type == FILEPATH)
+	{
+		if (ft_strcmp(">", word->word) == 0 || ft_strcmp("<", word->word) == 0 || ft_strcmp(">>", word->word) == 0 || ft_strcmp("<<", word->word) == 0)
+			return (1);
+	}
+	return (0);
+}
+
+int	print_syntax_error(char *token)
+{
+	g_status = 2;
+	ft_putstr_fd("syntax error near unexpected token '", 2);
+	ft_putstr_fd(token, 2);
+	ft_putendl_fd("'", 2);
+ 	return (1);
+}
+
+int	syntax_error(t_word **lst)
+{
+	t_word	*current;
+
+	// printf("\033[93m");
+	// display_words(lst);
+	if (!lst || !*lst)
+		return (0);
+	current = *lst;
+	while (current)
+	{
+		if (type_is_redir(current) && !current->next)
+		{
+			printf("Cas 1\n");
+			return (print_syntax_error("newline"));
+		}
+		if (current->next)
+		{
+			if (type_is_redir(current) && (type_is_redir(current->next) || is_bad_filepath(current->next)))
+			{
+				printf("Cas 2\n");
+				return (print_syntax_error(current->next->word));
+			}
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
+int	get_env_size(t_env_var *env)
+{
+	t_env_var	*current;
+	int			size;
+
+	size = 0;
+	if (!env)
+		return (0);
+	current = env;
+	while (current)
+	{
+		size++;
+		current = current->next;
+	}
+	return (size);
+}
+
+char	*join_env_values(char *key, char **tab)
+{
+	char	*res;
+	char	*temp;
+	int		i;
+
+	res = ft_strdup(key);
+	res = ft_strjoin(res, "=");
+	i = 0;
+	while (tab[i])
+	{
+		res = ft_strjoin(res, tab[i]);
+		if (tab[i + 1])
+			res = ft_strjoin(res, ":");
+		i++;
+	}
+	return (res);
+}
+
+char	**env_to_tab(t_env_var *env)
+{
+	t_env_var	*current;
+	char		**tab;
+	int			cell;
+
+	if (!env)
+		return (0);
+	
+	int size = get_env_size(env);
+	tab = malloc(sizeof(char *) * get_env_size(env));
+	if (!tab)
+		return (0);
+	current = env;
+	cell = 0;
+	while (current)
+	{
+		tab[cell] = join_env_values(current->key, current->values);
+		cell++;
+		current = current->next;
+	}
+	return (tab);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env_var	*env_vars;		//TODO rename type to a more generic name
+	t_env_var	*env_vars;
 	t_env_var	*global_vars;
 	char		*line;
 	char		*tmp;
@@ -55,9 +154,10 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		words_lst = parse_words(line, env_vars, &global_vars);
-		display_words(words_lst);
+		// printf("I'm here\n");
+		// display_words(words_lst);
 		var_expansion(words_lst, &global_vars, &env_vars);
-		if (words_lst && *words_lst && check_pipe_syntax(words_lst))
+		if (words_lst && *words_lst && !syntax_error(words_lst))
 			execute_line(words_lst, &env_vars, &global_vars);
 		free(line);
 	}

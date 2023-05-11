@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 20:47:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/03/18 21:39:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:38:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,6 @@ char	*print_type(t_type type)
 		return ("IGN");
 	else if (type == INIT)
 		return ("INIT");
+	else
+		return ("UNKNOWN TYPE");
 }

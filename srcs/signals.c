@@ -15,9 +15,9 @@
 static void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
-		printf("\n$> ");
+		printf("\n\033[1;36mminishell $>\033[00m ");
 	else if (sig == SIGQUIT)
-		printf("\33[2K\r$> ");
+		printf("\33[2K\r\033[1;36mminishell $>\033[00m ");
 }
 
 /**

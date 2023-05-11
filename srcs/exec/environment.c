@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:06:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 10:45:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 09:35:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (SUCCESS);
-}
-
-/**
-*	@brief Get values and keys from the initial environment where minishell starts
-**/
-t_env_var	*get_initial_env(char **env)
-{
-	int			i;
-	t_env_var	*env_var;
-	char		**split;
-	
-	i = 0;
-	while (env[i])
-	{
-		env_var_add_back(&env_var, env_var_new(env[i]));
-		i++;
-	}
-	return (env_var);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/10 22:23:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 12:13:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ void		env_var_add_back(t_env_var **env_var, t_env_var *new);
 t_env_var	*env_var_new(char *env);
 
 void	delete_existing_key(t_env_var **env, char *key);
+
+char	**env_to_tab(t_env_var *env);
 
 # define SUCCESS	0
 # define FAILURE	-1
