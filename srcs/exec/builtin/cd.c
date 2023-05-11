@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 10:45:45 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 18:12:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,12 @@ void	switch_old_curr_pwd(t_env_var *env)
 	char		*path;
 
 	old_pwd = get_old_pwd(env);
+	if (!old_pwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		g_status = 1;
+		return ;
+	}
 	if (chdir(old_pwd->values[0]) != 0)
 	{
 		perror(old_pwd->values[0]);
