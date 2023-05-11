@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 14:36:39 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:42:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,9 +315,16 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	size = get_nb_quoted_words(str);
 	printf("there are %d tokens\n", size);
 	tab = fill_quoted_tab(str, size);
+	int j = 0;
+	while (tab[j])
+	{
+		printf("jtab[%d]: %s\n", j, tab[j]);
+		j++;
+	}
+	printf("tab size: %d\n", j);
 	
 	int i = 0;
-	while (i < size)
+	while (i < j)//size)
 	{
 		printf("tab[%d]: %s\n", i, tab[i]);
 		if (tab[i][0] != '\'')
@@ -327,12 +334,13 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 		printf("new tab[%d]: %s\n", i, tab[i]);
 		i++;
 	}
-	return (join_tab(tab, size));
-}
-
-char	*simplify_quotes(char *str, t_env_var **env,t_env_var **global)
-{
-	return (get_quoted(str, env, global));
+	i = 0;
+	while (tab[i])
+	{
+		printf("newtab[%d]: %s\n", i, tab[i]);
+		i++;
+	}
+	return (join_tab(tab, j)); //size));
 }
 
 t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars)
@@ -345,7 +353,8 @@ t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **
 	current = *words_lst;
 	while (current)
 	{
-		current->word = simplify_quotes(current->word, env_vars, global_vars);
+		printf("-----------------\n");
+		current->word = get_quoted(current->word, env_vars, global_vars);
 		current = current->next;
 	}
 
