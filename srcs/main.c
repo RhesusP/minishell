@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 14:58:12 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:30:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 		words_lst = parse_words(line, env_vars, &global_vars);
 		// display_words(words_lst);
+		printf("\033[95m\texpansion start\033[39m\n");
 		var_expansion(words_lst, &global_vars, &env_vars);
+		printf("\033[95m\texpansion finished\033[39m\n");
 		if (words_lst && *words_lst && !syntax_error(words_lst))
 			execute_line(words_lst, &env_vars, &global_vars);
 		free(line);

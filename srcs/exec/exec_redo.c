@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/11 13:05:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:17:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 		ft_pwd(*env);
 		return (1);
 	}
-	// else if (ft_strcmp(curr->word, "unset") == 0)
-	// 	return (1);
-	else if (ft_strcmp(curr->word, "echo") == 0)		// ok
+	else if (ft_strcmp(curr->word, "echo") == 0)
 	{
 		ft_echo(lst);
 		return (1);
 	}
-	else if (ft_strcmp(curr->word, "env") == 0)		// ok
+	else if (ft_strcmp(curr->word, "env") == 0)
 	{
 		ft_env(lst, *env);
 		return (1);
@@ -64,12 +62,12 @@ int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global)
 	}
 	else if (ft_strcmp(curr->word, "export") == 0)
 	{
-		ft_export(lst, env);		//TODO change env
+		ft_export(lst, env);
 		return (0);
 	}
 	else if (ft_strcmp(curr->word, "unset") == 0)
 	{
-		ft_unset(lst, env, global);	//TODO change env
+		ft_unset(lst, env, global);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "cd") == 0)
@@ -84,7 +82,6 @@ int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global)
 *	@brief Get the command with args from the parser into a char **
 *	Then we'll be able to pass the full command to execve()
 **/
-
 char	**lst_to_string(t_word **lst)
 {
 	char	**tab;
@@ -126,7 +123,6 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 		i++;
 	}
 	return (NULL);
-
 }
 
 t_redir	*create_redir(t_type type, char *path)
@@ -198,21 +194,6 @@ t_redir	**get_redir(t_word **lst)
 	if (!redir)
 		return (0);
 	*redir = 0;
-	// while (current->next)
-	// {
-	// 	if (current->next->type == RO || current->next->type == RI || current->next->type == ARO || current->next->type == HE)
-	// 	{
-	// 		if (current->next->next && (current->next->next->type == FILEPATH || current->next->next->type == DELIMITER))
-	// 			add_back_redir(redir, create_redir(current->next->type, current->next->next->word));
-	// 		else
-	// 		{
-	// 			perror("syntax error ?\n");
-	// 			return (0);
-	// 		}
-	// 	}
-	// 	current = current->next;
-	// }
-
 	while (current)
 	{
 		if (current->type == RO || current->type == RI || current->type == ARO || current->type == HE)
@@ -229,17 +210,6 @@ t_redir	**get_redir(t_word **lst)
 	}
 
 	return (redir);
-}
-
-char	*get_filepath(t_word **lst)
-{
-	t_word	*current;
-	// #include "../../../includes/exec.h"
-
-	current = *lst;
-	while (current->next && current->next->type != FILEPATH)
-		current = current->next;
-	return (current->next->word);
 }
 
 char	*here_doc(char *delim)
@@ -262,27 +232,6 @@ char	*here_doc(char *delim)
 		concat = ft_strjoin(concat, "\n");
 	}
 	return (concat);
-}
-
-char	**copy_and_add_cmd(char **full_cmd, char *new_arg)
-{
-	int	i;
-	int	size;
-	char	**new_cmd;
-
-	size = 0;
-	while (full_cmd[size])
-		size++;
-	new_cmd = malloc(sizeof(char *) * (size + 1));
-	i = 0;
-	while (i < size)
-	{
-		new_cmd[i] = full_cmd[i];
-		i++;
-	}
-	new_cmd[i] = ft_strdup(new_arg);
-	free(full_cmd);
-	return (new_cmd);
 }
 
 char	**handle_redirection(t_redir **lst, char **full_cmd)
@@ -345,7 +294,6 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 			temp = current->next;
 			current->next = create_redir(RI, ".tmp");
 			current->next->next = temp;			
-			//new_full_cmd = copy_and_add_cmd(new_full_cmd, new_arg);
 		}
 		current = current->next;
 	}

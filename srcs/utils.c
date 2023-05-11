@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/03 11:06:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:24:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,19 @@ char	*ft_strndup(const char *s1, unsigned int size)
 	return (res);
 }
 
-char	*ft_strnchr(const char *s, int c, int pos)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
-	int nb_occur;
 
-	nb_occur = 0;
 	i = 0;
-	while ((unsigned char)s[i] != '\0')
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (FAILURE);
+	while (s1[i] && s2[i])
 	{
-		// printf("searching... (%c)\n", s[i]);
-		if ((unsigned char)s[i] == (unsigned char)c)
-			nb_occur++;
-		if (pos == nb_occur)
-		{
-			// printf("returning finding result\n");
-			return ((char *)&(s[i]));
-		}
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
 	}
-	if ((unsigned char)c == '\0')
-	{
-		// printf("returning \\0 string\n");
-		return ((char *)&(s[i]));
-	}
-	// printf("returning void string\n");
 	return (0);
 }
 

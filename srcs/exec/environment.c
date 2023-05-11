@@ -6,28 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:06:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/11 09:35:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:24:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-// #include "../../includes/exec.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (FAILURE);
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
-}
 
 /**
 *	@brief Get the pointer to the correct variable we need
