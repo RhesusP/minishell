@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 12:14:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/11 14:58:12 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,17 @@ int	syntax_error(t_word **lst)
 {
 	t_word	*current;
 
-	// printf("\033[93m");
-	// display_words(lst);
 	if (!lst || !*lst)
 		return (0);
 	current = *lst;
 	while (current)
 	{
 		if (type_is_redir(current) && !current->next)
-		{
-			printf("Cas 1\n");
 			return (print_syntax_error("newline"));
-		}
 		if (current->next)
 		{
 			if (type_is_redir(current) && (type_is_redir(current->next) || is_bad_filepath(current->next)))
-			{
-				printf("Cas 2\n");
 				return (print_syntax_error(current->next->word));
-			}
 		}
 		current = current->next;
 	}
@@ -143,7 +135,7 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	}
 	signal_handler();
-	env_vars = get_environment(env);		//handle fail
+	env_vars = get_environment(env);
 	global_vars = malloc(sizeof(t_env_var));
 	global_vars = 0;
 	// add_back_env_var(&global_vars, create_env_var("TEST=test"));
@@ -154,7 +146,6 @@ int	main(int argc, char **argv, char **env)
 		if (!is_cmd_anonymous(line))
 			add_history(line);
 		words_lst = parse_words(line, env_vars, &global_vars);
-		// printf("I'm here\n");
 		// display_words(words_lst);
 		var_expansion(words_lst, &global_vars, &env_vars);
 		if (words_lst && *words_lst && !syntax_error(words_lst))
