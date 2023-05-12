@@ -25,11 +25,12 @@ static void	sig_handler(int sig)
  * 
  * @param line User input. 
  */
-void	handle_ctrld(char *line)
+void	handle_ctrld(char *line, t_env_var *env, t_env_var *global)
 {
 	if (!line)
 	{
 		printf("exit\n");
+		ft_free(env, global);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -42,7 +43,8 @@ void	signal_handler(void)
 {
 	struct sigaction	act;
 
-	act.sa_handler = &sig_handler;
+	act.sa_handler = sig_handler;
+	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
