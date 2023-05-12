@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/03 10:18:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:38:40 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_word	*create_word(char *cmd)
 	word = malloc(sizeof(t_word));
 	if (!word)
 		return (0);
-	word->word = cmd;
+	word->word = ft_strdup(cmd);
 	word->type = INIT;
 	word->next = 0;
 	word->prev = 0;
@@ -50,6 +50,34 @@ void	add_back_word(t_word **lst, t_word *new)
 	last = get_last_word(*lst);
 	new->prev = last;
 	last->next = new;
+}
+
+char	*print_type(t_type type)
+{
+	if (type == CMD)
+		return ("CMD");
+	else if (type == ARG)
+		return ("ARG");
+	else if (type == PIPE)
+		return ("PIPE");
+	else if (type == RI)
+		return ("RI");
+	else if (type == RO)
+		return ("RO");
+	else if (type == ARO)
+		return ("ARO");
+	else if (type == HE)
+		return ("HE");
+	else if (type == FILEPATH)
+		return ("FILEPATH");
+	else if (type == DELIMITER)
+		return ("DELIMITER");
+	else if (type == IGN)
+		return ("IGN");
+	else if (type == INIT)
+		return ("INIT");
+	else
+		return ("UNKNOWN TYPE");
 }
 
 void	display_words(t_word **lst)
@@ -125,24 +153,5 @@ void	delete_word(t_word *word, t_word **lst)
 	{
 		prev->next = next;
 		next->prev = prev;
-	}
-}
-
-void	reverse_display_words(t_word **lst)
-{
-	t_word	*last;
-
-	last = get_last_word(*lst);
-	if (!last)
-	{
-		printf("######   REVERSE TOKEN LIST   ######\n");
-		printf("Aucun commande.\n");
-		return ;
-	}
-	printf("######   REVERSE TOKEN LIST   ######\n");
-	while (last)
-	{
-		printf("%s\t%s\n", print_type(last->type), last->word);
-		last = last->prev;
 	}
 }

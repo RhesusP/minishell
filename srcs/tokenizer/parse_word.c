@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 13:47:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:40:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
+void	free_tokens(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 t_word	**parse_words(char *line, t_env_var **globals)
 {
 	char	**tokens;
@@ -67,6 +80,7 @@ t_word	**parse_words(char *line, t_env_var **globals)
 		return (0);
 	*words_lst = 0;
 	tokens = ft_strtok(line, " \n\t");
+
 	i = 0;
 	while (tokens[i])
 	{
@@ -74,6 +88,7 @@ t_word	**parse_words(char *line, t_env_var **globals)
 		add_back_word(words_lst, word);
 		i++;
 	}
+	free_tokens(tokens);
 	words_lst = detect_close_pipe(words_lst);
 	set_type(words_lst, globals);
 	return (words_lst);

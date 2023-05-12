@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 13:48:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:47:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,33 +74,7 @@ void	add_back_env_var(t_env_var **lst, t_env_var *new)
 	last->next = new;
 }
 
-void	print_env(t_env_var *env_var_lst)
-{
-	t_env_var	*current;
-	int			i;
 
-	if (!env_var_lst)
-	{
-		printf("list is empty.\n");
-		return ;
-	}
-	current = env_var_lst;
-	while (current)
-	{
-		printf("%s=", current->key);
-		i = 0;
-		while (current->values[i])
-		{
-			if (current->values[i + 1])
-				printf("%s:", current->values[i]);
-			else
-					printf("%s", current->values[i]);
-			i++;
-		}
-		printf("\n");
-		current = current->next;
-	}
-}
 
 /**
  * @brief Get only the key from the cmd KEY=value

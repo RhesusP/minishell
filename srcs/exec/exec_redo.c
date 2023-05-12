@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 13:47:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:27:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	display_redirs(t_redir **lst)
 	printf("######   REDIR LIST   ######\n");
 	while (current)
 	{
-		printf("%s\t%s\n", print_type(current->type), current->filepath);
+		printf("\t%s\n", current->filepath);
 		current = current->next;
 	}
 }
@@ -388,6 +388,19 @@ int	**create_tubes(int nb_tubes)
 	return (tubes);
 }
 
+void	free_tubes(int **tubes)
+{
+	int	i;
+
+	i = 0;
+	while (tubes[i])
+	{
+		free(tubes[i]);
+		i++;
+	}
+	free(tubes);
+}
+
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **global)
 {
 	t_env_var	*path;
@@ -411,4 +424,5 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global)
 		clear_word_lst(cmd);
 		count++;
 	}
+
 }

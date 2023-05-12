@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:19:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 13:42:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:52:10 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_getcwd()
 {

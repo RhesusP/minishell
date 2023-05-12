@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 13:42:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:18:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define SUCCESS	0
 # define FAILURE	-1
+//#define _POSIX_C_SOURCE
 
 extern int	g_status;
 
@@ -74,7 +75,7 @@ typedef struct s_env_var
 }	t_env_var;
 
 void		signal_handler(void);
-void		handle_ctrld(char *line);
+void		handle_ctrld(char *line, t_env_var *env, t_env_var *global);
 
 t_env_var	*get_environment(char **env);
 t_env_var	*create_env_var(char *line);
@@ -100,7 +101,6 @@ void		display_words(t_word **lst);
 void		clear_word_lst(t_word **lst);
 void		free_word_lst(t_word **lst);
 void		delete_word(t_word *word, t_word **lst);
-void		reverse_display_words(t_word **lst);	//DEBUG
 
 int			is_unquoted(char *line, int c_index);
 int			is_unquoted_metachar(char *line, int c_index);
@@ -132,10 +132,6 @@ void	ft_cd(t_word **lst, t_env_var *env);
 void	ft_pwd();
 void	ft_exit(t_word **lst);
 void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
-
-/* DEBUG */
-void		print_env(t_env_var *env_var_lst);
-char		*print_type(t_type type);
 
 char	*get_home(t_env_var *env);
 t_env_var	*get_pwd(t_env_var *env);
