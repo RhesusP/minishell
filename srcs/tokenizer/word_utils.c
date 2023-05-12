@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 15:38:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:28:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	free_word_lst(t_word **lst)
 	t_word	*current;
 	t_word	*next;
 
-	if (!*lst)
+	if (!lst)
 		return ;
 	current = *lst;
 	while (current)

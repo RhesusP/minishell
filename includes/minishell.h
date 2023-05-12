@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 16:18:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:22:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ t_word		*get_last_word(t_word *lst);
 void		add_back_word(t_word **lst, t_word *new);
 void		display_words(t_word **lst);
 void		clear_word_lst(t_word **lst);
-void		free_word_lst(t_word **lst);
 void		delete_word(t_word *word, t_word **lst);
 
 int			is_unquoted(char *line, int c_index);
@@ -157,6 +156,7 @@ char	**env_to_tab(t_env_var *env);
 char	*ft_getcwd();
 
 void	ft_free(t_env_var *env, t_env_var *global);
+void	free_word_lst(t_word **lst);
 
 # define SUCCESS	0
 # define FAILURE	-1

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 15:27:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:44:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 	char	*temp;
 	char	*potential_path;
 
+	printf("\there in get execve\n");
 	i = 0;
 	while (path_var->values[i])
 	{
@@ -350,8 +351,25 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 		if (execute_builtin(lst, env, nb_pipes))
 			exit(EXIT_SUCCESS);
 
+		printf("here in ft execve child\n");
+		int i = 0;
+		while (full_cmd[i])
+		{
+			printf("full_cmd[%d]: %s\n", i, full_cmd[i]);
+			i++;
+		}
+
+		i = 0;
+		while (path->values[i])
+		{
+			printf("path[%d]: %s\n", i, path->values[i]);
+			i++;
+		}
+
 		exec_path = get_execve_path(full_cmd[0], path);
-	
+		printf("exec path: %s\n", exec_path);
+
+
 		printf("here in ft_execve\n");
 		if (full_cmd[0] && !exec_path)
 		{

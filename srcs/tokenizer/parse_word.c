@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 15:40:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:33:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	free_tokens(char **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = 0;
 	while (tab[i])
 	{

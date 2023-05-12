@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 15:49:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 18:02:37 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ t_env_var	*get_environment(char **env)
 	t_env_var	*res;
 	t_env_var	*new_var;
 
-	res = malloc(sizeof(t_env_var));
-	if (!res)
-		return (0);
-	res = 0;
+	// res = malloc(sizeof(t_env_var));
+	res = NULL;
+	// if (!res)
+	// 	return (0);
+	//res = 0;
 	i = 0;
 	while (env[i])
 	{

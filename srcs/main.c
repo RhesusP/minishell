@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 15:56:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 18:06:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,24 +120,6 @@ char	**env_to_tab(t_env_var *env)
 	return (tab);
 }
 
-void	free_words_lst(t_word **lst)
-{
-	t_word	*current;
-	t_word	*next;
-
-	if (!lst)
-		return ;
-	current = *lst;
-	while (current)
-	{
-		next = current->next;
-		free(current->word);
-		free(current);
-		current = next;
-	}
-	free(lst);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_env_var	*env_vars;
@@ -153,25 +135,36 @@ int	main(int argc, char **argv, char **envp)
 	}
 	signal_handler();
 	env_vars = get_environment(envp);
-	global_vars = malloc(sizeof(t_env_var));
-	global_vars = 0;
-	while (1)
+	
+	t_env_var *curr;
+	curr = env_vars;
+	while (curr)
 	{
-		line = readline("\033[1;36mminishell $>\033[00m ");
-		handle_ctrld(line, env_vars, global_vars);
-		// if (!is_cmd_anonymous(line))
-		// 	add_history(line);
-		// words_lst = parse_words(line, &global_vars);
-		
-		// display_words(words_lst);
-		
-		// printf("\033[95m\texpansion start\033[39m\n");
-		// var_expansion(words_lst, &global_vars, &env_vars);
-		// printf("\033[95m\texpansion finished\033[39m\n");
-		// if (words_lst && *words_lst && !syntax_error(words_lst))
-		// 	execute_line(words_lst, &env_vars, &global_vars);
-		free(line);
+		printf("%s\n", curr->key);
+		curr = curr->next;
 	}
+
+
+	// global_vars = malloc(sizeof(t_env_var));
+	global_vars = NULL;
+	// while (1)
+	// {
+	// 	line = readline("\033[1;36mminishell $>\033[00m ");
+	// 	handle_ctrld(line, env_vars, global_vars);
+	// 	if (!is_cmd_anonymous(line))
+	// 		add_history(line);
+	// 	words_lst = parse_words(line, &global_vars);
+		
+	// 	display_words(words_lst);
+		
+	// 	printf("\033[95m\texpansion start\033[39m\n");
+	// 	var_expansion(words_lst, &global_vars, &env_vars);
+	// 	printf("\033[95m\texpansion finished\033[39m\n");
+	// 	if (words_lst && *words_lst && !syntax_error(words_lst))
+	// 		execute_line(words_lst, &env_vars, &global_vars);
+	// 	free(line);
+	// 	free_word_lst(words_lst);
+	// }
 	ft_free(env_vars, global_vars);
 	return (0);
 }
