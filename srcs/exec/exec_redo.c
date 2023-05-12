@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/11 15:17:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:47:06 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,6 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			g_status = WEXITSTATUS(status);
 			printf("exit status was %d\n", g_status);
 		}
-		// wait(NULL);
 	}
 	if (pid == 0)		//child process
 	{
@@ -345,13 +344,6 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
-		printf("here in ft_execve\n");
-		int i = 0;
-		while (full_cmd[i])
-		{
-			printf("\033[92mfull_cmd[%d]: %s\033[39m\n", i, full_cmd[i]);
-			i++;
-		}
 		if (redir)
 			full_cmd = handle_redirection(redir, full_cmd);
 
@@ -360,15 +352,21 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 		exec_path = get_execve_path(full_cmd[0], path);
 	
+		printf("here in ft_execve\n");
 		if (full_cmd[0] && !exec_path)
 		{
+			printf("here 11\n");
 			if (execve(full_cmd[0], full_cmd, env_to_tab(*env)) == -1)	//TODO check error msg
 			{
 				ft_putstr_fd(full_cmd[0], 2);
 				ft_putendl_fd(": command not found", 2);
 			}
 		}
-		execve(exec_path, full_cmd, env_to_tab(*env));
+		if (execve(exec_path, full_cmd, env_to_tab(*env)) == -1)
+		{
+			ft_putstr_fd(full_cmd[0], 2);
+			ft_putendl_fd(": command not found", 2);
+		}
 		exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
 	}
 }

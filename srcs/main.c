@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 17:17:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:32:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	get_env_size(t_env_var *env)
 char	*join_env_values(char *key, char **tab)
 {
 	char	*res;
-	char	*temp;
 	int		i;
 
 	res = ft_strdup(key);
@@ -106,8 +105,7 @@ char	**env_to_tab(t_env_var *env)
 	if (!env)
 		return (0);
 	
-	int size = get_env_size(env);
-	tab = malloc(sizeof(char *) * get_env_size(env));
+	tab = malloc(sizeof(char *) * (get_env_size(env) + 1));
 	if (!tab)
 		return (0);
 	current = env;
@@ -118,35 +116,52 @@ char	**env_to_tab(t_env_var *env)
 		cell++;
 		current = current->next;
 	}
+	tab[cell] = 0;
 	return (tab);
 }
 
-int	main(int argc, char **argv, char **env)
+void	free_words_lst(t_word **lst)
+{
+	t_word	*current;
+	t_word	*next;
+
+	if (!lst)
+		return ;
+	current = *lst;
+	while (current)
+	{
+		next = current->next;
+		free(current->word);
+		free(current);
+		current = next;
+	}
+	free(lst);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_env_var	*env_vars;
 	t_env_var	*global_vars;
 	char		*line;
-	char		*tmp;
 	t_word		**words_lst;
 
+	(void)argv;
 	if (argc != 1)
 	{
 		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
 		return (0);
 	}
 	signal_handler();
-	env_vars = get_environment(env);
+	env_vars = get_environment(envp);
 	global_vars = malloc(sizeof(t_env_var));
 	global_vars = 0;
-	// add_back_env_var(&global_vars, create_env_var("TEST=test"));
 	while (1)
 	{
 		line = readline("\033[1;36mminishell $>\033[00m ");
 		handle_ctrld(line);
 		if (!is_cmd_anonymous(line))
 			add_history(line);
-		words_lst = parse_words(line, env_vars, &global_vars);
-		// display_words(words_lst);
+		words_lst = parse_words(line, &global_vars);
 		printf("\033[95m\texpansion start\033[39m\n");
 		var_expansion(words_lst, &global_vars, &env_vars);
 		printf("\033[95m\texpansion finished\033[39m\n");
@@ -154,5 +169,6 @@ int	main(int argc, char **argv, char **env)
 			execute_line(words_lst, &env_vars, &global_vars);
 		free(line);
 	}
+	//ft_free(env_vars, global_vars);
 	return (0);
 }

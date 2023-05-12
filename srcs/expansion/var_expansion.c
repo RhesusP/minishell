@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 16:42:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:42:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ char	**fill_quoted_tab(char *str, int size)
 	int	last_alloc;
 
 	last_alloc = -1;
-	tab = malloc(sizeof(char *) * size);
+	tab = malloc(sizeof(char *) * (size + 1));
 	if (!tab)
 		return (0);
 	i = 0;
@@ -272,7 +272,17 @@ char	**fill_quoted_tab(char *str, int size)
 		i++;
 	}
 	if (!tab[size - 1])
+	{
+		printf("\033[33mcase 4 (get last unquoted)\033[39m\n");		//4
 		tab[size - 1] = get_last_unquoted(str);
+	}
+	tab[size] = 0;
+	int z = 0;
+	while (z < size)
+	{
+		printf("returning tab: %s\n", tab[z]);
+		z++;
+	}
 	return (tab);
 }
 
@@ -315,6 +325,7 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	size = get_nb_quoted_words(str);
 	printf("there are %d tokens\n", size);
 	tab = fill_quoted_tab(str, size);
+	printf("here (new)\n");
 	int j = 0;
 	while (tab[j])
 	{
@@ -340,7 +351,7 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 		printf("newtab[%d]: %s\n", i, tab[i]);
 		i++;
 	}
-	return (join_tab(tab, j)); //size));
+	return (join_tab(tab, j));
 }
 
 t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars)

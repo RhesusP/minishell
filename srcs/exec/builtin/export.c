@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/10 22:29:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:40:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,20 @@ int	is_syntax_valid(char *str)
 	return (is_valid);
 }
 
-void	delete_existing_key(t_env_var **env, char *key)
+int		is_already_here(t_env_var **env, char *key)
 {
 	t_env_var	*current;
-	t_env_var	*prev;
-	t_env_var	*next;
 
-	if (!env || !*env)
-		return ;
-	prev = 0;
-	next = 0;
+	if (!env ||!*env)
+		return (0);
 	current = *env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-			{	
-				*env = malloc(sizeof(t_env_var));
-				*env = 0;
-				return ;
-			}
-			current->next = 0;
-			free(current);
-			return ;
-		}
-		prev = current;
-		current = current->next;	
+			return (1);
+		current = current->next;
 	}
+	return (0);
 }
 
 void	export_vars(t_word **lst, t_env_var **env)
@@ -112,9 +96,14 @@ void	export_vars(t_word **lst, t_env_var **env)
 		if (status == 1)
 		{
 			printf("%s IS VALID\n", current->word);
-			new = create_env_var(current->word);
-			delete_existing_key(env, new->key);
-			add_back_env_var(env, new);
+			if (is_already_here(env, get_var_key(current->word)))
+				printf("KEY ALREDY IN ENV\n");
+			else
+			{
+				printf("NEW KEY TO PUT IN ENV\n");
+				new = create_env_var(current->word);
+				add_back_env_var(env, new);
+			}
 		}
 		else if (status == 0)
 		{

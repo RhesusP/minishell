@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/05/10 20:49:33 by cbernot          ###   ########.fr        #
+#    Updated: 2023/05/12 13:46:14 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,11 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/exec/environment_utils.c ./srcs/exec/environment.c \
 		./srcs/exec/get_next_cmd.c ./srcs/exec/builtin/echo.c ./srcs/exec/builtin/env.c \
 		./srcs/exec/builtin/export.c ./srcs/exec/builtin/cd.c ./srcs/exec/builtin/pwd.c \
-		./srcs/expansion/var_expansion.c ./srcs/exec/builtin/exit.c ./srcs/exec/builtin/unset.c
+		./srcs/expansion/var_expansion.c ./srcs/exec/builtin/exit.c ./srcs/exec/builtin/unset.c ./srcs/free.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
-FLAGS = 
+FLAGS =
+#-Wall -Wextra -Werror
 DIR_FLAG = --no-print-directory
 
 %.o: %.c ./includes/minishell.h Makefile

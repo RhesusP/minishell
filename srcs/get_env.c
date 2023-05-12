@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 18:04:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:48:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	update_shlvl(t_env_var *env)
 {
 	t_env_var	*current;
 	int			old_lvl;
-	int			new_lvl;
 
 	if (!env)
 		return ;

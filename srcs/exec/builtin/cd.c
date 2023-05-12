@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/11 18:12:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:41:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,13 @@ t_env_var	*get_pwd(t_env_var *env)
 	if (!env)
 		return (0);
 	current = env;
-	while (current && ft_strcmp(current->key, "PWD") != 0)
+	while (current)
+	{
+		if (ft_strcmp(current->key, "PWD") != 0)
+			return (current);
 		current = current->next;
-	return (current);
+	}
+	return (0);
 }
 
 int	is_abs_path(char *path)
@@ -69,9 +73,11 @@ void	change_pwd(t_env_var *env, char *new_pwd)
 	t_env_var	*old_pwd;
 	
 	old_pwd = get_old_pwd(env);
+	if (!old_pwd)
+		add_back_env_var(&env, create_env_var(ft_strjoin("OLDPWD=", ft_getcwd())));
 	pwd = get_pwd(env);
-	old_pwd->values[0] = ft_strdup(pwd->values[0]);
-	pwd->values[0] = get_valid_pwd(old_pwd->values[0], new_pwd);
+	if (!pwd)
+		add_back_env_var(&env, create_env_var(ft_strjoin("PWD=", get_valid_pwd(old_pwd->values[0], new_pwd))));
 	if (chdir(new_pwd) != 0)
 		perror(new_pwd);
 }
@@ -82,7 +88,6 @@ void	go_back_in_pwd(t_env_var *env)
 	t_env_var	*old_pwd;
 	char		**tab;
 	char		*res;
-	char		*tmp;
 	int			i;
 	int			size;
 
@@ -234,7 +239,6 @@ void	switch_old_curr_pwd(t_env_var *env)
 	t_env_var	*old_pwd;
 	t_env_var	*pwd;
 	char		*temp;
-	char		*path;
 
 	old_pwd = get_old_pwd(env);
 	if (!old_pwd)
@@ -256,7 +260,6 @@ void	switch_old_curr_pwd(t_env_var *env)
 
 void	simplify_path(char *str, t_env_var *env)
 {
-	char	*res;
 	char	*temp;
 	char	**tab;
 	char	*path;
@@ -299,7 +302,24 @@ void	ft_cd(t_word **lst, t_env_var *env)
 		current = current->next;
 	}
 	if (nb_arg == 0)
-		change_pwd(env, get_home(env));
+	{
+		char *home = get_home(env);
+		if (!home)
+		{
+			ft_putendl_fd("cd: HOME not set", 2);
+			return ;
+		}
+		else if (ft_strcmp(home, "") == 0)
+		{
+			printf("nothing to do\n");
+			return ;
+		}
+		else
+		{
+			printf("need to go to home\n");
+			change_pwd(env, home);
+		}
+	}
 	else if (nb_arg == 1)
 		simplify_path(path->word, env);
 	else

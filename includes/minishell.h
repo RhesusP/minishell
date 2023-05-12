@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 15:28:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:42:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int			is_unquoted(char *line, int c_index);
 int			is_unquoted_metachar(char *line, int c_index);
 int			is_unquoted_double_chevron(char *line, int c_index);
 
-t_word		**parse_words(char *line, t_env_var *envs, t_env_var **globals);
-void		set_type(t_word **lst, t_env_var *envs, t_env_var **globals);
+t_word		**parse_words(char *line, t_env_var **globals);
+void		set_type(t_word **lst, t_env_var **globals);
 char		**resplit(char *s);
 int			is_metachar(char c);
 int			check_quotes_err(char *line);
@@ -129,7 +129,7 @@ void	ft_echo(t_word **lst);
 void	ft_env(t_word **lst, t_env_var *env);
 void	ft_export(t_word **lst, t_env_var **env);
 void	ft_cd(t_word **lst, t_env_var *env);
-void	ft_pwd(t_env_var *env);
+void	ft_pwd();
 void	ft_exit(t_word **lst);
 void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
 
@@ -154,8 +154,13 @@ void		env_var_add_back(t_env_var **env_var, t_env_var *new);
 t_env_var	*env_var_new(char *env);
 
 void	delete_existing_key(t_env_var **env, char *key);
+int		is_already_here(t_env_var **env, char *key);
 
 char	**env_to_tab(t_env_var *env);
+
+char	*ft_getcwd();
+
+void	ft_free(t_env_var *env, t_env_var *global);
 
 # define SUCCESS	0
 # define FAILURE	-1

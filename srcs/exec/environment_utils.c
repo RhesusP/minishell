@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/11 09:35:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:46:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,16 @@ char	*get_home(t_env_var *env)
 	if (!env)
 		return (0);
 	current = env;
-	while (current && ft_strcmp(current->key, "HOME") != 0)
+	while (current)
+	{
+		if (ft_strcmp(current->key, "HOME") == 0)
+		{
+			if (current->values && current->values[0])
+				return (current->values[0]);
+			else
+				return ("");
+		}
 		current = current->next;
-	return (current->values[0]);
+	}
+	return (0);
 }
