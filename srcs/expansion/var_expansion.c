@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 14:43:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/17 10:40:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,11 +209,11 @@ int	get_nb_quoted_words(char *str)
 
 char	**fill_quoted_tab(char *str, int size)
 {
-	int	i;
-	int	j;
-	int	cell;
+	int		i;
+	int		j;
+	int		cell;
 	char	**tab;
-	int	last_alloc;
+	int		last_alloc;
 
 	last_alloc = -1;
 	tab = malloc(sizeof(char *) * (size + 1));
@@ -317,6 +317,17 @@ char	*join_tab(char **tab, int size)
 	return (res);
 }
 
+
+
+
+
+
+
+
+
+
+
+
 char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 {
 	int		size;
@@ -325,13 +336,13 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	size = get_nb_quoted_words(str);
 	printf("there are %d tokens\n", size);
 	tab = fill_quoted_tab(str, size);
-	printf("here (new)\n");
+	printf("here (new)\n");    
 	int j = 0;
-	while (tab[j])
+	while (tab[j])  
 	{
 		printf("jtab[%d]: %s\n", j, tab[j]);
 		j++;
-	}
+	}             
 	printf("tab size: %d\n", j);
 	
 	int i = 0;
@@ -345,29 +356,40 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 		printf("new tab[%d]: %s\n", i, tab[i]);
 		i++;
 	}
-	i = 0;
-	while (tab[i])
-	{
-		printf("newtab[%d]: %s\n", i, tab[i]);
-		i++;
-	}
+	// i = 0;
+	// while (tab[i])
+	// {
+	// 	printf("newtab[%d]: %s\n", i, tab[i]);
+	// 	i++;
+	// }
 	return (join_tab(tab, j));
+	// return ("test");
 }
 
-t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars)
+
+
+
+
+
+
+
+
+
+
+void	var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars)
 {
 	t_word	*current;
 	int		quoted_case;
+	char	*temp;
 
 	if (!words_lst || !*words_lst)
-		return (words_lst);
+		return ;
 	current = *words_lst;
 	while (current)
 	{
 		printf("-----------------\n");
+		// ok
 		current->word = get_quoted(current->word, env_vars, global_vars);
 		current = current->next;
 	}
-
-	return (words_lst);
 }

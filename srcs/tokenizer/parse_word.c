@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 17:33:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/17 10:16:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_word	**detect_close_pipe(t_word **lst)
 	{
 		if (ft_strcmp(current->word, "<<") == 0 || ft_strcmp(current->word, ">>") == 0)
 		{
-			add_back_word(new_lst, create_word(ft_strdup(current->word)));
+			add_back_word(new_lst, create_word(current->word));
 			current = current->next;
 		}
 		else
@@ -48,6 +48,14 @@ t_word	**detect_close_pipe(t_word **lst)
 				add_back_word(new_lst, create_word(reparse[i]));
 				i++;
 			}
+			i = 0;
+			while (reparse[i])
+			{
+				free(reparse[i]);
+				i++;
+			}
+			free(reparse);
+
 			current = current->next;
 		}
 	}

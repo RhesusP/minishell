@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 17:22:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/17 10:19:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_env_var	*get_pwd(t_env_var *env);
 char	*get_var_key(char *str);
 char	**get_var_values(char *str);
 
-t_word	**var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars);
+void	var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars);
 
 char	**handle_redirection(t_redir **lst, char **full_cmd);
 char	**lst_to_string(t_word **lst);
