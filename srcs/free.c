@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:14:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/17 09:31:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/20 21:58:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_env(t_env_var *env)
 		next = current->next;
 		free(current->key);
 		i = 0;
-		while (current->values[i])
+		while (current->values && current->values[i])
 		{
 			free(current->values[i]);
 			i++;

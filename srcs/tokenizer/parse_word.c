@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/17 10:16:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:10:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_word	**detect_close_pipe(t_word **lst)
 	t_word	**new_lst;
 	char	**reparse;
 
-	if (!*lst)
+	if (!lst)
 		return (0);
 	new_lst = malloc(sizeof(t_word *));
 	if (!new_lst)
@@ -45,6 +45,7 @@ t_word	**detect_close_pipe(t_word **lst)
 			int	i = 0;
 			while (reparse[i])
 			{
+				// printf("new word: %s\n", reparse[i]);
 				add_back_word(new_lst, create_word(reparse[i]));
 				i++;
 			}
@@ -55,7 +56,6 @@ t_word	**detect_close_pipe(t_word **lst)
 				i++;
 			}
 			free(reparse);
-
 			current = current->next;
 		}
 	}
