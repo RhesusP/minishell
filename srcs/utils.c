@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/11 15:24:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/21 12:30:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,26 @@ void	free_all(char **str)
 		i++;
 	}
 	free(str);
+}
+
+char	*ft_strjoin_nullable(char *s1, char *s2)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	if (!s1 && !s2)
+	{
+		res = malloc(sizeof(char));
+		if (!res)
+			return (NULL);
+		res[0] = '\0';
+		return (res);
+	}
+	else if (s1 && !s2)
+		return (ft_strdup(s1));
+	else if (!s1 && s2)
+		return (ft_strdup(s2));
+	else 
+		return (ft_strjoin(s1, s2));
 }

@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/05/12 15:57:47 by cbernot          ###   ########.fr        #
+#    Updated: 2023/05/20 21:25:28 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,12 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/get_env.c ./srcs/env_utils.c \
 		./srcs/builtins/echo.c ./srcs/builtins/env.c \
 		./srcs/builtins/export.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c \
 		./srcs/builtins/exit.c ./srcs/builtins/unset.c \
-		./srcs/free.c
+		./srcs/free.c \
+		./srcs/redirection/redirection.c ./srcs/redirection/redir_handler.c ./srcs/exec/tubes.c ./srcs/builtins/builtin_handler.c \
+		./srcs/syntax.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
-FLAGS =
+FLAGS = -g
 #-g -fsanitize=address
 #-Wall -Wextra -Werror
 DIR_FLAG = --no-print-directory

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 14:51:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/20 22:10:46 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,48 +66,46 @@ char	*get_valid_pwd(char *pwd, char *input)
 	return (path);
 }
 
-void	change_pwd(t_env_var *env, char *new_pwd)
+void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 {
 	t_env_var	*pwd;
 	t_env_var	*old_pwd;
-	
+	char		*temp;
+
+	if (chdir(new_pwd) != 0)
+	{
+		g_status = 1;
+		perror(new_pwd);
+		free(new_pwd);
+		return ;
+	}
 	old_pwd = get_old_pwd(env);
+	pwd = get_pwd(env);
 	if (!old_pwd)
 		add_back_env_var(&env, create_env_var(ft_strjoin("OLDPWD=", ft_getcwd())));
-	pwd = get_pwd(env);
-	if (!pwd)
-		add_back_env_var(&env, create_env_var(ft_strjoin("PWD=", get_valid_pwd(old_pwd->values[0], new_pwd))));
-	if (chdir(new_pwd) != 0)
-		perror(new_pwd);
-}
-
-void	go_back_in_pwd(t_env_var *env)
-{
-	t_env_var	*pwd;
-	t_env_var	*old_pwd;
-	char		**tab;
-	char		*res;
-	int			i;
-	int			size;
-
-	old_pwd = get_old_pwd(env);
-	pwd = get_pwd(env);
-	old_pwd->values[0] = ft_strdup(pwd->values[0]);
-	tab = ft_split(old_pwd->values[0], '/');
-	size = 0;
-	while (tab[size])
-		size++;
-	i = 0;
-	res = "/";
-	while (i < size - 1)
+	else
 	{
-		res = ft_strjoin(res, tab[i]);
-		res = ft_strjoin(res, "/");
-		i++;
+		free(old_pwd->values);
+		temp = ft_getcwd();
+		old_pwd->values = malloc(sizeof(char *) * 2);
+		old_pwd->values[0] = ft_strdup(temp);
+		old_pwd->values[1] = 0;
+		free(temp);
+		// free(old_pwd->values[0]);
+		// old_pwd->values[0] = ft_getcwd();
 	}
-	pwd->values[0] = res;
-	if (chdir(res) != 0)
-		perror(res);
+	if (!pwd)
+	{
+		temp = ft_strjoin("PWD=", new_pwd);
+		add_back_env_var(&env, create_env_var(temp));
+		free(temp);
+	}
+	else
+	{
+		free(pwd->values[0]);
+		pwd->values[0] = new_pwd;
+	}
+	g_status = 0;
 }
 
 int	count_dir(char *path)
@@ -143,10 +141,9 @@ char	**create_dir_tab(char *str, int nb_dir)
 	tab = malloc(sizeof(char *) * (nb_dir + 1));
 	if (!tab)
 		return (0);
-	// tab[0] = ft_strdup("/");
 	cell = 0;
 	i = 0;
-	while (str[i] != '\0')
+	while (i < ft_strlen(str) && str[i] != '\0')
 	{
 		j = i;
 		while(str[j] != '/' && str[j] != '\0')
@@ -159,19 +156,13 @@ char	**create_dir_tab(char *str, int nb_dir)
 		i = j + 1;
 	}
 	tab[nb_dir] = 0;
-	// i = 0;
-	// while (tab[i])
-	// {
-	// 	printf("tab[%d]: %s\n", i, tab[i]);
-	// 	i++;
-	// }
 	return (tab);
 }
 
 char	*recreate_new_path(char **tab, int size)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*res;
 	char	*temp;
 
@@ -198,63 +189,72 @@ char	*recreate_new_path(char **tab, int size)
 		}
 		i++;
 	}
-	
+	char	*temp1;
+	res = 0;
 	if (!tab[0])
-		res = "/";
-	else
-		res = "";
+		res = ft_strdup("/");
 	i = 0;
 	while (i < size)
 	{
 		if (tab[i])
 		{
 			temp = ft_strjoin("/", tab[i]);
-			res = ft_strjoin(res, temp);
+			temp1 = ft_strjoin_nullable(res, temp);
+			free(res);
+			free(temp);
+			res = ft_strdup(temp1);
+			free(temp1);
 		}
 		i++;
 	}
 	return (res);
 }
 
-void	change_directory(char *path, t_env_var *env)
-{
-	t_env_var	*old_pwd;
-	t_env_var	*pwd;
+// void	switch_old_curr_pwd(t_env_var *env)
+// {
+// 	t_env_var	*old_pwd;
+// 	t_env_var	*pwd;
+// 	char		*temp;
+// 	char		*env_line;
 
-	printf("change directory to %s\n", path);
-	if (chdir(path) != 0)
-	{
-		perror(path);
-		return ;
-	}
-	old_pwd = get_old_pwd(env);
-	pwd = get_pwd(env);
-	old_pwd->values[0] = pwd->values[0];
-	pwd->values[0] = path;
-}
+// 	old_pwd = get_old_pwd(env);
+// 	if (!old_pwd)
+// 	{
+// 		ft_putendl_fd("cd: OLDPWD not set", 2);
+// 		g_status = 1;
+// 		return ;
+// 	}
+// 	temp = ft_getcwd();
+// 	if (chdir(old_pwd->values[0]) != 0)
+// 	{
+// 		perror(old_pwd->values[0]);
+// 		g_status = 1;
+// 		free(temp);
+// 		return ;
+// 	}
+// 	pwd = get_pwd(env);
+// 	if (!pwd)
+// 	{
+// 		env_line = ft_strjoin("PWD=", old_pwd->values[0]);
+// 		add_back_env_var(&env, create_env_var(env_line));
+// 		free(env_line);
+// 	}
+// 	old_pwd->values[0] = temp;
+// 	g_status = 0;
+// }
 
 void	switch_old_curr_pwd(t_env_var *env)
 {
 	t_env_var	*old_pwd;
-	t_env_var	*pwd;
-	char		*temp;
 
 	old_pwd = get_old_pwd(env);
-	if (!old_pwd)
+	if (!old_pwd || !old_pwd->values || !old_pwd->values[0])
 	{
 		ft_putendl_fd("cd: OLDPWD not set", 2);
 		g_status = 1;
 		return ;
 	}
-	if (chdir(old_pwd->values[0]) != 0)
-	{
-		perror(old_pwd->values[0]);
-		return ;
-	}
-	pwd = get_pwd(env);
-	temp = old_pwd->values[0];
-	old_pwd->values[0] = pwd->values[0];
-	pwd->values[0] = temp;
+	change_pwd(env, old_pwd->values[0], 1);
 }
 
 void	simplify_path(char *str, t_env_var *env)
@@ -262,6 +262,8 @@ void	simplify_path(char *str, t_env_var *env)
 	char	*temp;
 	char	**tab;
 	char	*path;
+	char	*pwd;
+	char	*temp1;
 
 	if (str[0] == '-' && ft_strlen(str) == 1)
 	{
@@ -270,17 +272,26 @@ void	simplify_path(char *str, t_env_var *env)
 	}
 	if (str[0] != '/')
 	{
-		temp = ft_strjoin(get_pwd(env)->values[0], "/");
-		temp = ft_strjoin(temp, str);
+		pwd = ft_getcwd();
+		temp1 = ft_strjoin(pwd, "/");
+		temp = ft_strjoin(temp1, str);
+		free(temp1);
+		free(pwd);
 	}
 	else
 		temp = ft_strdup(str);
-	printf("abs path is %s\n", temp);
-	printf("there are %d directories\n", count_dir(temp));
 	tab = create_dir_tab(temp, count_dir(temp));
 	path = recreate_new_path(tab, count_dir(temp));
-	printf("here HERE\n");
-	change_directory(path, env);
+	free(temp);
+	change_pwd(env, path, 1);
+	int	i;
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 	return ;
 }
 
@@ -306,21 +317,17 @@ void	ft_cd(t_word **lst, t_env_var *env)
 		if (!home)
 		{
 			ft_putendl_fd("cd: HOME not set", 2);
-			return ;
-		}
-		else if (ft_strcmp(home, "") == 0)
-		{
-			printf("nothing to do\n");
+			g_status = 1;
 			return ;
 		}
 		else
-		{
-			printf("need to go to home\n");
-			change_pwd(env, home);
-		}
+			change_pwd(env, home, 1);
 	}
 	else if (nb_arg == 1)
 		simplify_path(path->word, env);
 	else
+	{
 		ft_putendl_fd("cd: too many arguments", 2);
+		g_status = 1;
+	}
 }

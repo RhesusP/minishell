@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/17 10:19:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:46:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,37 @@ typedef struct s_env_var
 	struct s_env_var    *next;
 }	t_env_var;
 
+// Redirections
+t_redir	*create_redir(t_type type, char *path);
+t_redir	*get_last_redir(t_redir *lst);
+void	add_back_redir(t_redir **lst, t_redir *new);
+void	display_redirs(t_redir **lst);
+void	free_redir(t_redir **redir);
+char	**handle_redirection(t_redir **lst, char **full_cmd);
+t_redir	**get_redir(t_word **lst);
+char	*here_doc(char *delim);
+
+
+// Tubes
+int	**create_tubes(int nb_tubes);
+void	free_tubes(int **tubes);
+
+// Builtins
+int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes);
+int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes, int nb_pipes);
+
+// Syntax error
+int	type_is_redir(t_word *word);
+int	is_bad_filepath(t_word *word);
+int	print_syntax_error(char *token);
+int	syntax_error(t_word **lst);
+
+
+// Environment
+char	**env_to_tab(t_env_var *env);
+
+void	free_env(t_env_var *env);
+
 void		signal_handler(void);
 void		handle_ctrld(char *line, t_env_var *env, t_env_var *global);
 
@@ -118,7 +149,7 @@ void		free_all(char **str);
 
 int	is_cmd_anonymous(char *cmd);
 
-void		execute_line(t_word	**word, t_env_var **env, t_env_var **global);
+void		execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line);
 int			count_pipes(t_word **word);
 int			get_exec_len(t_word **lst);
 
@@ -126,10 +157,10 @@ t_word	**get_next_cmd(t_word **lst, t_word*** new_lst);
 
 void	ft_echo(t_word **lst);
 void	ft_env(t_word **lst, t_env_var *env);
-void	ft_export(t_word **lst, t_env_var **env);
+void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes);
 void	ft_cd(t_word **lst, t_env_var *env);
 void	ft_pwd();
-void	ft_exit(t_word **lst);
+void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes);
 void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
 
 char	*get_home(t_env_var *env);
@@ -151,12 +182,14 @@ t_env_var	*env_var_new(char *env);
 void	delete_existing_key(t_env_var **env, char *key);
 int		is_already_here(t_env_var **env, char *key);
 
-char	**env_to_tab(t_env_var *env);
+
 
 char	*ft_getcwd();
 
 void	ft_free(t_env_var *env, t_env_var *global);
 void	free_word_lst(t_word **lst);
+
+char	*ft_strjoin_nullable(char *s1, char *s2);
 
 # define SUCCESS	0
 # define FAILURE	-1

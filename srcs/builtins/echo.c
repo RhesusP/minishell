@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 14:51:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/21 02:26:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	ft_echo(t_word **lst)
 	}
 	if (newline)
 		ft_putchar_fd('\n', 1);
-	exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
+	//exit(EXIT_SUCCESS);		//TODO maybe fix the multiple exit case
 }

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 14:52:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/21 21:36:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	export_vars(t_word **lst, t_env_var **env)
 	t_word		*current;
 	t_env_var	*new;
 	int			status;
+	char		*key;
 
 	if (!*lst  || !env ||!*env)
 		return ; 
@@ -96,14 +97,20 @@ void	export_vars(t_word **lst, t_env_var **env)
 		if (status == 1)
 		{
 			printf("%s IS VALID\n", current->word);
-			if (is_already_here(env, get_var_key(current->word)))
+			key = get_var_key(current->word);
+			if (is_already_here(env, key))
+			{
+				new = get_env_custom(key, *env);
+				
 				printf("KEY ALREDY IN ENV\n");
+			}
 			else
 			{
 				printf("NEW KEY TO PUT IN ENV\n");
 				new = create_env_var(current->word);
 				add_back_env_var(env, new);
 			}
+			free(key);
 		}
 		else if (status == 0)
 		{
@@ -115,12 +122,21 @@ void	export_vars(t_word **lst, t_env_var **env)
 	}
 }
 
-void	ft_export(t_word **lst, t_env_var **env)
+void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes)
 {
 	int		nb_arg;
 	t_word	*current;
-	
+	int		redir;
+
+	redir = 0;
 	nb_arg = 0;
+	current = *lst;
+	while (current)
+	{
+		if (type_is_redir(current))
+			redir = 1;
+		current = current->next;
+	}
 	current = *lst;
 	while (current && current->type != ARG)
 		current = current->next;
@@ -129,8 +145,11 @@ void	ft_export(t_word **lst, t_env_var **env)
 		nb_arg++;
 		current = current->next;
 	}
-	if (nb_arg == 0)
+	if ((nb_arg == 0 && !forked && nb_pipes == 0 && !redir) || (nb_arg ==0 && forked))
 		print_export(*env);
 	else
-		export_vars(lst, env);
+	{
+		if (!forked)
+			export_vars(lst, env);
+	}
 }
