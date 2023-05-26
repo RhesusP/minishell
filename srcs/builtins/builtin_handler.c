@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 17:21:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/24 14:26:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 	t_word	*curr;
 
 	curr = *lst;
-
 	if (ft_strcmp(curr->word, "export") == 0)
 	{
 		ft_export(lst, env, 1, nb_pipes);
@@ -46,7 +45,7 @@ int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global, 
 	t_word	*curr;
 
 	curr = *lst;
-	if (ft_strcmp(curr->word , "exit") == 0)
+	if (ft_strcmp(curr->word, "exit") == 0)
 	{
 		ft_exit(lst, env, global, words, line, tubes);
 		return (1);

@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 01:33:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/26 09:36:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "./../../includes/minishell.h"
 
 void	update_shlvl(t_env_var *env)
 {
@@ -39,15 +39,11 @@ t_env_var	*get_environment(char **env)
 	t_env_var	*res;
 	t_env_var	*new_var;
 
-	// res = malloc(sizeof(t_env_var));
 	res = NULL;
-	// if (!res)
-	// 	return (0);
-	//res = 0;
 	i = 0;
 	while (env[i])
 	{
-		new_var = create_env_var(env[i]);	//handle fail
+		new_var = create_env_var(env[i]);
 		add_back_env_var(&res, new_var);
 		i++;
 	}

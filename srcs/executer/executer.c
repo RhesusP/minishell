@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/21 17:46:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/24 13:10:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			close(tubes[count][1]);
 		}
 		full_cmd = lst_to_string(lst);
+
+		
 		char	**temp;
 		if (redir)
 		{
@@ -139,6 +141,15 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 			free_all(temp);
 		}
 		free_redir(redir);
+		if (!full_cmd[0])
+		{
+			free_all(full_cmd);
+			free_env(*env);
+			free_word_lst(word);
+			free_word_lst(lst);
+			free_tubes(tubes);
+			exit(0);
+		}
 		if (execute_builtin(lst, env, nb_pipes))
 		{
 			free_all(full_cmd);
@@ -158,7 +169,6 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 		if (full_cmd[0] && !exec_path)
 		{
-			// printf("CAS 1\n");
 			if (execve(full_cmd[0], full_cmd, str_env) == -1)
 			{
 				ft_putstr_fd(full_cmd[0], 2);

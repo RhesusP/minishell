@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 16:46:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/26 10:39:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,12 @@ void	ft_free(t_env_var *env, t_env_var *global);
 void	free_word_lst(t_word **lst);
 
 char	*ft_strjoin_nullable(char *s1, char *s2);
+
+char	*join_tab(char **tab, int size);
+char	*remove_quotes(char *str);
+char	*get_last_unquoted(char *str);
+char	*values_to_str(char **tab);
+char	*here_doc(char *delim);
 
 # define SUCCESS	0
 # define FAILURE	-1

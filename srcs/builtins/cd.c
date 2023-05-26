@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/20 22:10:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/24 10:48:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_env_var	*get_pwd(t_env_var *env)
 	current = env;
 	while (current)
 	{
-		if (ft_strcmp(current->key, "PWD") != 0)
+		if (ft_strcmp(current->key, "PWD") == 0)
 			return (current);
 		current = current->next;
 	}
@@ -71,28 +71,33 @@ void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 	t_env_var	*pwd;
 	t_env_var	*old_pwd;
 	char		*temp;
+	char		*temp1;
 
 	if (chdir(new_pwd) != 0)
 	{
 		g_status = 1;
 		perror(new_pwd);
-		free(new_pwd);
 		return ;
 	}
 	old_pwd = get_old_pwd(env);
 	pwd = get_pwd(env);
+
 	if (!old_pwd)
-		add_back_env_var(&env, create_env_var(ft_strjoin("OLDPWD=", ft_getcwd())));
+	{
+		temp = ft_getcwd();
+		temp1 = ft_strjoin("OLDPWD=", temp);
+		free(temp);
+		add_back_env_var(&env, create_env_var(temp1));
+		free(temp1);
+	}
 	else
 	{
-		free(old_pwd->values);
+		free_all(old_pwd->values);
 		temp = ft_getcwd();
 		old_pwd->values = malloc(sizeof(char *) * 2);
 		old_pwd->values[0] = ft_strdup(temp);
 		old_pwd->values[1] = 0;
 		free(temp);
-		// free(old_pwd->values[0]);
-		// old_pwd->values[0] = ft_getcwd();
 	}
 	if (!pwd)
 	{
@@ -102,8 +107,10 @@ void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 	}
 	else
 	{
-		free(pwd->values[0]);
-		pwd->values[0] = new_pwd;
+		free_all(pwd->values);
+		pwd->values = malloc(sizeof(char *) * 2);
+		pwd->values[0] = ft_strdup(new_pwd);
+		pwd->values[1] = 0;
 	}
 	g_status = 0;
 }
@@ -210,39 +217,6 @@ char	*recreate_new_path(char **tab, int size)
 	return (res);
 }
 
-// void	switch_old_curr_pwd(t_env_var *env)
-// {
-// 	t_env_var	*old_pwd;
-// 	t_env_var	*pwd;
-// 	char		*temp;
-// 	char		*env_line;
-
-// 	old_pwd = get_old_pwd(env);
-// 	if (!old_pwd)
-// 	{
-// 		ft_putendl_fd("cd: OLDPWD not set", 2);
-// 		g_status = 1;
-// 		return ;
-// 	}
-// 	temp = ft_getcwd();
-// 	if (chdir(old_pwd->values[0]) != 0)
-// 	{
-// 		perror(old_pwd->values[0]);
-// 		g_status = 1;
-// 		free(temp);
-// 		return ;
-// 	}
-// 	pwd = get_pwd(env);
-// 	if (!pwd)
-// 	{
-// 		env_line = ft_strjoin("PWD=", old_pwd->values[0]);
-// 		add_back_env_var(&env, create_env_var(env_line));
-// 		free(env_line);
-// 	}
-// 	old_pwd->values[0] = temp;
-// 	g_status = 0;
-// }
-
 void	switch_old_curr_pwd(t_env_var *env)
 {
 	t_env_var	*old_pwd;
@@ -284,6 +258,8 @@ void	simplify_path(char *str, t_env_var *env)
 	path = recreate_new_path(tab, count_dir(temp));
 	free(temp);
 	change_pwd(env, path, 1);
+	if (path)
+		free(path);
 	int	i;
 	i = 0;
 	while (tab[i])

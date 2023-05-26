@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 13:48:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/26 10:47:46 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,25 @@ void	give_meta_type(t_word **lst)
 			else if (ft_strcmp(word->word, "<") == 0)
 			{
 				word->type = RI;
-				if (!word->next)
-					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-				else
+				if (word->next)
 					word->next->type = FILEPATH;
 			}
 			else if (ft_strcmp(word->word, ">") == 0)
 			{
 				word->type = RO;
-				if (!word->next)
-					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-				else
+				if (word->next)
 					word->next->type = FILEPATH;	
 			}
 			else if (ft_strcmp(word->word, ">>") == 0)
 			{
 				word->type = ARO;
-				if (!word->next)
-					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-				else
+				if (word->next)
 					word->next->type = FILEPATH;
 			}
 			else if (ft_strcmp(word->word, "<<") == 0)
 			{
 				word->type = HE;
-				if (!word->next)
-					ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-				else
+				if (word->next)
 					word->next->type = DELIMITER;
 			}
 		}
@@ -75,50 +67,28 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 	{
 		if (word->type == INIT)
 		{
-			// VARIABLE ASSIGNATION CASE 
-			//word->word[0] != '=' added, because if we have no key, we must consider the =something as a command
 			if (ft_strrchr(word->word, '=') && word->word[0] != '=')
 			{
-				printf("\033[31mvariable assignation detected\033[39m\n");
 				if (!word->prev && !word->next)
 				{
-					printf("\033[32mwe can execute this assignation\033[39m\n");
-					//delete_word(word, lst);
 					if (actualize_global_var(globals, word->word) == FAILURE)
-					{
-						printf("ADDBACK\n");
 						add_back_env_var(globals, create_env_var(word->word));
-					}
 					clear_word_lst(lst);
 				}
-				// case		echo TOTO=toto
 				else if (word->prev && word->prev->type == CMD)
-				{
-					//printf("here 1 (%s)\n", word->word);
 					word->type = ARG;
-				}
-				// case		TOTO=toto ls
 				else if (!word->prev && word->next && word->next->type == INIT)
 				{
-					//printf("here 2 (%s)\n", word->word);
 					word->next->type = CMD;
 					delete_word(word, lst);
-				}
-				// case		... | TOTO=toto 
+
 				if (word->prev && word->prev->type == PIPE)
 				{
-					//printf("here 3 (%s)\n", word->word);
 					delete_word(word->prev, lst);
 					if (word->next)
-					{
-						//printf("here 4 (%s)\n", word->word);
 						delete_word(word, lst);
-					}
 					else
-					{
-						//printf("here 5 (%s)\n", word->word);
 						word->prev->next = 0;
-					}
 				}
 				if (!word->prev && word->next && word->next->type == PIPE)
 				{

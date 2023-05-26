@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/21 21:36:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/24 12:27:53 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,14 @@ void	export_vars(t_word **lst, t_env_var **env)
 			if (is_already_here(env, key))
 			{
 				new = get_env_custom(key, *env);
-				
-				printf("KEY ALREDY IN ENV\n");
+				int	i = 0;
+				while (new->values[i])
+				{
+					free(new->values[i]);
+					i++;
+				}
+				free(new->values);
+				new->values = get_var_values(current->word);
 			}
 			else
 			{

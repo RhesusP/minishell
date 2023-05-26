@@ -1,3 +1,1 @@
-salut
-je
-suis
+$PWD

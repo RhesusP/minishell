@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 12:30:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/26 09:47:40 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_all(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		free(str[i]);
 		i++;
@@ -77,6 +77,6 @@ char	*ft_strjoin_nullable(char *s1, char *s2)
 		return (ft_strdup(s1));
 	else if (!s1 && s2)
 		return (ft_strdup(s2));
-	else 
+	else
 		return (ft_strjoin(s1, s2));
 }

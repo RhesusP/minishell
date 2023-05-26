@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 16:25:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/24 14:32:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("\033[1;36mminishell $>\033[00m ");
 		handle_ctrld(line, env_vars, global_vars);
-		if (!is_cmd_anonymous(line))
+		if (!is_cmd_anonymous(line))			// TODO check
 			add_history(line);
 
 		words_lst = parse_words(line, &global_vars);
 		var_expansion(words_lst, &global_vars, &env_vars);
-		// display_words(words_lst);
 		if (words_lst && *words_lst && !syntax_error(words_lst))
 			execute_line(words_lst, &env_vars, &global_vars, line);
 		free(line);

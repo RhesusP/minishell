@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:10:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/21 01:41:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/26 09:50:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,6 @@ void	add_back_redir(t_redir **lst, t_redir *new)
 	last->next = new;
 }
 
-void	display_redirs(t_redir **lst)
-{
-	t_redir	*current;
-
-	if (!*lst)
-	{
-		printf("######   REDIR LIST   ######\n");
-		printf("Aucun commande.\n");
-		return ;
-	}
-	current = *lst;
-	printf("######   REDIR LIST   ######\n");
-	while (current)
-	{
-		printf("\t%s\n", current->filepath);
-		current = current->next;
-	}
-}
-
 void	free_redir(t_redir **redir)
 {
 	t_redir	*current;
@@ -83,4 +64,14 @@ void	free_redir(t_redir **redir)
 		current = next;
 	}
 	free(redir);
+}
+
+int	type_is_redir(t_word *word)
+{
+	if (word->type == RI || \
+		word->type == RO || \
+		word->type == ARO || \
+		word->type == HE)
+		return (1);
+	return (0);
 }
