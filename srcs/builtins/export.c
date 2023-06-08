@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/24 12:27:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:49:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_syntax_valid(char *str)
 {
 	int	i;
 	int	is_valid;
-	
+
 	is_valid = 0;
 	i = 0;
 	if (ft_isdigit(str[0]))
@@ -63,31 +63,40 @@ int	is_syntax_valid(char *str)
 	return (is_valid);
 }
 
-int		is_already_here(t_env_var **env, char *key)
+void	create_export_var(t_word *current, t_env_var **env)
 {
-	t_env_var	*current;
+	char		*key;
+	t_env_var	*new;
+	int			i;
 
-	if (!env ||!*env)
-		return (0);
-	current = *env;
-	while (current)
+	key = get_var_key(current->word);
+	if (is_already_here(env, key))
 	{
-		if (ft_strcmp(current->key, key) == 0)
-			return (1);
-		current = current->next;
+		new = get_env_custom(key, *env);
+		i = 0;
+		while (new->values[i])
+		{
+			free(new->values[i]);
+			i++;
+		}
+		free(new->values);
+		new->values = get_var_values(current->word);
 	}
-	return (0);
+	else
+	{
+		new = create_env_var(current->word);
+		add_back_env_var(env, new);
+	}
+	free(key);
 }
 
 void	export_vars(t_word **lst, t_env_var **env)
 {
-	t_word		*current;
-	t_env_var	*new;
-	int			status;
-	char		*key;
+	t_word	*current;
+	int		status;
 
-	if (!*lst  || !env ||!*env)
-		return ; 
+	if (!*lst || !env ||!*env)
+		return ;
 	current = *lst;
 	while (current && current->type != ARG)
 		current = current->next;
@@ -95,29 +104,7 @@ void	export_vars(t_word **lst, t_env_var **env)
 	{
 		status = is_syntax_valid(current->word);
 		if (status == 1)
-		{
-			printf("%s IS VALID\n", current->word);
-			key = get_var_key(current->word);
-			if (is_already_here(env, key))
-			{
-				new = get_env_custom(key, *env);
-				int	i = 0;
-				while (new->values[i])
-				{
-					free(new->values[i]);
-					i++;
-				}
-				free(new->values);
-				new->values = get_var_values(current->word);
-			}
-			else
-			{
-				printf("NEW KEY TO PUT IN ENV\n");
-				new = create_env_var(current->word);
-				add_back_env_var(env, new);
-			}
-			free(key);
-		}
+			create_export_var(current, env);
 		else if (status == 0)
 		{
 			ft_putstr_fd("export '", 2);
@@ -151,7 +138,7 @@ void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes)
 		nb_arg++;
 		current = current->next;
 	}
-	if ((nb_arg == 0 && !forked && nb_pipes == 0 && !redir) || (nb_arg ==0 && forked))
+	if ((nb_arg == 0 && !forked && nb_pipes == 0 && !redir) || (nb_arg == 0 && forked))
 		print_export(*env);
 	else
 	{

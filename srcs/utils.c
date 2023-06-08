@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 00:39:26 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 09:47:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:55:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,11 @@ char	*ft_strjoin_nullable(char *s1, char *s2)
 		return (ft_strdup(s2));
 	else
 		return (ft_strjoin(s1, s2));
+}
+
+int	ft_isspace(const char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }

@@ -6,65 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/24 10:48:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:40:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_env_var	*get_old_pwd(t_env_var *env)
-{
-	t_env_var	*current;
-
-	if (!env)
-		return (0);
-	current = env;
-	while (current)
-	{
-		if (ft_strcmp(current->key, "OLDPWD") == 0)
-			return (current);
-		current = current->next;
-	}
-	return (0);
-}
-
-t_env_var	*get_pwd(t_env_var *env)
-{
-	t_env_var	*current;
-
-	if (!env)
-		return (0);
-	current = env;
-	while (current)
-	{
-		if (ft_strcmp(current->key, "PWD") == 0)
-			return (current);
-		current = current->next;
-	}
-	return (0);
-}
-
-int	is_abs_path(char *path)
-{
-	if (path[0] == '/')
-		return (1);
-	return (0);
-}
-
-char	*get_valid_pwd(char *pwd, char *input)
-{
-	char	*path;
-	char	*tmp;
-
-	if (is_abs_path(input))
-		return (ft_strdup(input));
-	if (ft_strlen(ft_strrchr(pwd, '/')) == 1)	// si l'ancien pwd se termine par /
-		return (ft_strjoin(pwd, input));
-	tmp = ft_strjoin(pwd, "/");
-	path = ft_strjoin(tmp, input);
-	free(tmp);
-	return (path);
-}
 
 void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 {
@@ -81,7 +27,6 @@ void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 	}
 	old_pwd = get_old_pwd(env);
 	pwd = get_pwd(env);
-
 	if (!old_pwd)
 	{
 		temp = ft_getcwd();
@@ -113,29 +58,6 @@ void	change_pwd(t_env_var *env, char *new_pwd, int to_free)
 		pwd->values[1] = 0;
 	}
 	g_status = 0;
-}
-
-int	count_dir(char *path)
-{
-	int	i;
-	int	reset;
-	int	nb;
-
-	reset = 1;
-	nb = 0;
-	i = 0;
-	while (path[i] != '\0')
-	{
-		if (path[i] != '/' && reset)
-		{
-			nb++;
-			reset = 0;
-		}
-		else if (path[i] == '/')
-			reset = 1;
-		i++;
-	}
-	return (nb);
 }
 
 char	**create_dir_tab(char *str, int nb_dir)

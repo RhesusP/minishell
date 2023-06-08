@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_redo.c                                        :+:      :+:    :+:   */
+/*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/24 13:10:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:42:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,12 +206,19 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	t_env_var	*path;
 	int			pipes_nbr;
 	t_word		**cmd;
-	int			**tubes;
+	// int			**tubes;
 	int			count;
+	t_to_free	to_free;
+
+	to_free.lst = word;
+	to_free.env = env;
+	to_free.global = global;
+	to_free.line = line;
+	to_free.tubes = create_tubes(pipes_nbr);
 
 	count = 0;
 	pipes_nbr = count_pipes(word);
-	tubes = create_tubes(pipes_nbr);
+	// tubes = create_tubes(pipes_nbr);
 	cmd = malloc(sizeof(t_word *));
 	if (!cmd)
 		return ;
@@ -219,11 +226,12 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	while (get_next_cmd(word, &cmd))
 	{
 		path = get_env_custom("PATH", *env);
-		if (!execute_non_fork_builtin(cmd, env, global, word, line, tubes, pipes_nbr))
-			ft_execve(cmd, path, tubes, count, pipes_nbr, env, global, word);
+		to_free.command = cmd;
+		if (!execute_non_fork_builtin(cmd, env, global, word, line, to_free.tubes, pipes_nbr))
+			ft_execve(cmd, path, to_free.tubes, count, pipes_nbr, env, global, word);
 		clear_word_lst(cmd);
 		count++;
 	}
 	free_word_lst(cmd);
-	free_tubes(tubes);
+	free_tubes(to_free.tubes);
 }

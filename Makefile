@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/05/26 10:43:08 by cbernot          ###   ########.fr        #
+#    Updated: 2023/05/31 12:03:37 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,12 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 		./srcs/executer/get_next_cmd.c \
 		./srcs/expansion/var_expansion.c \
 		./srcs/builtins/echo.c ./srcs/builtins/env.c \
-		./srcs/builtins/export.c ./srcs/builtins/cd.c ./srcs/builtins/pwd.c \
+		./srcs/builtins/export.c ./srcs/builtins/cd.c ./srcs/builtins/cd_utils.c  ./srcs/builtins/pwd.c \
 		./srcs/builtins/exit.c ./srcs/builtins/unset.c \
 		./srcs/free.c ./srcs/redirection/redir_utils.c\
 		./srcs/structs/create_env.c \
 		./srcs/structs/redirection.c ./srcs/redirection/redir_handler.c ./srcs/executer/tubes.c ./srcs/builtins/builtin_handler.c \
-		./srcs/syntax.c
+		./srcs/syntax.c ./srcs/structs/to_free.c
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = -g

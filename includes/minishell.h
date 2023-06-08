@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 10:39:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:39:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,16 @@ typedef struct s_env_var
     char                **values;
 	struct s_env_var    *next;
 }	t_env_var;
+
+typedef struct	s_to_free
+{
+	t_word		**lst;
+	t_word		**command;
+	t_env_var	**env;
+	t_env_var	**global;
+	char		*line;
+	int			**tubes;
+}	t_to_free;
 
 // Redirections
 t_redir	*create_redir(t_type type, char *path);
@@ -196,6 +206,9 @@ char	*remove_quotes(char *str);
 char	*get_last_unquoted(char *str);
 char	*values_to_str(char **tab);
 char	*here_doc(char *delim);
+int	is_already_here(t_env_var **env, char *key);
+int	ft_isspace(const char c);
+void	free_and_exit(t_to_free free_struct, int exit_status);
 
 # define SUCCESS	0
 # define FAILURE	-1

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/21 15:58:37 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 12:02:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ int	get_nb_arg(t_word **lst)
 		current = current->next;
 	}
 	return (nb);
-}
-
-int	ft_isspace(const char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
 }
 
 long	ft_long_atoi(const char *str)

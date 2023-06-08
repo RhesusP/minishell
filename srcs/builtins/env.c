@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/12 14:51:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:50:40 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_env(t_word **lst, t_env_var *env)
 			if (current->values[i + 1])
 				printf("%s:", current->values[i]);
 			else
-					printf("%s", current->values[i]);
+				printf("%s", current->values[i]);
 			i++;
 		}
 		printf("\n");

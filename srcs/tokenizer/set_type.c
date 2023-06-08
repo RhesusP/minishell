@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 10:47:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:44:10 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 				{
 					word->next->type = CMD;
 					delete_word(word, lst);
-
+				}
 				if (word->prev && word->prev->type == PIPE)
 				{
 					delete_word(word->prev, lst);
@@ -104,6 +104,7 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 				//printf("here 7 (%s)\n", word->word);
 				word->type = CMD;
 			}
+			//}
 		}
 		word = word->next;
 	}
