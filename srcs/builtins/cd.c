@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:23:47 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/31 12:40:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/08 12:15:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**create_dir_tab(char *str, int nb_dir)
 	while (i < ft_strlen(str) && str[i] != '\0')
 	{
 		j = i;
-		while(str[j] != '/' && str[j] != '\0')
+		while (str[j] != '/' && str[j] != '\0')
 			j++;
 		if (j != i)
 		{

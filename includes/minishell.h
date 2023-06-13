@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/31 12:39:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/08 12:16:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct	s_word
 
 typedef struct	s_command
 {
-	t_word	**words;	//chained list
+	t_word	**words;
 	int		fd_out;
 	int		fd_int;
 }	t_command;
@@ -75,7 +75,7 @@ typedef struct s_env_var
 }	t_env_var;
 
 typedef struct	s_to_free
-{
+{	
 	t_word		**lst;
 	t_word		**command;
 	t_env_var	**env;
@@ -93,7 +93,6 @@ void	free_redir(t_redir **redir);
 char	**handle_redirection(t_redir **lst, char **full_cmd);
 t_redir	**get_redir(t_word **lst);
 char	*here_doc(char *delim);
-
 
 // Tubes
 int	**create_tubes(int nb_tubes);
