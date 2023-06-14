@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/08 12:14:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:36:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ char	**lst_to_string(t_word **lst)
 	if (!tab)
 		return (0);		//TODO better error handling 
 	current = *lst;
+	while (current && current->type != CMD && current->type != ARG)
+		current = current->next;
 	while (current && i < len)
 	{
-		// printf("cmd[%d]: %s\n", i, current->word);
 		tab[i] = ft_strdup(current->word);
 		current = current->next;
 		i++;
@@ -74,7 +75,6 @@ char	**copy_string_array(char **tab)
 	len = 0;
 	while (tab[len])
 		len++;
-	// printf("len cmd: %d\n", len);
 	res = malloc(sizeof(char *) * (len + 1));
 	if (!res)
 		return (0);
@@ -88,7 +88,7 @@ char	**copy_string_array(char **tab)
 	return (res);
 }
 
-void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pipes, t_env_var **env, t_env_var **global, t_word **word)
+void	ft_execve(t_to_free to_free, t_env_var *path, int count, int nb_pipes)
 {
 	char		*exec_path;
 	char		**full_cmd;
@@ -98,7 +98,7 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 
 	status = 0;
 	pid = fork();
-	redir = get_redir(lst);
+	redir = get_redir(to_free.command);
 	// display_redirs(redir);
 	if (pid == -1)
 		perror("failed to fork\n");
@@ -106,8 +106,8 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	{
 		if (count > 0)
 		{
-			close(tubes[count - 1][0]);
-			close(tubes[count - 1][1]);
+			close(to_free.tubes[count - 1][0]);
+			close(to_free.tubes[count - 1][1]);
 		}
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
@@ -120,19 +120,17 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 	{
 		if (count > 0)
 		{
-			dup2(tubes[count - 1][0], STDIN_FILENO);	//duplique la sortie du précedent sur l'entree de l'actuel
-			close(tubes[count - 1][0]);					//ferme l'entrée / sortie du précédent
-			close(tubes[count - 1][1]);
+			dup2(to_free.tubes[count - 1][0], STDIN_FILENO);	//duplique la sortie du précedent sur l'entree de l'actuel
+			close(to_free.tubes[count - 1][0]);					//ferme l'entrée / sortie du précédent
+			close(to_free.tubes[count - 1][1]);
 		}
 		if (count < nb_pipes)
 		{
-			dup2(tubes[count][1], STDOUT_FILENO);	//duplique pour le suivant
-			close(tubes[count][0]);
-			close(tubes[count][1]);
+			dup2(to_free.tubes[count][1], STDOUT_FILENO);	//duplique pour le suivant
+			close(to_free.tubes[count][0]);
+			close(to_free.tubes[count][1]);
 		}
-		full_cmd = lst_to_string(lst);
-
-		
+		full_cmd = lst_to_string(to_free.command);
 		char	**temp;
 		if (redir)
 		{
@@ -142,30 +140,15 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 		}
 		free_redir(redir);
 		if (!full_cmd[0])
-		{
-			free_all(full_cmd);
-			free_env(*env);
-			free_word_lst(word);
-			free_word_lst(lst);
-			free_tubes(tubes);
-			exit(0);
-		}
-		if (execute_builtin(lst, env, nb_pipes))
-		{
-			free_all(full_cmd);
-			free_env(*env);
-			free_word_lst(word);
-			free_word_lst(lst);
-			free_tubes(tubes);
-			exit(EXIT_SUCCESS);
-		}
-		
-
+			free_and_exit(to_free, 0);
+		if (execute_builtin(to_free.command, to_free.env, nb_pipes))
+			free_and_exit(to_free, EXIT_SUCCESS);
+	
 		exec_path = get_execve_path(full_cmd[0], path);
 		// printf("exec path: %s\n", exec_path);
-
+		
 		char	**str_env;
-		str_env = env_to_tab(*env);
+		str_env = env_to_tab(*(to_free.env));
 
 		if (full_cmd[0] && !exec_path)
 		{
@@ -186,18 +169,30 @@ void	ft_execve(t_word **lst, t_env_var *path, int **tubes, int count, int nb_pip
 				g_status = 127;
 				free(exec_path);
 			}
-		}
-		
+		}	
 		free_all(str_env);
 		free_all(full_cmd);
-		free_env(*env);
-		free_word_lst(word);
-		free_word_lst(lst);
-		free_tubes(tubes);
+		free_env(*(to_free.env));
+		free_word_lst(to_free.lst);
+		free_word_lst(to_free.command);
+		free_tubes(to_free.tubes);
 		if (g_status == 127)
 			exit(127);
 		else
 			exit(EXIT_SUCCESS);
+	}
+}
+
+void	debug_print_words(t_word **lst)
+{
+	t_word	*temp;
+
+	temp = *lst;
+	while (temp)
+	{
+		printf("word: %s\n", temp->word);
+		printf("type: %d\n", temp->type);
+		temp = temp->next;
 	}
 }
 
@@ -206,32 +201,32 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	t_env_var	*path;
 	int			pipes_nbr;
 	t_word		**cmd;
-	// int			**tubes;
+	int			**tubes;
 	int			count;
 	t_to_free	to_free;
 
+	count = 0;
+	pipes_nbr = count_pipes(word);
 	to_free.lst = word;
 	to_free.env = env;
 	to_free.global = global;
 	to_free.line = line;
 	to_free.tubes = create_tubes(pipes_nbr);
-
-	count = 0;
-	pipes_nbr = count_pipes(word);
-	// tubes = create_tubes(pipes_nbr);
-	cmd = malloc(sizeof(t_word *));
-	if (!cmd)
+	
+	to_free.command = malloc(sizeof(t_word *));
+	if (!to_free.command)
 		return ;
-	*cmd = 0;
-	while (get_next_cmd(word, &cmd))
+	*(to_free.command) = 0;
+
+	while (get_next_cmd(word, &(to_free.command)))
 	{
+		// debug_print_words(to_free.command);
 		path = get_env_custom("PATH", *env);
-		to_free.command = cmd;
-		if (!execute_non_fork_builtin(cmd, env, global, word, line, to_free.tubes, pipes_nbr))
-			ft_execve(cmd, path, to_free.tubes, count, pipes_nbr, env, global, word);
-		clear_word_lst(cmd);
+		if (!execute_non_fork_builtin(to_free, pipes_nbr))
+			ft_execve(to_free, path, count, pipes_nbr);
+		clear_word_lst(to_free.command);
 		count++;
 	}
-	free_word_lst(cmd);
+	free_word_lst(to_free.command);
 	free_tubes(to_free.tubes);
 }

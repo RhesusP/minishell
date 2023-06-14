@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 10:40:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:36:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	while (current)
 	{
 		if (current->type == RI)
+		{
+			printf("need to perform input redirection\n");
 			input_redirection(current);
+		}
 		else if (current->type == RO)
 			output_redirection(current);
 		else if (current->type == ARO)

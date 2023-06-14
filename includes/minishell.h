@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/08 12:16:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:12:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ extern int	g_status;
 		DELIMITER	-->		come after a here document 
 		IGN			-->		ignore token (e.g. variable assignation followed by a pipe)
 */
+//                    0     1	 2    3    4   5    6   7       8         9
 typedef enum e_type {INIT, CMD, ARG, PIPE, RI, RO, ARO, HE, FILEPATH, DELIMITER, IGN} t_type;
 
 typedef struct	s_word
@@ -100,7 +101,7 @@ void	free_tubes(int **tubes);
 
 // Builtins
 int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes);
-int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes, int nb_pipes);
+int	execute_non_fork_builtin(t_to_free to_free, int nb_pipes);
 
 // Syntax error
 int	type_is_redir(t_word *word);
@@ -169,7 +170,7 @@ void	ft_env(t_word **lst, t_env_var *env);
 void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes);
 void	ft_cd(t_word **lst, t_env_var *env);
 void	ft_pwd();
-void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes);
+void	ft_exit(t_to_free to_free);
 void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
 
 char	*get_home(t_env_var *env);
@@ -192,7 +193,8 @@ void	delete_existing_key(t_env_var **env, char *key);
 int		is_already_here(t_env_var **env, char *key);
 
 
-
+t_env_var	*get_old_pwd(t_env_var *env);
+int	count_dir(char *path);
 char	*ft_getcwd();
 
 void	ft_free(t_env_var *env, t_env_var *global);

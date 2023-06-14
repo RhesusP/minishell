@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/24 14:26:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:36:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,30 @@ int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 	return (0);
 }
 
-int	execute_non_fork_builtin(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes, int nb_pipes)
+int	execute_non_fork_builtin(t_to_free to_free, int nb_pipes)
 {
 	t_word	*curr;
 
-	curr = *lst;
+	curr = *(to_free.command);
+	// curr = *lst;
 	if (ft_strcmp(curr->word, "exit") == 0)
 	{
-		ft_exit(lst, env, global, words, line, tubes);
+		ft_exit(to_free);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "export") == 0)
 	{
-		ft_export(lst, env, 0, nb_pipes);
+		ft_export(to_free.command, to_free.env, 0, nb_pipes);
 		return (0);
 	}
 	else if (ft_strcmp(curr->word, "unset") == 0)
 	{
-		ft_unset(lst, env, global);
+		ft_unset(to_free.command, to_free.env, to_free.global);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "cd") == 0)
 	{
-		ft_cd(lst, *env);
+		ft_cd(to_free.command, *(to_free.env));
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/31 11:44:10 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:56:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	give_cmd_type(t_word **lst, t_env_var **globals)
 				}
 			}
 			// COMMAND CASE
-			else if (!word->prev || word->prev->type == PIPE)
+			else if (!word->prev || word->prev->type == PIPE || word->prev->type == FILEPATH)
 			{
 				//printf("here 7 (%s)\n", word->word);
 				word->type = CMD;

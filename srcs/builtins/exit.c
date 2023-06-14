@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/31 12:02:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:17:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,24 +94,18 @@ int	ft_long_limit_error(char *str)
 	return (0);
 }
 
-void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes)
+// void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes)
+void	ft_exit(t_to_free to_free)
 {
 	int		nb_arg;
 	int		exit_value;
 	t_word	*current;
 
 	printf("exit\n");
-	nb_arg = get_nb_arg(lst);
+	nb_arg = get_nb_arg(to_free.command);
 	if (nb_arg == 0)
-	{
-		ft_free(*env, *global);
-		free_tubes(tubes);
-		free(line);
-		free_word_lst(lst);
-		free_word_lst(words);
-		exit(g_status);
-	}
-	current = *lst;
+		free_and_exit(to_free, g_status);
+	current = *(to_free.command);
 	if (nb_arg == 1)
 	{
 		if (ft_long_limit_error(current->next->word) == 0)
@@ -121,12 +115,7 @@ void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, 
 			ft_putendl_fd("exit: numeric argument required", 2);
 			exit_value = 2;
 		}
-		ft_free(*env, *global);
-		free_tubes(tubes);
-		free(line);
-		free_word_lst(lst);
-		free_word_lst(words);
-		exit(exit_value % 256);
+		free_and_exit(to_free, exit_value % 256);
 	}
 	else
 	{
@@ -138,12 +127,7 @@ void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, 
 		else
 		{
 			ft_putendl_fd("exit: numeric argument required", 2);
-			ft_free(*env, *global);
-			free_tubes(tubes);
-			free(line);
-			free_word_lst(lst);
-			free_word_lst(words);
-			exit(2);
+			free_and_exit(to_free, 2);
 		}
 	}
 }

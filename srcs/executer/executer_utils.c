@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 09:34:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:08:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	get_exec_len(t_word **lst)
 
 	len = 0;
 	current = *lst;
+	while (current && current->type != CMD && current->type != ARG)
+		current = current->next;
 	while (current && (current->type == CMD || current->type == ARG))
 	{
 		len++;
