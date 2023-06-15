@@ -6,27 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/14 19:17:07 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:30:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	get_nb_arg(t_word **lst)
-{
-	t_word	*current;
-	int		nb;
-
-	nb = 0;
-	current = *lst;
-	while (current)
-	{
-		if (current->type == ARG)
-			nb++;
-		current = current->next;
-	}
-	return (nb);
-}
 
 long	ft_long_atoi(const char *str)
 {
@@ -94,7 +78,20 @@ int	ft_long_limit_error(char *str)
 	return (0);
 }
 
-// void	ft_exit(t_word **lst, t_env_var **env, t_env_var **global, t_word **words, char *line, int **tubes)
+void	handle_multiple_args(t_word *current, t_to_free to_free)
+{
+	if (ft_long_limit_error(current->next->word) == 0)
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		g_status = 1;
+	}
+	else
+	{
+		ft_putendl_fd("exit: numeric argument required", 2);
+		free_and_exit(to_free, 1, 2);
+	}
+}
+
 void	ft_exit(t_to_free to_free)
 {
 	int		nb_arg;
@@ -104,7 +101,7 @@ void	ft_exit(t_to_free to_free)
 	printf("exit\n");
 	nb_arg = get_nb_arg(to_free.command);
 	if (nb_arg == 0)
-		free_and_exit(to_free, g_status);
+		free_and_exit(to_free, 1, g_status);
 	current = *(to_free.command);
 	if (nb_arg == 1)
 	{
@@ -115,19 +112,8 @@ void	ft_exit(t_to_free to_free)
 			ft_putendl_fd("exit: numeric argument required", 2);
 			exit_value = 2;
 		}
-		free_and_exit(to_free, exit_value % 256);
+		free_and_exit(to_free, 1, exit_value % 256);
 	}
 	else
-	{
-		if (ft_long_limit_error(current->next->word) == 0)
-		{
-			ft_putendl_fd("exit: too many arguments", 2);
-			g_status = 1;
-		}
-		else
-		{
-			ft_putendl_fd("exit: numeric argument required", 2);
-			free_and_exit(to_free, 2);
-		}
-	}
+		handle_multiple_args(current, to_free);
 }

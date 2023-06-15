@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:13:18 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/20 21:14:07 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:28:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	**create_tubes(int nb_tubes)
 	int	i;
 	int	**tubes;
 
-	tubes = malloc(sizeof(int *) * (nb_tubes + 1));	//TODO secure
+	tubes = malloc(sizeof(int *) * (nb_tubes + 1));
 	i = 0;
 	while (i < nb_tubes)
 	{
 		tubes[i] = malloc(sizeof(int) * 2);
 		if (pipe(tubes[i]) == -1)
-			perror("pipe failed.\n");		//TODO secure
+			perror("pipe failed.\n");
 		i++;
 	}
 	tubes[i] = 0;

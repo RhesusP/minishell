@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 10:23:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:26:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,52 +90,6 @@ char	*get_values(char *key, t_env_var **lst, t_env_var **global)
 	return (values_to_str(values));
 }
 
-char	*get_vars(char *str, t_env_var **env, t_env_var **global)
-{
-	char	**tab;
-	char	**temp_tab;
-	char	*res;
-	char	*temp;
-	char	*temp1;
-	char	*temp2;
-	char	*remains;
-
-	if (ft_strlen(str) == 1 && str[0] == '$')
-		return (str);
-	tab = get_key_name(str);
-	temp2 = get_values(tab[1], env, global);
-	res = ft_strjoin_nullable(tab[0], temp2);
-	free(temp2);
-	if (tab[2])
-		remains = ft_strdup(tab[2]);
-	else
-		remains = 0;
-	free(tab[0]);
-	free(tab[1]);
-	free(tab[2]);
-	free(tab);
-	while(remains)
-	{
-		tab = get_key_name(remains);
-		free(remains);
-		remains = tab[2];
-		temp2 = get_values(tab[1], env, global);
-		temp = ft_strjoin_nullable(tab[0], temp2);
-		free(temp2);
-		temp1 = ft_strdup(res);
-		free(res);
-		res = ft_strjoin_nullable(temp1, temp);
-		free(temp);
-		free(temp1);
-		free(tab[0]);
-		free(tab[1]);
-		free(tab[2]);
-		free(tab);
-	}
-	free(str);
-	return (res);
-}
-
 int	get_nb_quoted_words(char *str)
 {
 	int	i;
@@ -176,69 +130,6 @@ int	get_nb_quoted_words(char *str)
 	if (len > 0 && nb == 0)
 		nb++;
 	return (nb);
-}
-
-
-char	**fill_quoted_tab(char *str, int size)
-{
-	int		i;
-	int		j;
-	int		cell;
-	char	**tab;
-	int		last_alloc;
-
-	last_alloc = -1;
-	tab = malloc(sizeof(char *) * (size + 1));
-	if (!tab)
-		return (0);
-	i = 0;
-	while (i < size)
-	{
-		tab[i] = 0;
-		i++;
-	}
-	cell = 0;
-	if (str[0] != '"' && str[0] != '\'')
-	{
-		i = 0;
-		while (str[i] != '\0' && str[i] != '\'' && str[i] != '"')
-			i++;
-		tab[0] = ft_strndup(str, i);
-		cell = 1;
-		last_alloc = i - 1;
-	}
-	else
-		i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			if (i != last_alloc + 1)
-			{
-				tab[cell] = ft_strndup(&str[last_alloc + 1], i - last_alloc - 1);
-				cell++;
-				last_alloc = i;
-			}
-			j = i + 1;
-			while (str[j] != '\0')
-			{
-				if (str[j] == str[i])
-				{
-					tab[cell] = ft_strndup(&str[i], j - i + 1);
-					cell++;
-					last_alloc = j;
-					i = j;
-					break ;
-				}
-				j++;
-			}
-		}
-		i++;
-	}
-	if (!tab[size - 1])
-		tab[size - 1] = get_last_unquoted(str);
-	tab[size] = 0;
-	return (tab);
 }
 
 char	*get_quoted(char *str, t_env_var **env, t_env_var **global)

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:53:15 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/12 17:33:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 09:12:28 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	**ft_strtok(char *str, char *charset)
 	result = malloc(sizeof(char *) * (size + 1));
 	if (!result)
 		return (NULL);
-	// result[size] = malloc(sizeof(char));
 	result[size] = NULL;
 	return (ft_fill_tab(result, str, charset));
 }

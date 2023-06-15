@@ -6,13 +6,23 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/14 16:47:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:10:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
 int	g_status = 0;
+
+void	handle_error(int argc, char **argv)
+{
+	(void)argv;
+	if (argc != 1)
+	{
+		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
+		exit(EXIT_FAILURE);
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,12 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 	t_word		**words_lst;
 
-	(void)argv;
-	if (argc != 1)
-	{
-		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
-		return (0);
-	}
+	handle_error(argc, argv);
 	signal_handler();
 	env_vars = get_environment(envp);
 	global_vars = NULL;
@@ -34,9 +39,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("\033[1;36mminishell $>\033[00m ");
 		handle_ctrld(line, env_vars, global_vars);
-		if (!is_cmd_anonymous(line))			// TODO check
+		if (!is_cmd_anonymous(line))
 			add_history(line);
-
 		words_lst = parse_words(line, &global_vars);
 		var_expansion(words_lst, &global_vars, &env_vars);
 		if (words_lst && *words_lst && !syntax_error(words_lst))

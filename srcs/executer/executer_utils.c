@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/14 17:08:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 16:56:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,57 @@ int	count_pipes(t_word **word)
 		current = current->next;
 	}
 	return (pipe_nbr);
+}
+
+char	**copy_string_array(char **tab)
+{
+	int		len;
+	int		i;
+	char	**res;
+
+	if (!tab)
+		return (0);
+	len = 0;
+	while (tab[len])
+		len++;
+	res = malloc(sizeof(char *) * (len + 1));
+	if (!res)
+		return (0);
+	i = 0;
+	while (tab[i] != 0)
+	{
+		res[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	res[i] = 0;
+	return (res);
+}
+
+/**
+*	@brief Get the command with args from the parser into a char **
+*	Then we'll be able to pass the full command to execve()
+**/
+char	**lst_to_string(t_word **lst)
+{
+	char	**tab;
+	int		len;
+	t_word	*current;
+	int		i;
+
+	i = 0;
+	len = get_exec_len(lst);
+	tab = malloc(sizeof(t_word *) * (len + 1));
+	if (!tab)
+		return (0);
+	current = *lst;
+	while (current && current->type != CMD && current->type != ARG)
+		current = current->next;
+	while (current && i < len)
+	{
+		tab[i] = ft_strdup(current->word);
+		current = current->next;
+		i++;
+	}
+	tab[i] = 0;
+	return (tab);
 }

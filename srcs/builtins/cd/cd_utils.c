@@ -6,11 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/31 11:54:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:39:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 t_env_var	*get_old_pwd(t_env_var *env)
 {

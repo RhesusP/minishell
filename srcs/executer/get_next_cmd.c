@@ -6,18 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:44:42 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/20 17:15:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:29:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-t_word	**get_next_cmd(t_word **lst, t_word*** new_lst)
+t_word	**get_next_cmd(t_word **lst, t_word ***new_lst)
 {
 	static t_word	*current = 0;
 	static int		is_init = 0;
 	t_word			*copy;
-	
+
 	if (is_init && !current)
 	{
 		is_init = 0;
@@ -40,4 +40,3 @@ t_word	**get_next_cmd(t_word **lst, t_word*** new_lst)
 	}
 	return (*new_lst);
 }
-

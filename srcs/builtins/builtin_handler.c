@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/14 19:36:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 09:06:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	execute_non_fork_builtin(t_to_free to_free, int nb_pipes)
 	t_word	*curr;
 
 	curr = *(to_free.command);
-	// curr = *lst;
 	if (ft_strcmp(curr->word, "exit") == 0)
 	{
 		ft_exit(to_free);

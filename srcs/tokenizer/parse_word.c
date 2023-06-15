@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/24 10:48:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 09:30:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,31 @@ int	is_metachar(char c)
 	return (0);
 }
 
+void	reparse_and_addback(t_word **new_lst, t_word *current)
+{
+	int		i;
+	char	**reparse;
+
+	i = 0;
+	reparse = resplit(current->word);
+	while (reparse[i])
+	{
+		add_back_word(new_lst, create_word(reparse[i]));
+		i++;
+	}
+	i = 0;
+	while (reparse[i])
+	{
+		free(reparse[i]);
+		i++;
+	}
+	free(reparse);
+}
+
 t_word	**detect_close_pipe(t_word **lst)
 {
-	t_word	*current;
+	t_word	*c;
 	t_word	**new_lst;
-	char	**reparse;
 
 	if (!lst)
 		return (0);
@@ -31,32 +51,18 @@ t_word	**detect_close_pipe(t_word **lst)
 	if (!new_lst)
 		return (0);
 	*new_lst = 0;
-	current = *lst;
-	while (current)
+	c = *lst;
+	while (c)
 	{
-		if (ft_strcmp(current->word, "<<") == 0 || ft_strcmp(current->word, ">>") == 0)
+		if (ft_strcmp(c->word, "<<") == 0 || ft_strcmp(c->word, ">>") == 0)
 		{
-			add_back_word(new_lst, create_word(current->word));
-			current = current->next;
+			add_back_word(new_lst, create_word(c->word));
+			c = c->next;
 		}
 		else
 		{
-			reparse = resplit(current->word);
-			int	i = 0;
-			while (reparse[i])
-			{
-				// printf("new word: %s\n", reparse[i]);
-				add_back_word(new_lst, create_word(reparse[i]));
-				i++;
-			}
-			i = 0;
-			while (reparse[i])
-			{
-				free(reparse[i]);
-				i++;
-			}
-			free(reparse);
-			current = current->next;
+			reparse_and_addback(new_lst, c);
+			c = c->next;
 		}
 	}
 	free_word_lst(lst);
@@ -90,7 +96,6 @@ t_word	**parse_words(char *line, t_env_var **globals)
 		return (0);
 	*words_lst = 0;
 	tokens = ft_strtok(line, " \n\t");
-
 	i = 0;
 	while (tokens[i])
 	{
@@ -103,4 +108,3 @@ t_word	**parse_words(char *line, t_env_var **globals)
 	set_type(words_lst, globals);
 	return (words_lst);
 }
-

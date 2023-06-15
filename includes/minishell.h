@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/14 19:12:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:16:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,9 @@ t_word	**get_next_cmd(t_word **lst, t_word*** new_lst);
 void	ft_echo(t_word **lst);
 void	ft_env(t_word **lst, t_env_var *env);
 void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes);
+int		is_syntax_valid(char *str);
+void	print_export(t_env_var *env);
+
 void	ft_cd(t_word **lst, t_env_var *env);
 void	ft_pwd();
 void	ft_exit(t_to_free to_free);
@@ -209,7 +212,24 @@ char	*values_to_str(char **tab);
 char	*here_doc(char *delim);
 int	is_already_here(t_env_var **env, char *key);
 int	ft_isspace(const char c);
-void	free_and_exit(t_to_free free_struct, int exit_status);
+void	free_and_exit(t_to_free free_struct, int is_exit, int exit_status);
+char	**copy_string_array(char **tab);
+void	ft_execve(t_to_free to_free, int count, int nb_pipes);
+char	*get_execve_path(char *cmd, t_env_var *path_var);
+
+int	get_nb_arg(t_word **lst);
+
+void	change_pwd(t_env_var *env, char *new_pwd, int to_free);
+char	*recreate_new_path(char **tab, int size);
+void	simplify_path(char *str, t_env_var *env);
+void	switch_old_curr_pwd(t_env_var *env);
+char	**create_dir_tab(char *str, int nb_dir);
+int		get_nb_quoted_words(char *str);
+
+char	*get_vars(char *str, t_env_var **env, t_env_var **global);
+char	**get_key_name(char *str);
+char	*get_values(char *key, t_env_var **lst, t_env_var **global);
+char	**fill_quoted_tab(char *str, int size);
 
 # define SUCCESS	0
 # define FAILURE	-1
