@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 13:26:37 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:41:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ static void	child_process(t_to_free f, int count, int n_pp, t_redir **redir)
 	if (!full_cmd[0])
 		free_and_exit(f, 1, 0);
 	if (execute_builtin(f.command, f.env, n_pp))
+	{
+		free_all(full_cmd);
 		free_and_exit(f, 1, EXIT_SUCCESS);
+	}
 	exec_path = get_execve_path(full_cmd[0], get_env_custom("PATH", *f.env));
 	str_env = env_to_tab(*(f.env));
 	exec_cmd(f, full_cmd, str_env, exec_path);

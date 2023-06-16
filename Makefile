@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/06/16 09:50:15 by cbernot          ###   ########.fr        #
+#    Updated: 2023/06/16 15:47:37 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
-FLAGS = -g
+FLAGS = -g3
 #-g -fsanitize=address
 #-Wall -Wextra -Werror
 DIR_FLAG = --no-print-directory
