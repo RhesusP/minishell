@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/14 17:36:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:12:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-void	input_redirection(t_redir *current)
+static void	input_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -26,7 +26,7 @@ void	input_redirection(t_redir *current)
 	close(fd);
 }
 
-void	output_redirection(t_redir *current)
+static void	output_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -40,7 +40,7 @@ void	output_redirection(t_redir *current)
 	close(fd);
 }
 
-void	output_app_redirection(t_redir *current)
+static void	output_app_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -54,7 +54,7 @@ void	output_app_redirection(t_redir *current)
 	close(fd);
 }
 
-void	here_doc_redirection(t_redir *current)
+static void	here_doc_redirection(t_redir *current)
 {
 	int		fd;
 	char	*new_arg;

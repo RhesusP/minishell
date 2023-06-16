@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 09:30:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:57:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_metachar(char c)
 	return (0);
 }
 
-void	reparse_and_addback(t_word **new_lst, t_word *current)
+static void	reparse_and_addback(t_word **new_lst, t_word *current)
 {
 	int		i;
 	char	**reparse;
@@ -40,7 +40,7 @@ void	reparse_and_addback(t_word **new_lst, t_word *current)
 	free(reparse);
 }
 
-t_word	**detect_close_pipe(t_word **lst)
+static t_word	**detect_close_pipe(t_word **lst)
 {
 	t_word	*c;
 	t_word	**new_lst;
@@ -69,7 +69,7 @@ t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
-void	free_tokens(char **tab)
+static void	free_tokens(char **tab)
 {
 	int	i;
 

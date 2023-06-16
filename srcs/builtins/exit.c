@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/15 11:30:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:25:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-long	ft_long_atoi(const char *str)
+static long	ft_long_atoi(const char *str)
 {
 	long		res;
 	size_t		i;
@@ -37,7 +37,7 @@ long	ft_long_atoi(const char *str)
 	return (res * sign);
 }
 
-int	ft_get_neg_long_len(long nbr)
+static int	ft_get_neg_long_len(long nbr)
 {
 	int	len_nbr;
 
@@ -50,7 +50,7 @@ int	ft_get_neg_long_len(long nbr)
 	return (len_nbr + 1);
 }
 
-int	ft_long_limit_error(char *str)
+static int	ft_long_limit_error(char *str)
 {
 	int		len_str;
 	int		len_nbr;
@@ -78,7 +78,7 @@ int	ft_long_limit_error(char *str)
 	return (0);
 }
 
-void	handle_multiple_args(t_word *current, t_to_free to_free)
+static void	handle_multiple_args(t_word *current, t_to_free to_free)
 {
 	if (ft_long_limit_error(current->next->word) == 0)
 	{

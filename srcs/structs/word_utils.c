@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:14:23 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:00:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_word	*create_word(char *cmd)
 	return (word);
 }
 
-t_word	*get_last_word(t_word *lst)
+static t_word	*get_last_word(t_word *lst)
 {
 	t_word	*current;
 

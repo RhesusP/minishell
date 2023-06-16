@@ -6,21 +6,21 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 09:02:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:42:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	parent_process(t_to_free to_free, int pid, int count, t_redir **redir)
+static void	parent_process(t_to_free f, int pid, int count, t_redir **redir)
 {
 	int	status;
 
 	status = 0;
 	if (count > 0)
 	{
-		close(to_free.tubes[count - 1][0]);
-		close(to_free.tubes[count - 1][1]);
+		close(f.tubes[count - 1][0]);
+		close(f.tubes[count - 1][1]);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
@@ -28,7 +28,7 @@ void	parent_process(t_to_free to_free, int pid, int count, t_redir **redir)
 	free_redir(redir);
 }
 
-void	link_processes(t_to_free to_free, int count, int nb_pipes)
+static void	link_processes(t_to_free to_free, int count, int nb_pipes)
 {
 	if (count > 0)
 	{
@@ -44,9 +44,9 @@ void	link_processes(t_to_free to_free, int count, int nb_pipes)
 	}
 }
 
-void	exec_cmd(t_to_free f, char **full_cmd, char **str_env, char *exec_path)
+static void	exec_cmd(t_to_free f, char **full_cmd, char **str_env, char *exec)
 {
-	if (full_cmd[0] && !exec_path)
+	if (full_cmd[0] && !exec)
 	{
 		if (execve(full_cmd[0], full_cmd, str_env) == -1)
 		{
@@ -57,12 +57,12 @@ void	exec_cmd(t_to_free f, char **full_cmd, char **str_env, char *exec_path)
 	}
 	else
 	{
-		if (execve(exec_path, full_cmd, str_env) == -1)
+		if (execve(exec, full_cmd, str_env) == -1)
 		{
 			ft_putstr_fd(full_cmd[0], 2);
 			ft_putendl_fd(": command not found", 2);
 			g_status = 127;
-			free(exec_path);
+			free(exec);
 		}
 	}
 	free_all(str_env);
@@ -72,7 +72,7 @@ void	exec_cmd(t_to_free f, char **full_cmd, char **str_env, char *exec_path)
 		free_and_exit(f, 1, EXIT_SUCCESS);
 }
 
-void	child_process(t_to_free f, int count, int n_pp, t_redir **redir)
+static void	child_process(t_to_free f, int count, int n_pp, t_redir **redir)
 {
 	char	**full_cmd;
 	char	**temp;

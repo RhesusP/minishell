@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 17:02:37 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:11:46 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-int	search_redir(t_word *current, t_redir **redir)
+static int	search_redir(t_word *current, t_redir **redir)
 {
 	while (current)
 	{

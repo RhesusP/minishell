@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:24:33 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 09:50:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:51:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	is_bad_filepath(t_word *word)
+static int	is_bad_filepath(t_word *word)
 {
 	if (word->type == FILEPATH)
 	{
@@ -25,7 +25,7 @@ int	is_bad_filepath(t_word *word)
 	return (0);
 }
 
-int	print_syntax_error(char *token)
+static int	print_syntax_error(char *token)
 {
 	g_status = 2;
 	ft_putstr_fd("syntax error near unexpected token '", 2);

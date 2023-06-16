@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 09:06:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:26:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 	}
 	else if (ft_strcmp(curr->word, "pwd") == 0)
 	{
-		ft_pwd(*env);
+		ft_pwd();
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "echo") == 0)

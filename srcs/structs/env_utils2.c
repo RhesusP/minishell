@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:12:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:15:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:05:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-int	get_env_size(t_env_var *env)
+static int	get_env_size(t_env_var *env)
 {
 	t_env_var	*current;
 	int			size;
@@ -29,7 +29,7 @@ int	get_env_size(t_env_var *env)
 	return (size);
 }
 
-char	*join_env_values(char *key, char **tab)
+static char	*join_env_values(char *key, char **tab)
 {
 	char	*res;
 	char	*temp;

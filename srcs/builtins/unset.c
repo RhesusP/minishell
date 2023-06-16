@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/24 13:51:58 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:21:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	delete_single_var(t_env_var *delete)
+static void	delete_single_var(t_env_var *delete)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ void	delete_single_var(t_env_var *delete)
 	free(delete);
 }
 
-t_env_var	*get_prev(t_env_var **env, char *key)
+static t_env_var	*get_prev(t_env_var **env, char *key)
 {
 	t_env_var	*current;
 	t_env_var	*last;
@@ -47,7 +47,7 @@ t_env_var	*get_prev(t_env_var **env, char *key)
 	return (last);
 }
 
-void	delete_existing_key(t_env_var **env, char *key)
+static void	delete_existing_key(t_env_var **env, char *key)
 {
 	t_env_var	*prev;
 	t_env_var	*delete;

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:39:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:30:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ t_env_var	*get_pwd(t_env_var *env)
 	return (0);
 }
 
-int	is_abs_path(char *path)
+static int	is_abs_path(char *path)
 {
 	if (path[0] == '/')
 		return (1);
 	return (0);
 }
 
-char	*get_valid_pwd(char *pwd, char *input)
+static char	*get_valid_pwd(char *pwd, char *input)
 {
 	char	*path;
 	char	*tmp;

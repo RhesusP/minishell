@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:10:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:09:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:01:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_redir	*create_redir(t_type type, char *path)
 	return (redir);
 }
 
-t_redir	*get_last_redir(t_redir *lst)
+static t_redir	*get_last_redir(t_redir *lst)
 {
 	t_redir	*current;
 

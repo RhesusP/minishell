@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 10:10:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:55:53 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-void	give_redir_type(t_word *word)
+static void	give_redir_type(t_word *word)
 {
 	if (ft_strcmp(word->word, "<") == 0)
 	{
@@ -41,7 +41,7 @@ void	give_redir_type(t_word *word)
 }
 
 // TODO return error int when syntax error ? (e.g. missing HE delimiter)
-void	give_meta_type(t_word **lst)
+static void	give_meta_type(t_word **lst)
 {
 	t_word	*word;
 
@@ -61,7 +61,7 @@ void	give_meta_type(t_word **lst)
 	}
 }
 
-void	sub_give_cmd_type(t_word *word, t_word **lst, t_env_var **globals)
+static void	sub_give_cmd_type(t_word *word, t_word **lst, t_env_var **globals)
 {
 	if (!word->prev && !word->next)
 	{
@@ -86,7 +86,7 @@ void	sub_give_cmd_type(t_word *word, t_word **lst, t_env_var **globals)
 	}
 }
 
-void	give_cmd_type(t_word **lst, t_env_var **globals)
+static void	give_cmd_type(t_word **lst, t_env_var **globals)
 {
 	t_word	*word;
 

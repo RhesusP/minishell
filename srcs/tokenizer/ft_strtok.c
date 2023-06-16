@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:53:15 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 09:12:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:58:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-int	ft_get_next_word(char *str, char *charset, int *i)
+static int	ft_get_next_word(char *str, char *charset, int *i)
 {
 	int	j;
 
@@ -32,7 +32,7 @@ int	ft_get_next_word(char *str, char *charset, int *i)
 	return (0);
 }
 
-char	**ft_fill_tab(char **tab, char *str, char *charset)
+static char	**ft_fill_tab(char **tab, char *str, char *charset)
 {
 	int	i;
 	int	temp;

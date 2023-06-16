@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/15 11:14:58 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:03:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
 *	@brief Go to the end of the env_var chained list
 **/
-t_env_var	*env_var_last(t_env_var *env_var)
+static t_env_var	*env_var_last(t_env_var *env_var)
 {
 	t_env_var	*current;
 

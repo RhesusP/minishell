@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/26 09:36:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:13:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-void	update_shlvl(t_env_var *env)
+static void	update_shlvl(t_env_var *env)
 {
 	t_env_var	*current;
 	int			old_lvl;

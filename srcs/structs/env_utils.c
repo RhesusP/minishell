@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/05/31 11:35:26 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:07:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Get only the key from the cmd KEY=value
  * @return Return a char * containing the KEY
 */
-char	*get_word_key(char *word)
+static char	*get_word_key(char *word)
 {
 	int		i;
 	char	*ret;
@@ -38,7 +38,7 @@ char	*get_word_key(char *word)
  * @brief change the value of the global variable in the structure to actualize
  * it
 */
-void	change_value(t_env_var *current, char *word)
+static void	change_value(t_env_var *current, char *word)
 {
 	int	i;
 
@@ -82,7 +82,7 @@ int	actualize_global_var(t_env_var **globals, char *word)
 /**
  * @brief free a t_env_var
 */
-void	free_env_var(t_env_var *env_var)
+static void	free_env_var(t_env_var *env_var)
 {
 	t_env_var	*tmp;
 

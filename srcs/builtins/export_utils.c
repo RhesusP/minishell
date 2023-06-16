@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:20:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:22:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:23:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_export(t_env_var *env)
 }
 
 // Return 0 for bad syntax and -1 for nothing to do
-int	is_syntax_valid(char *str)
+int	is_export_syntax_valid(char *str)
 {
 	int	i;
 	int	is_valid;

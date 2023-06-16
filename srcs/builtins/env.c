@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/05/31 11:50:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:25:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	cmd_have_arg(t_word **lst)
+static int	cmd_have_arg(t_word **lst)
 {
 	t_word	*current;
 

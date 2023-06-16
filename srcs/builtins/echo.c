@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/15 11:33:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:26:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	arg_is_valid(char *arg)
+static int	arg_is_valid(char *arg)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int	arg_is_valid(char *arg)
 	return (0);
 }
 
-void	display_echo(t_word *current)
+static void	display_echo(t_word *current)
 {
 	if (current->next && current->next->type == ARG)
 	{

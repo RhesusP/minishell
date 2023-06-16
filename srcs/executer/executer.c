@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/15 17:07:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:49:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 	return (NULL);
 }
 
-void	execute_line(t_word	**word, t_env_var **env, t_env_var **gbl, char *ln)
+void	exec_ln(t_word	**word, t_env_var **e, t_env_var **g, char *ln)
 {
 	int			pipes_nbr;
 	int			count;
@@ -43,8 +43,8 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **gbl, char *ln)
 	count = 0;
 	pipes_nbr = count_pipes(word);
 	to_free.lst = word;
-	to_free.env = env;
-	to_free.global = gbl;
+	to_free.env = e;
+	to_free.global = g;
 	to_free.line = ln;
 	to_free.tubes = create_tubes(pipes_nbr);
 	to_free.command = malloc(sizeof(t_word *));

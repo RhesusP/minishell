@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:26:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 12:28:23 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:28:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	change_old_pwd(t_env_var *env)
+static void	change_old_pwd(t_env_var *env)
 {
 	t_env_var	*old_pwd;
 	char		*temp;
@@ -38,7 +38,7 @@ void	change_old_pwd(t_env_var *env)
 	}
 }
 
-void	sub_change_pwd(t_env_var *env, char *new_pwd)
+static void	sub_change_pwd(t_env_var *env, char *new_pwd)
 {
 	t_env_var	*pwd;
 	char		*temp;

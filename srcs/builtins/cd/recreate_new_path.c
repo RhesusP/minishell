@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:42:13 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 11:58:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:28:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*join_path(char **tab, int size)
+static char	*join_path(char **tab, int size)
 {
 	char	*res;
 	int		i;
@@ -39,7 +39,7 @@ char	*join_path(char **tab, int size)
 	return (res);
 }
 
-void	free_cell(char **tab, int i)
+static void	free_cell(char **tab, int i)
 {
 	free(tab[i]);
 	tab[i] = 0;

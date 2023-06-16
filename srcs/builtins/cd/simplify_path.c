@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:01:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 12:30:10 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:27:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*get_temp_path(char *str)
+static char	*get_temp_path(char *str)
 {
 	char	*pwd;
 	char	*temp1;

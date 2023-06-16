@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/15 16:56:58 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:20:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
 *	@brief Get the number of args for the execution of one programm
 **/
-int	get_exec_len(t_word **lst)
+static int	get_exec_len(t_word **lst)
 {
 	int		len;
 	t_word	*current;

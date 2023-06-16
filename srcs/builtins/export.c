@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/15 11:25:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:50:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	create_export_var(t_word *current, t_env_var **env)
+static void	create_export_var(t_word *current, t_env_var **env)
 {
 	char		*key;
 	t_env_var	*new;
@@ -39,7 +39,7 @@ void	create_export_var(t_word *current, t_env_var **env)
 	free(key);
 }
 
-void	export_vars(t_word **lst, t_env_var **env)
+static void	export_vars(t_word **lst, t_env_var **env)
 {
 	t_word	*current;
 	int		status;
@@ -51,7 +51,7 @@ void	export_vars(t_word **lst, t_env_var **env)
 		current = current->next;
 	while (current && current->type == ARG)
 	{
-		status = is_syntax_valid(current->word);
+		status = is_export_syntax_valid(current->word);
 		if (status == 1)
 			create_export_var(current, env);
 		else if (status == 0)
@@ -81,7 +81,7 @@ int	get_nb_arg(t_word **lst)
 	return (nb_arg);
 }
 
-void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes)
+void	ft_export(t_word **lst, t_env_var **e, int forked, int n_pipe)
 {
 	int		nb_arg;
 	t_word	*current;
@@ -97,12 +97,12 @@ void	ft_export(t_word **lst, t_env_var **env, int forked, int nb_pipes)
 		current = current->next;
 	}
 	nb_arg = get_nb_arg(lst);
-	if ((nb_arg == 0 && !forked && nb_pipes == 0 && !redir) || \
+	if ((nb_arg == 0 && !forked && n_pipe == 0 && !redir) || \
 		(nb_arg == 0 && forked))
-		print_export(*env);
+		print_export(*e);
 	else
 	{
 		if (!forked)
-			export_vars(lst, env);
+			export_vars(lst, e);
 	}
 }
