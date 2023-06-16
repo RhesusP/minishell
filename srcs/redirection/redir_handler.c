@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:12:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:47:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-static void	input_redirection(t_redir *current)
+static int	input_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -20,13 +20,14 @@ static void	input_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		return ;
+		return (0);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	return (1);
 }
 
-static void	output_redirection(t_redir *current)
+static int	output_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -34,13 +35,14 @@ static void	output_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		return ;
+		return (0);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (1);
 }
 
-static void	output_app_redirection(t_redir *current)
+static int	output_app_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -48,13 +50,14 @@ static void	output_app_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		return ;
+		return (0);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (1);
 }
 
-static void	here_doc_redirection(t_redir *current)
+static int	here_doc_redirection(t_redir *current)
 {
 	int		fd;
 	char	*new_arg;
@@ -65,7 +68,7 @@ static void	here_doc_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		return ;
+		return (0);
 	}
 	ft_putstr_fd(new_arg, fd);
 	dup2(fd, STDIN_FILENO);
@@ -73,6 +76,7 @@ static void	here_doc_redirection(t_redir *current)
 	temp = current->next;
 	current->next = create_redir(RI, ".tmp.c");
 	current->next->next = temp;
+	return (1);
 }
 
 char	**handle_redirection(t_redir **lst, char **full_cmd)
@@ -86,15 +90,24 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	{
 		if (current->type == RI)
 		{
-			printf("need to perform input redirection\n");
-			input_redirection(current);
+			if (!input_redirection(current))
+				return (0);
 		}
-		else if (current->type == RO)
-			output_redirection(current);
+		if (current->type == RO)
+		{
+			if (!output_redirection(current))
+				return (0);
+		}
 		else if (current->type == ARO)
-			output_app_redirection(current);
+		{
+			if (!output_app_redirection(current))
+				return (0);
+		}
 		else if (current->type == HE)
-			here_doc_redirection(current);
+		{
+			if (!here_doc_redirection(current))
+				return (0);
+		}
 		current = current->next;
 	}
 	return (new_full_cmd);
