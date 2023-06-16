@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:47:45 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:51:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 
 	i = -1;
 	size = get_nb_quoted_words(str);
+	printf("size: %d\n", size);
 	tab = fill_quoted_tab(str, size);
 	while (++i < size)
 	{
@@ -50,6 +51,7 @@ void	var_expansion(t_word **lst, t_env_var **g, t_env_var **e)
 	current = *lst;
 	while (current)
 	{
+		printf("analyzing: %s\n", current->word);
 		temp = get_quoted(current->word, e, g);
 		free(current->word);
 		current->word = temp;

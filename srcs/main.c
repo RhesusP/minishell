@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:49:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:50:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ static void	handle_error(int argc, char **argv)
 	{
 		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
 		exit(EXIT_FAILURE);
+	}
+}
+
+void	display_t_word_lst(t_word **lst)
+{
+	t_word	*current;
+
+	current = *lst;
+	while (current)
+	{
+		printf("%s\t", current->word);
+		printf("type: %d\n", current->type);
+		current = current->next;
 	}
 }
 

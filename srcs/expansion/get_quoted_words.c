@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:49:36 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:15:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:56:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	count_words(char *str, int i, int *unquoted, int *nb)
 	if (str[i] == '\'' || str[i] == '"')
 	{
 		if (*unquoted)
-			nb++;
+			(*nb)++;
 		*unquoted = 0;
 		j = i + 1;
 		while (str[j] != '\0')
