@@ -6,49 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:24:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:35:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
-
-char	**get_key_name(char *str)
-{
-	int		len;
-	int		i;
-	char	**tab;
-
-	tab = malloc(sizeof(char *) * 3);
-	if (!tab)
-		return (0);
-	i = 0;
-
-	while (str[i] != '\0' && str[i] != '$')
-		i++;
-		
-	if (i > 0)
-		tab[0] = ft_strndup(str, i);
-	else
-		tab[0] = 0;
-	len = i;
-	len += 1;
-	if (len < ft_strlen(str))
-	{
-		while (str[len] != '\0' && (str[len] == '_' || str[len] == '?' || ft_isalnum(str[len])))
-			len++;
-		tab[1] = ft_strndup(&str[i], len - i);
-		if (len < ft_strlen(str) && str[len])
-			tab[2] = ft_strdup(&str[len]);
-		else
-			tab[2] = 0;
-	}
-	else
-	{
-		tab[1] = 0;
-		tab[2] = 0;
-	}
-	return (tab);
-}
 
 char	*get_values(char *key, t_env_var **lst, t_env_var **global)
 {
@@ -58,7 +20,6 @@ char	*get_values(char *key, t_env_var **lst, t_env_var **global)
 
 	stop = 0;
 	values = 0;
-	
 	if (!*lst || !key)
 		return (0);
 	if (ft_strcmp(key, "$") == 0)
