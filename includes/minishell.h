@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 17:36:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:23:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ char			*values_to_str(char **tab);
 char			*get_values(char *key, t_env_var **lst, t_env_var **global);
 char			*get_vars(char *str, t_env_var **env, t_env_var **global);
 char			*get_last_unquoted(char *str);
-// int				get_nb_quoted_words(char *str);
+int				get_nb_quoted_words(char *str);
 // char			**fill_quoted_tab(char *str, int size);
 // char			*remove_quotes(char *str);
 // char			*join_tab(char **tab, int size);
