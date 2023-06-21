@@ -6,115 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:35:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:11:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
-
-char	*get_values(char *key, t_env_var **lst, t_env_var **global)
-{
-	t_env_var	*current;
-	char		**values;
-	int			stop;
-
-	stop = 0;
-	values = 0;
-	if (!*lst || !key)
-		return (0);
-	if (ft_strcmp(key, "$") == 0)
-		return (ft_strdup("$"));
-	else if (ft_strcmp(key, "$?") == 0)
-		return (ft_itoa(g_status));
-	key = &key[1];
-	current = *lst;
-	while (current && !stop)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			values = current->values;
-			stop = 1;
-		}
-		current = current->next;
-	}
-	if (!values && *global)
-	{
-		stop = 0;
-		current = *global;
-		while (current && !stop)
-		{
-			if (ft_strcmp(current->key, key) == 0)
-			{
-				values = current->values;
-				stop = 1;
-			}
-			current = current->next;
-		}
-	}
-	return (values_to_str(values));
-}
-
-char	**fill_quoted_tab(char *str, int size)
-{
-	int		i;
-	int		j;
-	int		cell;
-	char	**tab;
-	int		last_alloc;
-
-	last_alloc = -1;
-	tab = malloc(sizeof(char *) * (size + 1));
-	if (!tab)
-		return (0);
-	i = 0;
-	while (i < size)
-	{
-		tab[i] = 0;
-		i++;
-	}
-	cell = 0;
-	if (str[0] != '"' && str[0] != '\'')
-	{
-		i = 0;
-		while (str[i] != '\0' && str[i] != '\'' && str[i] != '"')
-			i++;
-		tab[0] = ft_strndup(str, i);
-		cell = 1;
-		last_alloc = i - 1;
-	}
-	else
-		i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			if (i != last_alloc + 1)
-			{
-				tab[cell] = ft_strndup(&str[last_alloc + 1], i - last_alloc - 1);
-				cell++;
-				last_alloc = i;
-			}
-			j = i + 1;
-			while (str[j] != '\0')
-			{
-				if (str[j] == str[i])
-				{
-					tab[cell] = ft_strndup(&str[i], j - i + 1);
-					cell++;
-					last_alloc = j;
-					i = j;
-					break ;
-				}
-				j++;
-			}
-		}
-		i++;
-	}
-	if (!tab[size - 1])
-		tab[size - 1] = get_last_unquoted(str);
-	tab[size] = 0;
-	return (tab);
-}
 
 char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 {

@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/06/21 18:35:40 by cbernot          ###   ########.fr        #
+#    Updated: 2023/06/21 19:11:47 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 		./srcs/syntax.c ./srcs/structs/to_free.c ./srcs/builtins/cd/simplify_path.c \
 		./srcs/structs/parse_param_utils.c \
 		./srcs/expansion/var_expansion.c ./srcs/expansion/expansion_utils.c ./srcs/expansion/get_vars.c ./srcs/expansion/get_quoted_words.c \
-		./srcs/expansion/get_key_name.c 
+		./srcs/expansion/get_key_name.c ./srcs/expansion/fill_quoted_tab.c ./srcs/expansion/get_values.c 
 
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
