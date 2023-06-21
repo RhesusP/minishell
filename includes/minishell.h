@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 15:46:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:36:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,15 +147,6 @@ char			*here_doc(char *delim);
 t_redir			**get_redir(t_word **lst);
 char			**handle_redirection(t_redir **lst, char **full_cmd);
 void			var_expansion(t_word **lst, t_env_var **g, t_env_var **e);
-char			*get_vars(char *str, t_env_var **env, t_env_var **global);
-char			*get_values(char *key, t_env_var **lst, t_env_var **global);
-int				get_nb_quoted_words(char *str);
-char			**get_key_name(char *str);
-char			**fill_quoted_tab(char *str, int size);
-char			*values_to_str(char **tab);
-char			*remove_quotes(char *str);
-char			*get_last_unquoted(char *str);
-char			*join_tab(char **tab, int size);
 void			free_tubes(int **tubes);
 int				**create_tubes(int nb_tubes);
 t_word			**get_next_cmd(t_word **lst, t_word ***new_lst);
@@ -186,5 +177,17 @@ char			**create_dir_tab(char *str, int nb_dir);
 int				count_dir(char *path);
 t_env_var		*get_pwd(t_env_var *env);
 t_env_var		*get_old_pwd(t_env_var *env);
+
+char			**get_key_name(char *str);
+char			*values_to_str(char **tab);
+char			*get_values(char *key, t_env_var **lst, t_env_var **global);
+char			*get_vars(char *str, t_env_var **env, t_env_var **global);
+char			*get_last_unquoted(char *str);
+// int				get_nb_quoted_words(char *str);
+// char			**fill_quoted_tab(char *str, int size);
+// char			*remove_quotes(char *str);
+// char			*join_tab(char **tab, int size);
+char			*remove_quotes(char *str);
+char			*join_tab(char **tab, int size);
 
 #endif

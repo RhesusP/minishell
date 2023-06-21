@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/06/16 15:47:37 by cbernot          ###   ########.fr        #
+#    Updated: 2023/06/21 17:29:11 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,7 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 		./srcs/tokenizer/unquoted.c \
 		./srcs/executer/executer.c ./srcs/executer/executer_utils.c ./srcs/executer/ft_execve.c \
 		./srcs/structs/environment_utils.c ./srcs/structs/environment.c \
-		./srcs/expansion/expansion_utils.c \
 		./srcs/executer/get_next_cmd.c \
-		./srcs/expansion/var_expansion.c \
 		./srcs/builtins/echo.c ./srcs/builtins/env.c \
 		./srcs/builtins/export.c ./srcs/builtins/export_utils.c ./srcs/builtins/cd/cd.c ./srcs/builtins/cd/cd_utils.c  ./srcs/builtins/pwd.c \
 		./srcs/builtins/exit.c ./srcs/builtins/unset.c ./srcs/builtins/cd/change_pwd.c ./srcs/builtins/cd/recreate_new_path.c \
@@ -29,8 +27,8 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 		./srcs/structs/create_env.c \
 		./srcs/structs/redirection.c ./srcs/redirection/redir_handler.c ./srcs/executer/tubes.c ./srcs/builtins/builtin_handler.c \
 		./srcs/syntax.c ./srcs/structs/to_free.c ./srcs/builtins/cd/simplify_path.c \
-		./srcs/expansion/get_vars.c ./srcs/expansion/fill_quoted_tab.c ./srcs/expansion/get_values.c ./srcs/expansion/get_key_name.c \
-		./srcs/structs/parse_param_utils.c ./srcs/expansion/get_quoted_words.c
+		./srcs/structs/parse_param_utils.c \
+		./srcs/expansion/var_expansion.c ./srcs/expansion/expansion_utils.c ./srcs/expansion/get_vars.c 
 
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
