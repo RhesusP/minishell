@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 19:11:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:15:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	char	**tab;
 	char	*res;
 	char	*temp;
-	
+	int		i;
+
 	size = get_nb_quoted_words(str);
 	tab = fill_quoted_tab(str, size);
-	int i = 0;
+	i = 0;
 	while (i < size)
 	{
 		if (tab[i][0] != '\'')
@@ -35,17 +36,11 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 		i++;
 	}
 	res = join_tab(tab, size);
-	i = 0;	
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	free_all(tab);
 	return (res);
 }
 
-void	var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_vars)
+void	var_expansion(t_word **words_lst, t_env_var **g, t_env_var **e)
 {
 	t_word	*current;
 	int		quoted_case;
@@ -56,7 +51,7 @@ void	var_expansion(t_word **words_lst, t_env_var **global_vars, t_env_var **env_
 	current = *words_lst;
 	while (current)
 	{
-		temp = get_quoted(current->word, env_vars, global_vars);
+		temp = get_quoted(current->word, e, g);
 		free(current->word);
 		current->word = temp;
 		current = current->next;
