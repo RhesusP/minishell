@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:42:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:11:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/22 09:45:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,28 @@ char	**get_var_values(char *str)
 {
 	char	**values;
 	int		i;
+	char	*tmp;
+	char	*tmp1;
 
 	i = 0;
 	while (str[i] != '=')
 		i++;
 	values = ft_split(&str[i + 1], ':');
+	if (str[i + 1] == ':')
+	{
+		tmp = ft_strjoin(":", values[0]);
+		free(values[0]);
+		values[0] = tmp;
+	}
+	if (str[ft_strlen(str) - 1] == ':')
+	{
+		i = 0;
+		while (values[i])
+			i++;
+		tmp1 = ft_strjoin(values[i - 1], ":");
+		free(values[i - 1]);
+		values[i - 1] = tmp1;
+	}
 	return (values);
 }
 

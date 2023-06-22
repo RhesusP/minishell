@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:51:03 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:54:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:22:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ static char	**init_tab(int size)
 	return (tab);
 }
 
+static int	get_first_word(char *str, char ***tab, int *cell, int *last_alloc)
+
+{
+	int	i;
+
+	i = 0;
+	*last_alloc = -1;
+	*cell = 0;
+	if (str[0] != '"' && str[0] != '\'')
+	{
+		while (str[i] != '\0' && str[i] != '\'' && str[i] != '"')
+			i++;
+		(*tab)[0] = ft_strndup(str, i);
+		*cell = 1;
+		*last_alloc = i - 1;
+	}
+	return (i);
+}
+
 char	**fill_quoted_tab(char *str, int size)
 {
 	int		i;
@@ -37,20 +56,8 @@ char	**fill_quoted_tab(char *str, int size)
 	char	**tab;
 	int		last_alloc;
 
-	last_alloc = -1;
 	tab = init_tab(size);
-	cell = 0;
-	if (str[0] != '"' && str[0] != '\'')
-	{
-		i = 0;
-		while (str[i] != '\0' && str[i] != '\'' && str[i] != '"')
-			i++;
-		tab[0] = ft_strndup(str, i);
-		cell = 1;
-		last_alloc = i - 1;
-	}
-	else
-		i = 0;
+	i = get_first_word(str, &tab, &cell, &last_alloc);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '"')

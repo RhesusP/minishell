@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:51:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/06/22 16:01:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void			var_expansion(t_word **lst, t_env_var **g, t_env_var **e);
 void			free_tubes(int **tubes);
 int				**create_tubes(int nb_tubes);
 t_word			**get_next_cmd(t_word **lst, t_word ***new_lst);
-void			ft_execve(t_to_free to_free, int count, int nb_pipes);
+// void			ft_execve(t_to_free to_free, int count, int nb_pipes);
 void			exec_ln(t_word	**word, t_env_var **e, t_env_var **g, char *ln);
 char			*get_execve_path(char *cmd, t_env_var *path_var);
 char			**lst_to_string(t_word **lst);
@@ -189,5 +189,8 @@ char			**fill_quoted_tab(char *str, int size);
 // char			*join_tab(char **tab, int size);
 char			*remove_quotes(char *str);
 char			*join_tab(char **tab, int size);
+
+
+void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line);
 
 #endif
