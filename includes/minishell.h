@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/22 16:01:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/05 15:13:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,14 @@ typedef struct s_parse_param
 	int		*last_alloc;
 	int		*cell;
 }	t_parse_param;
+
+typedef struct	s_exec
+{
+	int	nb_pipes;
+	int	*pipes;
+	int	index;
+	pid_t	pid;
+}	t_exec;
 
 char			*ft_strndup(const char *s1, unsigned int size);
 int				ft_strcmp(char *s1, char *s2);
