@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_key_name.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:35:01 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:49:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:57:46 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**get_key_name(char *str)
 	len = i + 1;
 	if (len < ft_strlen(str))
 	{
-		while (char_is_valid_key(str[len]))
+		while (char_is_valid_key(str[len]) && str[len - 1] != '?')
 			len++;
 		tab[1] = ft_strndup(&str[i], len - i);
 		if (len < ft_strlen(str) && str[len])

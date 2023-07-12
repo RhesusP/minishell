@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 19:15:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:57:42 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	while (i < size)
 	{
 		if (tab[i][0] != '\'')
+		{
 			tab[i] = get_vars(tab[i], env, global);
+		}
 		if (tab[i][0] == '\'' || tab[i][0] == '"')
 		{
 			temp = remove_quotes(tab[i]);
