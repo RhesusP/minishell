@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/05 16:02:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:46:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,108 +62,142 @@ void	close_pipes(t_exec *exec)
 	}
 }
 
-void	child_process2(t_exec *exec, t_word **lst, t_env_var *path, int count, int nb_pipes, t_env_var **env, t_env_var **global, t_word **word)
+void	display_errmsg(void)
 {
-	// exec->pid = fork();
-	// if (exec->pid == 0)
-	// {
-	// 	if (exec->index == 0)
-			
-	// }
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
+{
 	static int input_fd = STDIN_FILENO;
+	t_redir	**redir;
+	redir = get_redir(to_free.command);
 	int pipe_fd[2];
-	if (exec->index != exec->nb_pipes)
+	if (index != nb_pipes)
 		pipe(pipe_fd);
 	int pid = fork();
+	if (pid > 0)
+		to_free.pids[index] = pid;
 	if (pid == 0)
 	{
 		// processus fils
-		if (exec->index != 0)
+		if (index != 0)
 		{
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
 		}
-		if (exec->index != exec->nb_pipes)
+		if (index != nb_pipes)
 		{
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 		}
-		char **full_cmd = lst_to_string(lst);
-		
-		// if (execute_builtin(lst, env, nb_pipes))
-		// {
-		// 	exit(EXIT_SUCCESS);
-		// }
+		char **full_cmd = lst_to_string(to_free.command);
 
+		char	**temp;
+		if (redir)
+		{
+			temp = handle_redirection(redir, full_cmd);
+			if (!temp)
+				free_and_exit(to_free, 1, g_status);
+			full_cmd = copy_string_array(temp);
+			free_all(temp);
+		}
+		free_redir(redir);
+		if (execute_builtin(to_free.command, to_free.env, nb_pipes))
+		{
+			free_all(full_cmd);
+			// free_env(*env);
+			free_word_lst(to_free.lst);
+			free_word_lst(to_free.command);
+			exit(g_status);
+		}
 		char *exec_path = get_execve_path(full_cmd[0], path);
-		
 		char	**str_env;
-		str_env = env_to_tab(*env);
+		str_env = env_to_tab(*(to_free.env));
 
 		if (full_cmd[0] && !exec_path)
 		{
 			// printf("CAS 1\n");
 			if (execve(full_cmd[0], full_cmd, str_env) == -1)
 			{
-				ft_putstr_fd(full_cmd[0], 2);
-				ft_putendl_fd(": command not found", 2);
-				g_status = 127;
+				display_errmsg();
+				free_and_exit(to_free, 1, errno);
 			}
 		}
 		else
 		{
 			if (execve(exec_path, full_cmd, str_env) == -1)
 			{
-				
-				ft_putstr_fd(full_cmd[0], 2);
-				ft_putendl_fd(": command not found", 2);
-				g_status = 127;
+				display_errmsg();
 				free(exec_path);
+				free_and_exit(to_free, 1, errno);
 			}
 		}
+		free_all(str_env);
+		free_and_exit(to_free, 1, EXIT_SUCCESS);
 	}
-	if (exec->index != 0)
+	if (index != 0)
 		close(input_fd);
-	if (exec->index != exec->nb_pipes)
+	if (index != nb_pipes)
 	{
 		close(pipe_fd[1]);
 		input_fd = pipe_fd[0];
 	}
+	
 }
 
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line)
 {
-
-	t_exec	exec;
 	t_env_var *path;
-	t_word		**cmd;
+	t_to_free	to_free;
+	int			index;
+	int			nb_pipes;
 
 	// Compter le nombre de pipes / commandes
-	exec.nb_pipes = count_pipes(word);
-	// creer les pipes
-	// create_pipes(&exec);
-	exec.index = 0;
-	cmd = malloc(sizeof(t_word *));
-	if (!cmd)		//TODO catch error
+	nb_pipes = count_pipes(word);
+	index = 0;
+	
+	to_free.pids = malloc(sizeof(int) * nb_pipes + 1);
+	if (!to_free.pids)
 		return ;
-	*cmd = 0;
+	to_free.lst = word;
+	to_free.env = env;
+	to_free.global = global;
+	to_free.line = line;
+	to_free.command = malloc(sizeof(t_word *));
+	if (!to_free.command)
+		return ;
+	*(to_free.command) = 0;
+
 	// Lancer les processus
-	while (get_next_cmd(word, &cmd))
+	while (get_next_cmd(word, &to_free.command))
 	{		
 		path = get_env_custom("PATH", *env);
-		child_process2(&exec, cmd, path, exec.index, exec.nb_pipes, env, global, word);
-		exec.index++;
-		clear_word_lst(cmd);
+		if (execute_non_fork_builtin(to_free, nb_pipes))
+			to_free.pids[index] = -999;
+		else
+			child_process2(to_free, path, index, nb_pipes);
+		index++;
+		clear_word_lst(to_free.command);
 	}
 	int i = 0;
-	while (i <= exec.nb_pipes)
+	int status;
+	status = 0;
+	while (i <= nb_pipes)
 	{
-		wait(NULL);
+		// wait(NULL);
+		if (to_free.pids[i] != -999)
+		{
+			waitpid(to_free.pids[i], &status, 0);
+			if (WIFEXITED(status))
+			{
+				g_status = WEXITSTATUS(status);
+			}
+		}
 		i++;
 	}
-	// fermer les pipes
-	// close_pipes(&exec);
-	// attendre la fin des processus
 	waitpid(-1, NULL, 0);
 }
