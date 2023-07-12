@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:56:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 11:40:22 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	sub_resplit(char *s, char **tab, int *n_word, int *i)
 	{
 		tab[(*n_word)] = ft_strndup(&s[*i], 1);
 		(*n_word)++;
-		i++;
+		*i += 1;
 	}
 	else
 	{

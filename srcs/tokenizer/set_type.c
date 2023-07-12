@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:55:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 12:29:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ static void	give_cmd_type(t_word **lst, t_env_var **globals)
 					delete_word(word, lst);
 				}
 			}
-			else if (!word->prev || word->prev->type == PIPE || \
-				word->prev->type == FILEPATH)
+			else if (!word->prev || word->prev->type == PIPE)
 				word->type = CMD;
+			// || word->prev->type == FILEPATH)
 		}
 		word = word->next;
 	}

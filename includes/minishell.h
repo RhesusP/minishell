@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/05 15:13:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:30:28 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # define SUCCESS	0
 # define FAILURE	-1
@@ -30,19 +31,18 @@ extern int	g_status;
 
 /*
 	POSSIBLE TYPES:
-		INIT		-->		given at initialization
-		CMD 		-->		command name (exec)
-		ARG			--> 	command's argument
-		PIPE		-->		pipe (|)
-		RI			-->		redirecting input (<)
-		RO			-->		redirecting output (>)
-		ARO			-->		appending redirecting output (>>)
-		HE			-->		here documents (<<)
-		FILEPATH	-->		file path (used for redirections)
-		DELIMITER	-->		come after a here document 
-		IGN			-->		ignore token (e.g. variable assignation followed by a pipe)
+		INIT		-->	(0)		given at initialization
+		CMD 		-->	(1)		command name (exec)
+		ARG			--> (2)		command's argument
+		PIPE		-->	(3)		pipe (|)
+		RI			-->	(4)		redirecting input (<)
+		RO			-->	(5)		redirecting output (>)
+		ARO			-->	(6)		appending redirecting output (>>)
+		HE			-->	(7)		here documents (<<)
+		FILEPATH	-->	(8)		file path (used for redirections)
+		DELIMITER	-->	(9)		come after a here document 
+		IGN			-->	(10)	ignore token (e.g. variable assignation followed by a pipe)
 */
-//                    0     1	 2    3    4   5    6   7       8         9
 typedef enum e_type
 {
 	INIT,
@@ -94,7 +94,7 @@ typedef struct s_to_free
 	t_env_var	**env;
 	t_env_var	**global;
 	char		*line;
-	int			**tubes;
+	int			*pids;
 }	t_to_free;
 
 typedef struct s_parse_param
