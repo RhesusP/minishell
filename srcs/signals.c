@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:26:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:51:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 10:15:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 static void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
-		printf("\n\033[1;36mminishell $>\033[00m ");
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_status = 130;
+	}
 	else if (sig == SIGQUIT)
-		printf("\33[2K\r\033[1;36mminishell $>\033[00m ");
+		write(1, "\b\b  \b\b", 6);
 }
 
 /**
@@ -31,7 +37,7 @@ void	handle_ctrld(char *line, t_env_var *env, t_env_var *global)
 	{
 		printf("exit\n");
 		ft_free(env, global);
-		exit(EXIT_SUCCESS);
+		exit(g_status);
 	}
 }
 

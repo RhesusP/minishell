@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 13:46:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 10:18:06 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ void	close_pipes(t_exec *exec)
 	}
 }
 
-void	display_errmsg(void)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-}
-
 void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 {
 	static int input_fd = STDIN_FILENO;
@@ -115,6 +108,42 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 			exit(g_status);
 		}
 		char *exec_path = get_execve_path(full_cmd[0], path);
+		if (!exec_path)
+		{
+			struct stat	path;
+			if (stat(full_cmd[0], &path) == 0)
+			{
+				if (S_ISDIR(path.st_mode))
+				{
+					// printf("C'est un dossier\n");
+					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
+					ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+					g_status = 126;
+					free_and_exit(to_free, 1, g_status);
+				}
+				else
+				{
+					if (access(full_cmd[0], X_OK) != 0)
+					{
+						ft_putstr_fd(full_cmd[0], STDERR_FILENO);
+						ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+						g_status = 126;
+						free_and_exit(to_free, 1, g_status);
+					}
+				}	
+			}
+			else
+			{
+				if (ft_strncmp(full_cmd[0], "./", 2) == 0)
+				{
+					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
+					ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+					g_status = 127;
+					free_and_exit(to_free, 1, g_status);
+				}
+			}
+		}
+		
 		char	**str_env;
 		str_env = env_to_tab(*(to_free.env));
 
@@ -123,18 +152,23 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 			// printf("CAS 1\n");
 			if (execve(full_cmd[0], full_cmd, str_env) == -1)
 			{
-				display_errmsg();
-				free_and_exit(to_free, 1, errno);
+				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
+				ft_putstr_fd(": command not found\n", STDERR_FILENO);
+				g_status = 127;
+				free_and_exit(to_free, 1, g_status);
 			}
 		}
 		else
 		{
 			if (execve(exec_path, full_cmd, str_env) == -1)
 			{
-				display_errmsg();
+				// display_errmsg();
 				free(exec_path);
-				free_and_exit(to_free, 1, errno);
-			}
+				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
+				ft_putstr_fd(": command not found\n", STDERR_FILENO);
+				g_status = 127;
+				free_and_exit(to_free, 1, g_status);
+		}
 		}
 		free_all(str_env);
 		free_and_exit(to_free, 1, EXIT_SUCCESS);
@@ -146,7 +180,6 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 		close(pipe_fd[1]);
 		input_fd = pipe_fd[0];
 	}
-	
 }
 
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line)
@@ -176,10 +209,31 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	while (get_next_cmd(word, &to_free.command))
 	{		
 		path = get_env_custom("PATH", *env);
-		if (execute_non_fork_builtin(to_free, nb_pipes))
-			to_free.pids[index] = -999;
-		else
-			child_process2(to_free, path, index, nb_pipes);
+
+		t_word	*first;
+		t_word	*next;
+		first = *(to_free.command);
+		if (first && first->word && first->word[0] == '\0')
+		{
+			next = first->next;
+			if (next)
+			{
+				*(to_free.command) = next;
+				if (first->type == CMD && next->type == ARG)
+					next->type = CMD;
+			}
+			else
+			{
+				*to_free.command = 0;
+			}
+		}
+		if (*to_free.command)
+		{
+			if (execute_non_fork_builtin(to_free, nb_pipes))
+				to_free.pids[index] = -999;
+			else
+				child_process2(to_free, path, index, nb_pipes);
+		}
 		index++;
 		clear_word_lst(to_free.command);
 	}

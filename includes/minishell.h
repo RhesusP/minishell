@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 13:30:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/12 17:24:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/stat.h>
 
 # define SUCCESS	0
 # define FAILURE	-1
