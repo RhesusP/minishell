@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 13:05:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:27:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 		to_free->pids[index] = pid;
 	if (pid == 0)
 	{
-		to_free->pids[index] = pid;
 		// processus fils
 		t_redir	**redir;
 		redir = get_redir(to_free->command);
@@ -90,7 +89,6 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 			close(pipe_fd[1]);
 		}
 		char **full_cmd = lst_to_string(to_free->command);
-
 		char	**temp;
 		if (redir)
 		{

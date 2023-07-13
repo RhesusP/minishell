@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 12:15:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:26:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ char	**lst_to_string(t_word **lst)
 
 	i = 0;
 	len = get_exec_len(lst);
+	if (len == 0)
+		return (0);
 	tab = malloc(sizeof(t_word *) * (len + 1));
 	if (!tab)
 		return (0);
