@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 10:50:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:05:22 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 		to_free->pids[index] = pid;
 	if (pid == 0)
 	{
+		to_free->pids[index] = pid;
 		// processus fils
 		t_redir	**redir;
 		redir = get_redir(to_free->command);
@@ -153,6 +154,8 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				g_status = 127;
+				free_all(full_cmd);
+				free_all(str_env);
 				free_and_exit(*to_free, 1, g_status);
 			}
 		}
@@ -165,6 +168,8 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				g_status = 127;
+				free_all(full_cmd);
+				free_all(str_env);
 				free_and_exit(*to_free, 1, g_status);
 		}
 		}
@@ -191,7 +196,7 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	nb_pipes = count_pipes(word);
 	index = 0;
 	
-	to_free.pids = malloc(sizeof(int) * nb_pipes + 1);
+	to_free.pids = malloc(sizeof(int) * (nb_pipes + 1));
 	if (!to_free.pids)
 		return ;
 	to_free.lst = word;
@@ -207,7 +212,6 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	while (get_next_cmd(word, &to_free.command))
 	{		
 		path = get_env_custom("PATH", *env);
-
 		t_word	*first;
 		t_word	*next;
 		first = *(to_free.command);
@@ -240,7 +244,6 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 	status = 0;
 	while (i <= nb_pipes)
 	{
-		// wait(NULL);
 		if (to_free.pids[i] != -999)
 		{
 			waitpid(to_free.pids[i], &status, 0);

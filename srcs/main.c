@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 11:19:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:37:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 		words_lst = parse_words(line, &global_vars);
 		var_expansion(words_lst, &global_vars, &env_vars);
 
-		if (words_lst && *words_lst) // && !syntax_error(words_lst))
+		if (words_lst && *words_lst && !syntax_error(words_lst))
 			execute_line(words_lst, &env_vars, &global_vars, line);
 		add_history(line);
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 10:00:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:05:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 {
 	t_redir	*current;
 	char	**new_full_cmd;
-
+	
 	new_full_cmd = full_cmd;
 	current = *lst;
 	while (current)

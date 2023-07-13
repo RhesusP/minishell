@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/16 11:21:47 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:12:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global)
 	if (!*lst)
 		return ;
 	current = *lst;
+	g_status = 0;
 	while (current && current->type != ARG)
 		current = current->next;
 	while (current && current->type == ARG)

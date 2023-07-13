@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 10:00:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:11:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-static int	search_redir(t_word *current, t_redir **redir)
+static int	search_redir(t_word **lst, t_word *current, t_redir **redir)
 {
 	while (current)
 	{
@@ -20,8 +20,12 @@ static int	search_redir(t_word *current, t_redir **redir)
 		{
 			if (current->next && (current->next->type == FILEPATH || \
 				current->next->type == DELIMITER))
+			{
 				add_back_redir(redir, create_redir(current->type, \
 					current->next->word));
+				delete_word(current, lst);
+				delete_word(current->next, lst);
+			}
 			else
 			{
 				perror("syntax error ?\n");
@@ -45,7 +49,7 @@ t_redir	**get_redir(t_word **lst)
 	if (!redir)
 		return (0);
 	*redir = 0;
-	if (!search_redir(current, redir))
+	if (!search_redir(lst, current, redir))
 		return (0);
 	return (redir);
 }

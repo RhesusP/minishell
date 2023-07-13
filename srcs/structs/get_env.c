@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/22 09:40:44 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:52:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ static void	update_shlvl(t_env_var *env)
 	}
 }
 
+static int	get_env_size(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
+}
+
 t_env_var	*get_environment(char **env)
 {
 	int			i;
@@ -48,5 +58,14 @@ t_env_var	*get_environment(char **env)
 		i++;
 	}
 	update_shlvl(res);
+	if (i == 0)
+	{
+		new_var = create_env_var("SHLVL=1");
+		add_back_env_var(&res, new_var);
+		char *temp = ft_strjoin("PWD=", ft_getcwd());
+		new_var = create_env_var(temp);
+		add_back_env_var(&res, new_var);
+		free(temp);
+	}
 	return (res);
 }
