@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 10:18:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/13 10:50:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,21 @@ void	close_pipes(t_exec *exec)
 	}
 }
 
-void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
+void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes)
 {
 	static int input_fd = STDIN_FILENO;
-	t_redir	**redir;
-	redir = get_redir(to_free.command);
+	
 	int pipe_fd[2];
 	if (index != nb_pipes)
 		pipe(pipe_fd);
 	int pid = fork();
 	if (pid > 0)
-		to_free.pids[index] = pid;
+		to_free->pids[index] = pid;
 	if (pid == 0)
 	{
 		// processus fils
+		t_redir	**redir;
+		redir = get_redir(to_free->command);
 		if (index != 0)
 		{
 			dup2(input_fd, STDIN_FILENO);
@@ -87,25 +88,22 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 		}
-		char **full_cmd = lst_to_string(to_free.command);
+		char **full_cmd = lst_to_string(to_free->command);
 
 		char	**temp;
 		if (redir)
 		{
 			temp = handle_redirection(redir, full_cmd);
 			if (!temp)
-				free_and_exit(to_free, 1, g_status);
+				free_and_exit(*to_free, 1, g_status);
 			full_cmd = copy_string_array(temp);
 			free_all(temp);
 		}
 		free_redir(redir);
-		if (execute_builtin(to_free.command, to_free.env, nb_pipes))
+		if (execute_builtin(to_free->command, to_free->env, nb_pipes))
 		{
 			free_all(full_cmd);
-			// free_env(*env);
-			free_word_lst(to_free.lst);
-			free_word_lst(to_free.command);
-			exit(g_status);
+			free_and_exit(*to_free, 1, g_status);
 		}
 		char *exec_path = get_execve_path(full_cmd[0], path);
 		if (!exec_path)
@@ -119,7 +117,7 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 					ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 					g_status = 126;
-					free_and_exit(to_free, 1, g_status);
+					free_and_exit(*to_free, 1, g_status);
 				}
 				else
 				{
@@ -128,7 +126,7 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 						ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 						ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 						g_status = 126;
-						free_and_exit(to_free, 1, g_status);
+						free_and_exit(*to_free, 1, g_status);
 					}
 				}	
 			}
@@ -139,13 +137,13 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 					ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 					g_status = 127;
-					free_and_exit(to_free, 1, g_status);
+					free_and_exit(*to_free, 1, g_status);
 				}
 			}
 		}
 		
 		char	**str_env;
-		str_env = env_to_tab(*(to_free.env));
+		str_env = env_to_tab(*to_free->env);
 
 		if (full_cmd[0] && !exec_path)
 		{
@@ -155,7 +153,7 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				g_status = 127;
-				free_and_exit(to_free, 1, g_status);
+				free_and_exit(*to_free, 1, g_status);
 			}
 		}
 		else
@@ -167,11 +165,11 @@ void	child_process2(t_to_free to_free, t_env_var *path, int index, int nb_pipes)
 				ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				g_status = 127;
-				free_and_exit(to_free, 1, g_status);
+				free_and_exit(*to_free, 1, g_status);
 		}
 		}
 		free_all(str_env);
-		free_and_exit(to_free, 1, EXIT_SUCCESS);
+		free_and_exit(*to_free, 1, EXIT_SUCCESS);
 	}
 	if (index != 0)
 		close(input_fd);
@@ -232,7 +230,7 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 			if (execute_non_fork_builtin(to_free, nb_pipes))
 				to_free.pids[index] = -999;
 			else
-				child_process2(to_free, path, index, nb_pipes);
+				child_process2(&to_free, path, index, nb_pipes);
 		}
 		index++;
 		clear_word_lst(to_free.command);
@@ -253,5 +251,7 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line
 		}
 		i++;
 	}
-	waitpid(-1, NULL, 0);
+	// waitpid(-1, NULL, 0);
+	free(to_free.pids);
+	free(to_free.command);
 }
