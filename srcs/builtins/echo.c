@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/12 12:35:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:21:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	arg_is_valid(char *arg)
 
 static void	display_echo(t_word *current, int has_write)
 {
+	g_status = 0;
 	if (has_write)
 		ft_putchar_fd(' ', 1);
 	ft_putstr_fd(current->word, 1);

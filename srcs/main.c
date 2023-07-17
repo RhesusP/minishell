@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 13:37:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:06:13 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int	main(int argc, char **argv, char **envp)
 	t_word		**words_lst;
 
 	handle_error(argc, argv);
-	signal_handler();
+	// signal_handler();
 	env_vars = get_environment(envp);
 	global_vars = NULL;
 	while (1)
 	{
+		signal_handler(1);
 		line = readline("\033[1;36mminishell $>\033[00m ");
 		handle_ctrld(line, env_vars, global_vars);
 		words_lst = parse_words(line, &global_vars);

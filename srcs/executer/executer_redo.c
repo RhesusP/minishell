@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:26:16 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 18:27:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:37:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 		to_free->pids[index] = pid;
 	if (pid == 0)
 	{
+		signal_handler(2);
 		// processus fils
 		t_redir	**redir;
 		redir = get_redir(to_free->command);
@@ -94,7 +95,11 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 		{
 			temp = handle_redirection(redir, full_cmd);
 			if (!temp)
+			{
+				free_redir(redir);
+				free_all(full_cmd);
 				free_and_exit(*to_free, 1, g_status);
+			}
 			full_cmd = copy_string_array(temp);
 			free_all(temp);
 		}
@@ -116,6 +121,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 					ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 					g_status = 126;
+					free_all(full_cmd);
 					free_and_exit(*to_free, 1, g_status);
 				}
 				else
@@ -125,6 +131,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 						ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 						ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 						g_status = 126;
+						free_all(full_cmd);
 						free_and_exit(*to_free, 1, g_status);
 					}
 				}	
@@ -136,6 +143,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 					ft_putstr_fd(full_cmd[0], STDERR_FILENO);
 					ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 					g_status = 127;
+					free_all(full_cmd);
 					free_and_exit(*to_free, 1, g_status);
 				}
 			}
@@ -171,6 +179,7 @@ void	child_process2(t_to_free *to_free, t_env_var *path, int index, int nb_pipes
 				free_and_exit(*to_free, 1, g_status);
 		}
 		}
+		free_all(full_cmd);
 		free_all(str_env);
 		free_and_exit(*to_free, 1, EXIT_SUCCESS);
 	}

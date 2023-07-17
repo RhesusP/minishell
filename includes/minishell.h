@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 12:41:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:05:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void			free_all(char **str);
 char			*ft_strjoin_nullable(char *s1, char *s2);
 int				ft_isspace(const char c);
 int				syntax_error(t_word **lst);
-void			signal_handler(void);
+// void			signal_handler(void);
+void	signal_handler(int sig);
 void			handle_ctrld(char *line, t_env_var *env, t_env_var *global);
 void			free_word_lst(t_word **lst);
 void			ft_free(t_env_var *env, t_env_var *global);
@@ -201,5 +202,7 @@ char			*join_tab(char **tab, int size);
 
 
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line);
+
+void	ft_sig_ignore(int sig);
 
 #endif
