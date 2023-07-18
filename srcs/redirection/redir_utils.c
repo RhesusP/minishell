@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 15:57:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:46:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	search_redir(t_word **lst, t_word *current, t_redir **redir)
 			{
 				add_back_redir(redir, create_redir(current->type, \
 					current->next->word));
-				// delete_word(current, lst);
-				// delete_word(current->next, lst);
 			}
 			else
 			{

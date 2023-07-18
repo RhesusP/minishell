@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 15:12:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:47:59 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_env_var	*get_environment(char **env)
 	int			i;
 	t_env_var	*res;
 	t_env_var	*new_var;
+	char		*temp;
 
 	res = NULL;
 	i = 0;
@@ -62,7 +63,7 @@ t_env_var	*get_environment(char **env)
 	{
 		new_var = create_env_var("SHLVL=1");
 		add_back_env_var(&res, new_var);
-		char *temp = ft_strjoin("PWD=", ft_getcwd());
+		temp = ft_strjoin("PWD=", ft_getcwd());
 		new_var = create_env_var(temp);
 		add_back_env_var(&res, new_var);
 		free(temp);

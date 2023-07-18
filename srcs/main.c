@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:06:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/18 22:04:28 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int argc, char **argv, char **envp)
 	t_word		**words_lst;
 
 	handle_error(argc, argv);
-	// signal_handler();
 	env_vars = get_environment(envp);
 	global_vars = NULL;
 	while (1)
@@ -55,10 +54,10 @@ int	main(int argc, char **argv, char **envp)
 		handle_ctrld(line, env_vars, global_vars);
 		words_lst = parse_words(line, &global_vars);
 		var_expansion(words_lst, &global_vars, &env_vars);
-
 		if (words_lst && *words_lst && !syntax_error(words_lst))
 			execute_line(words_lst, &env_vars, &global_vars, line);
-		add_history(line);
+		if (line && ft_strlen(line) > 0)
+			add_history(line);
 		free(line);
 		free_word_lst(words_lst);
 	}

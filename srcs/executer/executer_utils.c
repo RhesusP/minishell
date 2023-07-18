@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 18:26:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:50:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ static int	get_exec_len(t_word **lst)
 			len++;
 		current = current->next;
 	}
-
-	// while (current && current->type != CMD && current->type != ARG)
-	// 	current = current->next;
-	// while (current && (current->type == CMD || current->type == ARG))
-	// {
-	// 	len++;
-	// 	current = current->next;
-	// }
 	return (len);
 }
 
@@ -104,9 +96,6 @@ char	**lst_to_string(t_word **lst)
 	if (!tab)
 		return (0);
 	current = *lst;
-	// while (current && current->type != CMD && current->type != ARG)
-	// 	current = current->next;
-	//while (current && i < len)
 	while (current)
 	{
 		if (current->type == CMD || current->type == ARG)

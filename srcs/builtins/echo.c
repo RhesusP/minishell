@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/17 16:21:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:46:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ static int	arg_is_valid(char *arg)
 	return (0);
 }
 
-static void	display_echo(t_word *current, int has_write)
+static void	display_echo(t_word *current, int *has_write)
 {
 	g_status = 0;
-	if (has_write)
+	if (*has_write == 1)
 		ft_putchar_fd(' ', 1);
 	ft_putstr_fd(current->word, 1);
+	*has_write = 1;
 }
 
 void	ft_echo(t_word **lst)
@@ -49,9 +50,6 @@ void	ft_echo(t_word **lst)
 	accept_option = 1;
 	newline = 1;
 	current = *lst;
-
-	// while (current && current->type != ARG)
-	// 	current = current->next;
 	while (current)
 	{
 		if (current->type == ARG)
@@ -60,12 +58,10 @@ void	ft_echo(t_word **lst)
 				newline = 0;
 			else
 			{
-				display_echo(current, has_write);
-				has_write = 1;
+				display_echo(current, &has_write);
 				accept_option = 0;
 			}
 		}
-
 		current = current->next;
 	}
 	if (newline)

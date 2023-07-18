@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:19:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/13 13:46:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:44:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*ft_getcwd(void)
 	pwd = malloc(sizeof(char) * size);
 	while (!getcwd(pwd, 256))
 		size += 256;
-	
 	return (pwd);
 }
 

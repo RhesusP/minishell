@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:26:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:28:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/18 22:15:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	change_old_pwd(t_env_var *env)
 	else
 	{
 		free_all(old_pwd->values);
-		temp = ft_getcwd();
+		temp = get_pwd(env)->values[0];
 		old_pwd->values = malloc(sizeof(char *) * 2);
 		old_pwd->values[0] = ft_strdup(temp);
 		old_pwd->values[1] = 0;
-		free(temp);
+		// free(temp);
 	}
 }
 

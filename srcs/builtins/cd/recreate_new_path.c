@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:42:13 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:28:16 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/18 22:58:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*recreate_new_path(char **tab, int size)
 		else if (tab[i] && ft_strcmp(tab[i], "..") == 0)
 		{
 			j = i - 1;
-			while (!tab[j])
+			while (j >= 0 && !tab[j])
 				j--;
 			if (j >= 0)
 				free_cell(tab, j);
