@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 00:09:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 01:16:22 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-static int	input_redirection(t_redir *current)
+int	input_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -28,7 +28,7 @@ static int	input_redirection(t_redir *current)
 	return (1);
 }
 
-static int	output_redirection(t_redir *current)
+int	output_redirection(t_redir *current)
 {
 	int	fd;
 
@@ -92,16 +92,8 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 	current = *lst;
 	while (current)
 	{
-		if (current->type == RI)
-		{
-			if (!input_redirection(current))
-				return (0);
-		}
-		if (current->type == RO)
-		{
-			if (!output_redirection(current))
-				return (0);
-		}
+		if (!handle_simple_redir(current))
+			return (0);
 		else if (current->type == ARO)
 		{
 			if (!output_app_redirection(current))

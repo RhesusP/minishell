@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:05:18 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 01:16:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char			*ft_strjoin_nullable(char *s1, char *s2);
 int				ft_isspace(const char c);
 int				syntax_error(t_word **lst);
 // void			signal_handler(void);
-void	signal_handler(int sig);
+void			signal_handler(int sig);
 void			handle_ctrld(char *line, t_env_var *env, t_env_var *global);
 void			free_word_lst(t_word **lst);
 void			ft_free(t_env_var *env, t_env_var *global);
@@ -160,7 +160,6 @@ void			var_expansion(t_word **lst, t_env_var **g, t_env_var **e);
 void			free_tubes(int **tubes);
 int				**create_tubes(int nb_tubes);
 t_word			**get_next_cmd(t_word **lst, t_word ***new_lst);
-// void			ft_execve(t_to_free to_free, int count, int nb_pipes);
 void			exec_ln(t_word	**word, t_env_var **e, t_env_var **g, char *ln);
 char			*get_execve_path(char *cmd, t_env_var *path_var);
 char			**lst_to_string(t_word **lst);
@@ -204,5 +203,13 @@ char			*join_tab(char **tab, int size);
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **global, char *line);
 
 void	ft_sig_ignore(int sig);
+void	init_to_free_vars(t_to_free *to_free, t_env_var **env, t_env_var **global);
+void	init_to_free(t_to_free *to_free, int nb_pipes, t_word **word, char *line);
+void	ft_execve(t_to_free *to_free, t_env_var *path, int index, int nb_pipes);
+void	check_cmd_err(t_to_free *to_free, char **full_cmd);
+void	handle_execve_fail(t_to_free *to_free, char **full_cmd, char **str_env);
+int	handle_simple_redir(t_redir *current);
+int	input_redirection(t_redir *current);
+int	output_redirection(t_redir *current);
 
 #endif

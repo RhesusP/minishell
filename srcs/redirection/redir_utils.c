@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:46:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 01:15:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,19 @@ char	*here_doc(char *delim)
 		concat = ft_strjoin(concat, "\n");
 	}
 	return (concat);
+}
+
+int	handle_simple_redir(t_redir *current)
+{
+	if (current->type == RI)
+	{
+		if (!input_redirection(current))
+			return (0);
+	}
+	if (current->type == RO)
+	{
+		if (!output_redirection(current))
+			return (0);
+	}
+	return (1);
 }
