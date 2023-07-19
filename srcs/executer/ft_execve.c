@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 12:24:51 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 16:48:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,20 @@ void	do_exec_redir(t_to_free *to_free, char ***full_cmd, int i)
 void	child_process(t_to_free *f, t_env_var *path, int nb_pipes, int i)
 {
 	char	**full_cmd;
+	int		j;
 
 	signal_handler(2);
 	full_cmd = lst_to_string(f->command);
 	do_exec_redir(f, &full_cmd, i);
 	if (execute_builtin(f->command, f->env, nb_pipes))
 	{
+		j = 0;
+		while (j < nb_pipes + 2)
+		{
+			free(f->he_files[j]);
+			j++;
+		}
+		free(f->he_files);
 		free_all(full_cmd);
 		free_and_exit(*f, 1, g_status);
 	}

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 13:54:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 16:24:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,13 @@ void	unlink_he_files(t_to_free *to_free, int nb_pipes)
 {
 	int	i;
 
-	i = -1;
-	while (++i < nb_pipes + 2)
+	i = 0;
+	while (i < nb_pipes + 2)
 	{
 		if (to_free->he_files[i])
-		{
 			unlink(to_free->he_files[i]);
-			free(to_free->he_files[i]);
-		}
+		free(to_free->he_files[i]);
+		i++;
 	}
 	free(to_free->he_files);
 }
