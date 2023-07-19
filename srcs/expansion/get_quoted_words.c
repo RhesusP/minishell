@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:22:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 18:24:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:13:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	count_words(char *str, int i, int *unquoted, int *nb)
 int	get_nb_quoted_words(char *str)
 {
 	int	i;
-	int	j;
 	int	nb;
 	int	len;
 	int	unquoted;

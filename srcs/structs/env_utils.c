@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:46 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:07:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:03:51 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	change_value(t_env_var *current, char *word)
 int	actualize_global_var(t_env_var **globals, char *word)
 {
 	t_env_var	*current;
-	char		*temp;
 	char		*word_key;
 
 	current = *globals;
@@ -77,23 +76,6 @@ int	actualize_global_var(t_env_var **globals, char *word)
 	}
 	free(word_key);
 	return (FAILURE);
-}
-
-/**
- * @brief free a t_env_var
-*/
-static void	free_env_var(t_env_var *env_var)
-{
-	t_env_var	*tmp;
-
-	while (env_var)
-	{
-		tmp = env_var->next;
-		free(env_var->key);
-		free_all(env_var->values);
-		free(env_var);
-		env_var = tmp;
-	}
 }
 
 int	is_already_here(t_env_var **env, char *key)

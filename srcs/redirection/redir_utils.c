@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 01:15:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:15:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-static int	search_redir(t_word **lst, t_word *current, t_redir **redir)
+static int	search_redir(t_word *current, t_redir **redir)
 {
 	while (current)
 	{
@@ -47,7 +47,7 @@ t_redir	**get_redir(t_word **lst)
 	if (!redir)
 		return (0);
 	*redir = 0;
-	if (!search_redir(lst, current, redir))
+	if (!search_redir(current, redir))
 		return (0);
 	return (redir);
 }
@@ -56,8 +56,6 @@ char	*here_doc(char *delim)
 {
 	char	*line;
 	char	*concat;
-	t_word	*arg;
-	int		i;
 
 	concat = "";
 	while (1)

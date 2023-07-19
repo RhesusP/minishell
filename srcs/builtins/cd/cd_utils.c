@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:09:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,6 @@ t_env_var	*get_pwd(t_env_var *env)
 		current = current->next;
 	}
 	return (0);
-}
-
-static int	is_abs_path(char *path)
-{
-	if (path[0] == '/')
-		return (1);
-	return (0);
-}
-
-static char	*get_valid_pwd(char *pwd, char *input)
-{
-	char	*path;
-	char	*tmp;
-
-	if (is_abs_path(input))
-		return (ft_strdup(input));
-	if (ft_strlen(ft_strrchr(pwd, '/')) == 1)
-		return (ft_strjoin(pwd, input));
-	tmp = ft_strjoin(pwd, "/");
-	path = ft_strjoin(tmp, input);
-	free(tmp);
-	return (path);
 }
 
 int	count_dir(char *path)

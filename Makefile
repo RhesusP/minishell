@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/19 00:36:33 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/19 09:02:40 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,12 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 		./srcs/structs/create_env.c \
 		./srcs/structs/redirection.c ./srcs/redirection/redir_handler.c ./srcs/executer/tubes.c ./srcs/builtins/builtin_handler.c \
 		./srcs/syntax.c ./srcs/structs/to_free.c ./srcs/builtins/cd/simplify_path.c \
-		./srcs/structs/parse_param_utils.c \
 		./srcs/expansion/var_expansion.c ./srcs/expansion/expansion_utils.c ./srcs/expansion/get_vars.c ./srcs/expansion/get_quoted_words.c \
 		./srcs/expansion/get_key_name.c ./srcs/expansion/fill_quoted_tab.c ./srcs/expansion/get_values.c 
 
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
-FLAGS = -g3
+FLAGS = -g3 -Wall -Wextra -Werror
 #-g -fsanitize=address
 #-Wall -Wextra -Werror
 DIR_FLAG = --no-print-directory
@@ -44,7 +43,6 @@ DIR_FLAG = --no-print-directory
 ${NAME}: ${OBJS}
 	make ${DIR_FLAG} -C ./libft
 	cc ${OBJS} -L ./libft -lft -lreadline -o ${NAME}
-#-g -fsanitize=address
 
 all: ${NAME}
 

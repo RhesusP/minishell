@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:14:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:52:39 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:12:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	free_env(t_env_var *env)
 void	ft_free(t_env_var *env, t_env_var *global)
 {
 	free_env(env);
+	free_env(global);
 	rl_clear_history();
 }
 

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/13 12:12:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:09:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	delete_existing_key(t_env_var **env, char *key)
 {
 	t_env_var	*prev;
 	t_env_var	*delete;
-	int			i;
 
 	prev = get_prev(env, key);
 	if (!prev)

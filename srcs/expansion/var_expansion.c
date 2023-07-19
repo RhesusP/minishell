@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:49:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:13:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 void	var_expansion(t_word **words_lst, t_env_var **g, t_env_var **e)
 {
 	t_word	*current;
-	int		quoted_case;
 	char	*temp;
 
 	if (!words_lst || !*words_lst)

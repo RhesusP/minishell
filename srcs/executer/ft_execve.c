@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 01:00:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:07:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	do_exec_redir(t_to_free *to_free, char ***full_cmd)
 	free_redir(redir);
 }
 
-void	child_process(t_to_free *f, t_env_var *path, int index, int nb_pipes)
+void	child_process(t_to_free *f, t_env_var *path, int nb_pipes)
 {
 	char	**full_cmd;
 
@@ -110,7 +110,7 @@ void	ft_execve(t_to_free *to_free, t_env_var *path, int index, int nb_pipes)
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 		}
-		child_process(to_free, path, index, nb_pipes);
+		child_process(to_free, path, nb_pipes);
 	}
 	close_pipes(index, nb_pipes, &input_fd, pipe_fd);
 }

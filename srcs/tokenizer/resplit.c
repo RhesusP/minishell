@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 11:40:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:04:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**resplit(char *s)
 	n_word = 0;
 	tab = ft_malloc((char *)s, &count);
 	i = 0;
-	while (n_word < count && i < ft_strlen(s))
+	while (n_word < count && i < (int)ft_strlen(s))
 		sub_resplit(s, tab, &n_word, &i);
 	return (tab);
 }

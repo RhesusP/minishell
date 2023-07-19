@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:40:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/18 22:38:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:11:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**create_dir_tab(char *str, int nb_dir)
 		return (0);
 	cell = 0;
 	i = 0;
-	while (i < ft_strlen(str) && str[i] != '\0')
+	while (i < (int)ft_strlen(str) && str[i] != '\0')
 	{
 		j = i;
 		while (str[j] != '/' && str[j] != '\0')
@@ -51,7 +51,7 @@ void	switch_old_curr_pwd(t_env_var *env)
 		g_status = 1;
 		return ;
 	}
-	change_pwd(env, old_pwd->values[0], 1);
+	change_pwd(env, old_pwd->values[0]);
 }
 
 static void	go_home(t_env_var *env)
@@ -65,7 +65,7 @@ static void	go_home(t_env_var *env)
 		g_status = 1;
 	}
 	else
-		change_pwd(env, home, 1);
+		change_pwd(env, home);
 }
 
 void	ft_cd(t_word **lst, t_env_var *env)

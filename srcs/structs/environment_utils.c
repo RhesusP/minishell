@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:05:29 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/16 11:03:58 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 09:08:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static t_env_var	*env_var_last(t_env_var *env_var)
 void	env_var_add_back(t_env_var **env_var, t_env_var *new)
 {
 	t_env_var	*last;
-	char		**split;
 
 	if (*env_var == 0)
 	{
