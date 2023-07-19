@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/18 22:04:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:36:13 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	g_status = 0;
 
+/// @brief Exit program if there is more than one arg
 static void	handle_error(int argc, char **argv)
 {
 	(void)argv;
@@ -21,19 +22,6 @@ static void	handle_error(int argc, char **argv)
 	{
 		ft_putstr_fd("[!] USAGE: ./minishell\n", 2);
 		exit(EXIT_FAILURE);
-	}
-}
-
-void	display_t_word_lst(t_word **lst)
-{
-	t_word	*current;
-
-	current = *lst;
-	while (current)
-	{
-		printf("%s\t", current->word);
-		printf("type: %d\n", current->type);
-		current = current->next;
 	}
 }
 

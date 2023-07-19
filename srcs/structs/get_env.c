@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:03:07 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:22:36 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ static void	update_shlvl(t_env_var *env)
 	}
 }
 
+/// @brief Parse environnement to t_env_var
+/// @param env Original env
+/// @return return parsed env
 t_env_var	*get_environment(char **env)
 {
 	int			i;

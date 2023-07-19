@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:53:15 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:58:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:34:04 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ static char	**ft_fill_tab(char **tab, char *str, char *charset)
 	return (tab);
 }
 
+/// @brief split a string with a charset
+/// @param str string to split
+/// @param charset charset
+/// @return char **tab
 char	**ft_strtok(char *str, char *charset)
 {
 	char	**result;

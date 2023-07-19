@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:19:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/17 16:44:16 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:43:23 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/// @brief Get pwd
+/// @return pwd
 char	*ft_getcwd(void)
 {
 	char	*pwd;
@@ -26,6 +28,7 @@ char	*ft_getcwd(void)
 	return (pwd);
 }
 
+/// @brief builtin pwd and print it
 void	ft_pwd(void)
 {
 	char	*pwd;
