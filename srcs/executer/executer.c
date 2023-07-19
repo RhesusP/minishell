@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/19 01:03:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:54:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,26 @@ void	wait_child_processes(t_to_free *to_free, int nb_pipes)
 			waitpid(to_free->pids[i], &status, 0);
 			if (WIFEXITED(status))
 				g_status = WEXITSTATUS(status);
-			else if ((WIFSIGNALED(ret)))
-				signal_handler(WTERMSIG(ret));
+			else if (WIFSIGNALED(status))
+			{
+				if (status == 131)
+					printf("Quit (core dumped)\n");
+			}
 		}
 		i++;
 	}
+	unlink_he_files(to_free, nb_pipes);
+}
+
+char	*generate_filename(int index)
+{
+	char	*itoa_ret;
+	char	*res;
+
+	itoa_ret = ft_itoa(index);
+	res = ft_strjoin(".tmp", itoa_ret);
+	free(itoa_ret);
+	return (res);
 }
 
 void	execute_line(t_word	**word, t_env_var **env, t_env_var **g, char *line)
@@ -82,13 +97,15 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **g, char *line)
 	t_to_free	to_free;
 	int			i;
 	int			nb_pipes;
+	static int	idx = 1;
 
 	nb_pipes = count_pipes(word);
-	i = 0;
+	i = -1;
 	init_to_free(&to_free, nb_pipes, word, line);
 	init_to_free_vars(&to_free, env, g);
 	while (get_next_cmd(word, &to_free.command))
-	{		
+	{
+		to_free.he_files[++i] = generate_filename(idx++);
 		clean_null_args(&to_free);
 		if (*to_free.command)
 		{
@@ -97,7 +114,6 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **g, char *line)
 			else
 				ft_execve(&to_free, get_env_custom("PATH", *env), i, nb_pipes);
 		}
-		i++;
 		clear_word_lst(to_free.command);
 	}
 	wait_child_processes(&to_free, nb_pipes);

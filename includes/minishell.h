@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:29:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:54:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_to_free
 	t_env_var	**global;
 	char		*line;
 	int			*pids;
+	char		**he_files;
 }	t_to_free;
 
 typedef struct s_parse_p
@@ -139,7 +140,7 @@ char		**get_var_values(char *str);
 char		*get_var_key(char *str);
 char		*here_doc(char *delim);
 t_redir		**get_redir(t_word **lst);
-char		**handle_redirection(t_redir **lst, char **full_cmd);
+char		**handle_redirection(t_redir **lst, char **full_cmd, char *he_file);
 void		var_expansion(t_word **lst, t_env_var **g, t_env_var **e);
 void		free_tubes(int **tubes);
 int			**create_tubes(int nb_tubes);
@@ -190,5 +191,6 @@ void		handle_execve_fail(t_to_free *f, char **full_cmd, char **str_env);
 int			handle_simple_redir(t_redir *current);
 int			input_redirection(t_redir *current);
 int			output_redirection(t_redir *current);
+void		unlink_he_files(t_to_free *to_free, int nb_pipes);
 
 #endif

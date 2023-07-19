@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/19 09:02:40 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/19 09:35:53 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,6 @@ SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/en
 OBJS = ${SRCS:.c=.o}
 INCLUDES = ./includes
 FLAGS = -g3 -Wall -Wextra -Werror
-#-g -fsanitize=address
-#-Wall -Wextra -Werror
 DIR_FLAG = --no-print-directory
 
 %.o: %.c ./includes/minishell.h Makefile

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:07:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:24:51 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	execute_cmd(t_to_free *to_free, char **full_cmd, t_env_var *path)
 	free_and_exit(*to_free, 1, EXIT_SUCCESS);
 }
 
-void	do_exec_redir(t_to_free *to_free, char ***full_cmd)
+void	do_exec_redir(t_to_free *to_free, char ***full_cmd, int i)
 {
 	t_redir	**redir;
 	char	**temp;
@@ -47,7 +47,7 @@ void	do_exec_redir(t_to_free *to_free, char ***full_cmd)
 	redir = get_redir(to_free->command);
 	if (redir)
 	{
-		temp = handle_redirection(redir, *full_cmd);
+		temp = handle_redirection(redir, *full_cmd, to_free->he_files[i]);
 		if (!temp)
 		{
 			free_redir(redir);
@@ -60,13 +60,13 @@ void	do_exec_redir(t_to_free *to_free, char ***full_cmd)
 	free_redir(redir);
 }
 
-void	child_process(t_to_free *f, t_env_var *path, int nb_pipes)
+void	child_process(t_to_free *f, t_env_var *path, int nb_pipes, int i)
 {
 	char	**full_cmd;
 
 	signal_handler(2);
 	full_cmd = lst_to_string(f->command);
-	do_exec_redir(f, &full_cmd);
+	do_exec_redir(f, &full_cmd, i);
 	if (execute_builtin(f->command, f->env, nb_pipes))
 	{
 		free_all(full_cmd);
@@ -110,7 +110,7 @@ void	ft_execve(t_to_free *to_free, t_env_var *path, int index, int nb_pipes)
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 		}
-		child_process(to_free, path, nb_pipes);
+		child_process(to_free, path, nb_pipes, index);
 	}
 	close_pipes(index, nb_pipes, &input_fd, pipe_fd);
 }

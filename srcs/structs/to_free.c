@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:02:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 01:01:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:08:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,20 @@ void	init_to_free_vars(t_to_free *f, t_env_var **env, t_env_var **global)
 
 void	init_to_free(t_to_free *f, int nb_pipes, t_word **word, char *line)
 {
+	int	i;
+
 	f->pids = malloc(sizeof(int) * (nb_pipes + 1));
 	if (!f->pids)
 		return ;
+	f->he_files = malloc(sizeof(char *) * (nb_pipes + 2));
+	if (!f->he_files)
+		return ;
+	i = 0;
+	while (i < nb_pipes + 2)
+	{
+		f->he_files[i] = 0;
+		i++;
+	}
 	f->lst = word;
 	f->global = 0;
 	f->line = line;

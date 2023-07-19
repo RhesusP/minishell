@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 01:16:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:16:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ static int	output_app_redirection(t_redir *current)
 	return (1);
 }
 
-static int	here_doc_redirection(t_redir *current)
+static int	here_doc_redirection(t_redir *current, char *he_file)
 {
 	int		fd;
 	char	*new_arg;
 	t_redir	*temp;
 
 	new_arg = here_doc(current->filepath);
-	fd = open(".tmp.c", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd = open(he_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror(current->filepath);
@@ -78,12 +78,12 @@ static int	here_doc_redirection(t_redir *current)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	temp = current->next;
-	current->next = create_redir(RI, ".tmp.c");
+	current->next = create_redir(RI, he_file);
 	current->next->next = temp;
 	return (1);
 }
 
-char	**handle_redirection(t_redir **lst, char **full_cmd)
+char	**handle_redirection(t_redir **lst, char **full_cmd, char *he_file)
 {
 	t_redir	*current;
 	char	**new_full_cmd;
@@ -101,7 +101,7 @@ char	**handle_redirection(t_redir **lst, char **full_cmd)
 		}
 		else if (current->type == HE)
 		{
-			if (!here_doc_redirection(current))
+			if (!here_doc_redirection(current, he_file))
 				return (0);
 		}
 		current = current->next;
