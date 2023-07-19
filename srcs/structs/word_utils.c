@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   word_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:00:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 13:10:23 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/// @brief Create a new word and set to INIT his type
+/// @param cmd word data
+/// @return Malloc'd *t_word
 t_word	*create_word(char *cmd)
 {
 	t_word	*word;
@@ -26,6 +29,9 @@ t_word	*create_word(char *cmd)
 	return (word);
 }
 
+/// @brief Get last t_word from lst
+/// @param lst lst of t_word
+/// @return last t_word
 static t_word	*get_last_word(t_word *lst)
 {
 	t_word	*current;
@@ -38,6 +44,9 @@ static t_word	*get_last_word(t_word *lst)
 	return (current);
 }
 
+/// @brief Add [new] to the end of the list
+/// @param lst list
+/// @param new element to add
 void	add_back_word(t_word **lst, t_word *new)
 {
 	t_word	*last;

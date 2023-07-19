@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:26:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 00:18:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:27:05 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ctrl_c(int sig)
 	exit(g_status);
 }
 
+/// @brief Handle [Ctrl + \ ] 'signal'
+/// @param sig SIGQUIT
 void	back_slash(int sig)
 {
 	g_status = 131;

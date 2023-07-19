@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/13 15:13:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:32:10 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
+/// @brief Free unsed tokens
+/// @param tab tokens_lst
 static void	free_tokens(char **tab)
 {
 	int	i;
@@ -84,6 +86,10 @@ static void	free_tokens(char **tab)
 	free(tab);
 }
 
+/// @brief Parse line
+/// @param line User Input
+/// @param globals Environnement Variable
+/// @return **t_word words_lst
 t_word	**parse_words(char *line, t_env_var **globals)
 {
 	char	**tokens;
