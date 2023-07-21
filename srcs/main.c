@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:27:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:45:12 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:36:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	g_status = 0;
+t_to_free	g_gbl = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 /// @brief Exit program if there is more than one arg
 static void	handle_error(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:26:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:10:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:07:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ void	change_pwd(t_env_var *env, char *new_pwd)
 {
 	if (chdir(new_pwd) != 0)
 	{
-		g_status = 1;
+		g_gbl.status = 1;
 		perror(new_pwd);
 		return ;
 	}
 	change_old_pwd(env);
 	sub_change_pwd(env, new_pwd);
-	g_status = 0;
+	g_gbl.status = 0;
 }

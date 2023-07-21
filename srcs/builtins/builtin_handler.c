@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:44:41 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:05:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,29 @@ int	execute_builtin(t_word **lst, t_env_var **env, int nb_pipes)
 	return (0);
 }
 
-int	execute_non_fork_builtin(t_to_free to_free, int nb_pipes)
+int	execute_non_fork_builtin(int nb_pipes)
 {
 	t_word	*curr;
 
-	curr = *(to_free.command);
+	curr = *(g_gbl.command);
 	if (ft_strcmp(curr->word, "exit") == 0)
 	{
-		ft_exit(to_free);
+		ft_exit(g_gbl);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "export") == 0)
 	{
-		ft_export(to_free.command, to_free.env, 0, nb_pipes);
+		ft_export(g_gbl.command, g_gbl.env, 0, nb_pipes);
 		return (0);
 	}
 	else if (ft_strcmp(curr->word, "unset") == 0)
 	{
-		ft_unset(to_free.command, to_free.env);
+		ft_unset(g_gbl.command, g_gbl.env);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "cd") == 0)
 	{
-		ft_cd(to_free.command, *(to_free.env));
+		ft_cd(g_gbl.command, *(g_gbl.env));
 		return (1);
 	}
 	return (0);

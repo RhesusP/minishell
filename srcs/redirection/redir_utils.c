@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 09:49:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:31:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*here_doc(char *delim)
 	char	*line;
 	char	*concat;
 
+	g_gbl.in_hd = 1;
 	concat = "";
 	while (1)
 	{
@@ -88,21 +89,22 @@ int	handle_simple_redir(t_redir *current)
 
 void	do_exec_redir(t_to_free *to_free, char ***full_cmd, int i)
 {
-	t_redir	**redir;
 	char	**temp;
 
-	redir = get_redir(to_free->command);
-	if (redir)
+	g_gbl.redir = get_redir(to_free->command);
+	if (g_gbl.redir)
 	{
-		temp = handle_redirection(redir, *full_cmd, to_free->he_files[i]);
+		temp = handle_redirection(g_gbl.redir, *full_cmd, to_free->he_files[i]);
 		if (!temp)
 		{
-			free_redir(redir);
+			free_redir(g_gbl.redir);
+			g_gbl.redir = 0;
 			free_all(*full_cmd);
-			free_and_exit(*to_free, 1, g_status);
+			free_and_exit(to_free, 1, g_gbl.status, 1);
 		}
 		*full_cmd = copy_string_array(temp);
 		free_all(temp);
 	}
-	free_redir(redir);
+	free_redir(g_gbl.redir);
+	g_gbl.redir = 0;
 }

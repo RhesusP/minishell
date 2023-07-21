@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:45:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:41:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 
 # define SUCCESS	0
 # define FAILURE	-1
-
-extern int	g_status;
 
 /*
 	POSSIBLE TYPES:
@@ -89,7 +87,15 @@ typedef struct s_to_free
 	char		*line;
 	int			*pids;
 	char		**he_files;
+	int			status;
+	int			nb_pipes;
+	int			in_hd;
+	t_redir		**redir;
+	char		**str_env;
+	char		**full_cmd;
 }	t_to_free;
+
+extern t_to_free	g_gbl;
 
 typedef struct s_parse_p
 {
@@ -139,7 +145,7 @@ void		ft_env(t_word **lst, t_env_var *env);
 void		ft_echo(t_word **lst);
 void		ft_pwd(void);
 void		ft_cd(t_word **lst, t_env_var *env);
-int			execute_non_fork_builtin(t_to_free to_free, int nb_pipes);
+int			execute_non_fork_builtin(int nb_pipes);
 int			execute_builtin(t_word **lst, t_env_var **env, int nb_pipes);
 char		*recreate_new_path(char **tab, int size);
 
@@ -176,10 +182,10 @@ void		handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p);
 /**********Free/Exit***********/
 void		free_all(char **str);
 void		free_word_lst(t_word **lst);
-void		init_to_free(t_to_free *f, int nb_pipes, t_word **word, char *line);
+void		init_to_free(int nb_pipes, t_word **word, char *line);
 void		ft_free(t_env_var *env);
 void		free_redir(t_redir **redir);
-void		free_and_exit(t_to_free f, int is_exit, int exit_status);
+void		free_and_exit(t_to_free *f, int is_exit, int exit_status, int u);
 void		free_tubes(int **tubes);
 void		ft_exit(t_to_free to_free);
 

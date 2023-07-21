@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:37:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:06:35 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_values(char *key, t_env_var **lst)
 	if (ft_strcmp(key, "$") == 0)
 		return (ft_strdup("$"));
 	else if (ft_strcmp(key, "$?") == 0)
-		return (ft_itoa(g_status));
+		return (ft_itoa(g_gbl.status));
 	key = &key[1];
 	values = search_key(*lst, key);
 	return (values_to_str(values));

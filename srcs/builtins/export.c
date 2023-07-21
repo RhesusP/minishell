@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/13 12:09:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:07:19 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ static void	export_vars(t_word **lst, t_env_var **env)
 		if (status == 1)
 		{
 			create_export_var(current, env);
-			g_status = 0;
+			g_gbl.status = 0;
 		}
 		else if (status == 0)
 		{
-			g_status = 1;
+			g_gbl.status = 1;
 			ft_putstr_fd("export '", 2);
 			ft_putstr_fd(current->word, 2);
 			ft_putendl_fd("': not a valid identifier", 2);

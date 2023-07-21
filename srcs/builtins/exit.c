@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/16 11:25:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:46:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@ static int	ft_long_limit_error(char *str)
 	return (0);
 }
 
-static void	handle_multiple_args(t_word *current, t_to_free to_free)
+static void	handle_multiple_args(t_to_free to_free, t_word *current)
 {
 	if (ft_long_limit_error(current->next->word) == 0)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		g_status = 1;
+		g_gbl.status = 1;
 	}
 	else
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		free_and_exit(to_free, 1, 2);
+		free_and_exit(&to_free, 1, 2, 1);
 	}
 }
 
@@ -101,7 +101,7 @@ void	ft_exit(t_to_free to_free)
 	printf("exit\n");
 	nb_arg = get_nb_arg(to_free.command);
 	if (nb_arg == 0)
-		free_and_exit(to_free, 1, g_status);
+		free_and_exit(&to_free, 1, g_gbl.status, 1);
 	current = *(to_free.command);
 	if (nb_arg == 1)
 	{
@@ -112,8 +112,8 @@ void	ft_exit(t_to_free to_free)
 			ft_putendl_fd("exit: numeric argument required", 2);
 			exit_value = 2;
 		}
-		free_and_exit(to_free, 1, exit_value % 256);
+		free_and_exit(&to_free, 1, exit_value % 256, 1);
 	}
 	else
-		handle_multiple_args(current, to_free);
+		handle_multiple_args(to_free, current);
 }

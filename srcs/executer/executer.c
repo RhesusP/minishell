@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 11:43:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:36:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 	return (NULL);
 }
 
-void	clean_null_args(t_to_free *to_free)
+static void	clean_null_args(void)
 {
 	t_word	*first;
 	t_word	*next;
 
-	first = *(to_free->command);
+	first = *(g_gbl.command);
 	if (first && first->word && first->word[0] == '\0')
 	{
 		next = first->next;
 		if (next)
 		{
-			*(to_free->command) = next;
+			*(g_gbl.command) = next;
 			if (first->type == CMD && next->type == ARG)
 				next->type = CMD;
 		}
 		else
-			*to_free->command = 0;
+			*g_gbl.command = 0;
 	}
 	else if (first && first->type == ARG && ft_strlen(first->word) > 0)
 		first->type = CMD;
@@ -71,7 +71,7 @@ void	wait_child_processes(t_to_free *f, int nb_pipes)
 		{
 			waitpid(f->pids[i], &status, 0);
 			if (WIFEXITED(status))
-				g_status = WEXITSTATUS(status);
+				g_gbl.status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 				get_sig_event(status);
 		}
@@ -94,29 +94,29 @@ char	*generate_filename(int index)
 
 void	execute_line(t_word	**word, t_env_var **env, char *line)
 {
-	t_to_free	to_free;
 	int			i;
 	int			nb_pipes;
 	static int	idx = 1;
 
 	nb_pipes = count_pipes(word);
+	g_gbl.nb_pipes = nb_pipes;
 	i = -1;
-	init_to_free(&to_free, nb_pipes, word, line);
-	to_free.env = env;
-	while (get_next_cmd(word, &to_free.command))
+	init_to_free(nb_pipes, word, line);
+	g_gbl.env = env;
+	while (get_next_cmd(word, &g_gbl.command))
 	{
-		to_free.he_files[++i] = generate_filename(idx++);
-		clean_null_args(&to_free);
-		if (*to_free.command)
+		g_gbl.he_files[++i] = generate_filename(idx++);
+		clean_null_args();
+		if (*g_gbl.command)
 		{
-			if (execute_non_fork_builtin(to_free, nb_pipes))
-				to_free.pids[i] = -999;
+			if (execute_non_fork_builtin(nb_pipes))
+				g_gbl.pids[i] = -999;
 			else
-				ft_execve(&to_free, get_env_custom("PATH", *env), i, nb_pipes);
+				ft_execve(&g_gbl, get_env_custom("PATH", *env), i, nb_pipes);
 		}
-		clear_word_lst(to_free.command);
+		clear_word_lst(g_gbl.command);
 	}
-	wait_child_processes(&to_free, nb_pipes);
-	free(to_free.pids);
-	free(to_free.command);
+	wait_child_processes(&g_gbl, nb_pipes);
+	free(g_gbl.pids);
+	free(g_gbl.command);
 }

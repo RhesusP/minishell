@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:26:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:28:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:43:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,41 @@ void	restore_prompt(int sig)
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_status = 130;
+	g_gbl.status = 130;
 }
 
 void	ctrl_c(int sig)
 {
-	g_status = 130;
+	g_gbl.status = 130;
 	write(1, "\n", 1);
 	(void)sig;
-	exit(g_status);
+	if (g_gbl.in_hd)
+	{
+		free_redir(g_gbl.redir);
+		g_gbl.redir = 0;
+		free_all(g_gbl.full_cmd);
+		g_gbl.full_cmd = 0;
+		free_and_exit(&g_gbl, 1, g_gbl.status, 1);
+	}
+	exit(g_gbl.status);
 }
 
 /// @brief Handle [Ctrl + \ ] 'signal'
 /// @param sig SIGQUIT
 void	back_slash(int sig)
 {
-	g_status = 131;
+	g_gbl.status = 131;
 	printf("Quit (core dumped)\n");
 	(void)sig;
-	exit(g_status);
+	if (g_gbl.in_hd)
+	{
+		free_redir(g_gbl.redir);
+		g_gbl.redir = 0;
+		free_all(g_gbl.full_cmd);
+		g_gbl.full_cmd = 0;
+		free_and_exit(&g_gbl, 1, g_gbl.status, 1);
+	}
+	exit(g_gbl.status);
 }
 
 void	signal_handler(int sig)
@@ -65,6 +81,6 @@ void	handle_ctrld(char *line, t_env_var *env)
 	{
 		printf("exit\n");
 		ft_free(env);
-		exit(g_status);
+		exit(g_gbl.status);
 	}
 }

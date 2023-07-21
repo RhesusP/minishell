@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:24:33 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:55:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:07:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_bad_filepath(t_word *word)
 
 static int	print_syntax_error(char *token)
 {
-	g_status = 2;
+	g_gbl.status = 2;
 	ft_putstr_fd("syntax error near unexpected token '", 2);
 	ft_putstr_fd(token, 2);
 	ft_putendl_fd("'", 2);

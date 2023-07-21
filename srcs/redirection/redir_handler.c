@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 12:16:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:26:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	input_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		g_status = 1;
+		g_gbl.status = 1;
 		return (0);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -36,7 +36,7 @@ int	output_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		g_status = 1;
+		g_gbl.status = 1;
 		return (0);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -52,7 +52,7 @@ static int	output_app_redirection(t_redir *current)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		g_status = 1;
+		g_gbl.status = 1;
 		return (0);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -71,7 +71,7 @@ static int	here_doc_redirection(t_redir *current, char *he_file)
 	if (fd == -1)
 	{
 		perror(current->filepath);
-		g_status = 1;
+		g_gbl.status = 1;
 		return (0);
 	}
 	ft_putstr_fd(new_arg, fd);
