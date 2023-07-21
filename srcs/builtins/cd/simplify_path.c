@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:01:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:11:05 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:18:12 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	simplify_path(char *str, t_env_var *env)
 	char	**tab;
 	char	*path;
 
-	if (str[0] == '-' && ft_strlen(str) == 1)
-	{
-		switch_old_curr_pwd(env);
-		return ;
-	}
 	temp = get_temp_path(str);
 	tab = create_dir_tab(temp, count_dir(temp));
 	path = recreate_new_path(tab, count_dir(temp));

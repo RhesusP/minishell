@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:40:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:11:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:18:14 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	switch_old_curr_pwd(t_env_var *env)
 	if (!old_pwd || !old_pwd->values || !old_pwd->values[0])
 	{
 		ft_putendl_fd("cd: OLDPWD not set", 2);
-		g_status = 1;
+		g_gbl.status = 1;
 		return ;
 	}
 	change_pwd(env, old_pwd->values[0]);
@@ -62,7 +62,7 @@ static void	go_home(t_env_var *env)
 	if (!home)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
-		g_status = 1;
+		g_gbl.status = 1;
 	}
 	else
 		change_pwd(env, home);
@@ -91,6 +91,6 @@ void	ft_cd(t_word **lst, t_env_var *env)
 	else
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
-		g_status = 1;
+		g_gbl.status = 1;
 	}
 }
