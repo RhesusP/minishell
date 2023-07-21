@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:42:13 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/18 22:58:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 09:36:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ char	*recreate_new_path(char **tab, int size)
 				free_cell(tab, j);
 			free_cell(tab, i);
 		}
-	}	
+	}
 	return (join_path(tab, size));
 }

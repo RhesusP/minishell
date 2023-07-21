@@ -6,12 +6,12 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/19 09:35:53 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/19 18:33:59 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRCS = ./srcs/main.c ./srcs/signals.c ./srcs/structs/get_env.c ./srcs/structs/env_utils.c ./srcs/structs/env_utils2.c \
+SRCS = ./srcs/main.c ./srcs/signals/signals.c ./srcs/signals/exec_signal.c ./srcs/structs/get_env.c ./srcs/structs/env_utils.c ./srcs/structs/env_utils2.c \
 		./srcs/utils.c ./srcs/history.c \
 		./srcs/tokenizer/parse_word.c ./srcs/structs/word_utils.c \
 		./srcs/tokenizer/ft_strtok.c ./srcs/tokenizer/resplit.c \

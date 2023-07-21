@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 13:58:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 09:55:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_env_var
 }	t_env_var;
 
 typedef struct s_to_free
-{	
+{
 	t_word		**lst;
 	t_word		**command;
 	t_env_var	**env;
@@ -123,6 +123,7 @@ void		set_type(t_word **lst, t_env_var **globals);
 
 /**********Signal*********/
 void		signal_handler(int sig);
+void		get_sig_event(int status);
 void		handle_ctrld(char *line, t_env_var *env, t_env_var *global);
 
 /*******Redirection*******/
@@ -132,6 +133,7 @@ int			handle_simple_redir(t_redir *current);
 int			input_redirection(t_redir *current);
 int			output_redirection(t_redir *current);
 void		unlink_he_files(t_to_free *to_free, int nb_pipes);
+void		do_exec_redir(t_to_free *to_free, char ***full_cmd, int i);
 
 /********Builtin*********/
 void		ft_env(t_word **lst, t_env_var *env);
@@ -170,9 +172,8 @@ t_env_var	*get_old_pwd(t_env_var *env);
 /****Error Management*****/
 int			syntax_error(t_word **lst);
 int			is_export_syntax_valid(char *str);
-void		check_cmd_err(t_to_free *f, char **full_cmd);
-void		handle_execve_fail(t_to_free *f, char **full_cmd, char **str_env);
-
+void		check_cmd_err(t_to_free *to_free, char **cmd, int nb_pipes);
+void		handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p);
 /**********Free/Exit***********/
 void		free_all(char **str);
 void		free_word_lst(t_word **lst);

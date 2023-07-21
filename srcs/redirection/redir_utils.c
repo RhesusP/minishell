@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:15:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 09:49:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,25 @@ int	handle_simple_redir(t_redir *current)
 			return (0);
 	}
 	return (1);
+}
+
+void	do_exec_redir(t_to_free *to_free, char ***full_cmd, int i)
+{
+	t_redir	**redir;
+	char	**temp;
+
+	redir = get_redir(to_free->command);
+	if (redir)
+	{
+		temp = handle_redirection(redir, *full_cmd, to_free->he_files[i]);
+		if (!temp)
+		{
+			free_redir(redir);
+			free_all(*full_cmd);
+			free_and_exit(*to_free, 1, g_status);
+		}
+		*full_cmd = copy_string_array(temp);
+		free_all(temp);
+	}
+	free_redir(redir);
 }

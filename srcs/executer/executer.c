@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/19 16:44:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 09:44:35 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,33 @@ void	clean_null_args(t_to_free *to_free)
 		else
 			*to_free->command = 0;
 	}
+	else if (first && first->type == ARG && ft_strlen(first->word) > 0)
+		first->type = CMD;
 }
 
-void	wait_child_processes(t_to_free *to_free, int nb_pipes)
+void	wait_child_processes(t_to_free *f, int nb_pipes)
 {
 	int	i;
 	int	status;
 	int	ret;
 
 	i = 0;
-	status = 0;
 	while (i <= nb_pipes)
 	{
+		status = 0;
 		ret = 0;
-		if (to_free->pids[i] != -999)
+		if (f && f->pids && f->pids[i] && f->pids[i] != -999)
 		{
-			waitpid(to_free->pids[i], &status, 0);
+			waitpid(f->pids[i], &status, 0);
 			if (WIFEXITED(status))
 				g_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
-			{
-				if (status == 131)
-					printf("Quit (core dumped)\n");
-			}
+				get_sig_event(status);
 		}
 		i++;
 	}
-	unlink_he_files(to_free, nb_pipes);
+	signal_handler(1);
+	unlink_he_files(f, nb_pipes);
 }
 
 char	*generate_filename(int index)
