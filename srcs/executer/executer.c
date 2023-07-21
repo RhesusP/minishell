@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 09:44:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:43:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*generate_filename(int index)
 	return (res);
 }
 
-void	execute_line(t_word	**word, t_env_var **env, t_env_var **g, char *line)
+void	execute_line(t_word	**word, t_env_var **env, char *line)
 {
 	t_to_free	to_free;
 	int			i;
@@ -102,7 +102,7 @@ void	execute_line(t_word	**word, t_env_var **env, t_env_var **g, char *line)
 	nb_pipes = count_pipes(word);
 	i = -1;
 	init_to_free(&to_free, nb_pipes, word, line);
-	init_to_free_vars(&to_free, env, g);
+	to_free.env = env;
 	while (get_next_cmd(word, &to_free.command))
 	{
 		to_free.he_files[++i] = generate_filename(idx++);

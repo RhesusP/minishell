@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/19 09:09:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:44:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	delete_existing_key(t_env_var **env, char *key)
 	}
 }
 
-void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global)
+void	ft_unset(t_word **lst, t_env_var **env)
 {
 	t_word		*current;
 
@@ -81,8 +81,6 @@ void	ft_unset(t_word **lst, t_env_var **env, t_env_var **global)
 	{
 		if (is_already_here(env, current->word))
 			delete_existing_key(env, current->word);
-		if (is_already_here(global, current->word))
-			delete_existing_key(global, current->word);
 		current = current->next;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:13:23 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:40:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
+char	*get_quoted(char *str, t_env_var **env)
 {
 	int		size;
 	char	**tab;
@@ -27,7 +27,7 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	{
 		if (tab[i][0] != '\'')
 		{
-			tab[i] = get_vars(tab[i], env, global);
+			tab[i] = get_vars(tab[i], env);
 		}
 		if (tab[i][0] == '\'' || tab[i][0] == '"')
 		{
@@ -41,7 +41,7 @@ char	*get_quoted(char *str, t_env_var **env, t_env_var **global)
 	return (res);
 }
 
-void	var_expansion(t_word **words_lst, t_env_var **g, t_env_var **e)
+void	var_expansion(t_word **words_lst, t_env_var **e)
 {
 	t_word	*current;
 	char	*temp;
@@ -51,7 +51,7 @@ void	var_expansion(t_word **words_lst, t_env_var **g, t_env_var **e)
 	current = *words_lst;
 	while (current)
 	{
-		temp = get_quoted(current->word, e, g);
+		temp = get_quoted(current->word, e);
 		free(current->word);
 		current->word = temp;
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:15:00 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:26:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:44:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	execute_non_fork_builtin(t_to_free to_free, int nb_pipes)
 	}
 	else if (ft_strcmp(curr->word, "unset") == 0)
 	{
-		ft_unset(to_free.command, to_free.env, to_free.global);
+		ft_unset(to_free.command, to_free.env);
 		return (1);
 	}
 	else if (ft_strcmp(curr->word, "cd") == 0)

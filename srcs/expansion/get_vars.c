@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 17:28:59 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 14:09:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:39:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static void	free_var_tab(char **tab)
 	free(tab);
 }
 
-static char	**first_extract(char *str, t_env_var **e, t_env_var **g, char **res)
+static char	**first_extract(char *str, t_env_var **e, char **res)
 {
 	char	**tab;
 	char	*temp;
 
 	tab = get_key_name(str);
-	temp = get_values(tab[1], e, g);
+	temp = get_values(tab[1], e);
 	*res = ft_strjoin_nullable(tab[0], temp);
 	free(temp);
 	return (tab);
 }
 
-static void	get_remains(char **r, char ***tab, char **res, t_to_free envs)
+static void	get_remains(char **r, char ***tab, char **res, t_env_var **env)
 {
 	char	*temp;
 	char	*temp1;
@@ -44,7 +44,7 @@ static void	get_remains(char **r, char ***tab, char **res, t_to_free envs)
 		*r = ft_strdup((*tab)[2]);
 	else
 		*r = 0;
-	temp2 = get_values((*tab)[1], envs.env, envs.global);
+	temp2 = get_values((*tab)[1], env);
 	temp = ft_strjoin_nullable((*tab)[0], temp2);
 	free(temp2);
 	temp1 = ft_strdup(*res);
@@ -55,24 +55,21 @@ static void	get_remains(char **r, char ***tab, char **res, t_to_free envs)
 	free_var_tab(*tab);
 }
 
-char	*get_vars(char *str, t_env_var **env, t_env_var **global)
+char	*get_vars(char *str, t_env_var **env)
 {
 	char		**tab;
 	char		*res;
 	char		*remains;
-	t_to_free	envs;
 
-	envs.env = env;
-	envs.global = global;
 	remains = 0;
 	if (ft_strlen(str) == 1 && str[0] == '$')
 		return (str);
-	tab = first_extract(str, env, global, &res);
+	tab = first_extract(str, env, &res);
 	if (tab[2])
 		remains = ft_strdup(tab[2]);
 	free_var_tab(tab);
 	while (remains)
-		get_remains(&remains, &tab, &res, envs);
+		get_remains(&remains, &tab, &res, env);
 	free(str);
 	return (res);
 }

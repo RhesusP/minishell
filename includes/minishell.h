@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 09:55:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:45:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_to_free
 	t_word		**lst;
 	t_word		**command;
 	t_env_var	**env;
-	t_env_var	**global;
 	char		*line;
 	int			*pids;
 	char		**he_files;
@@ -104,27 +103,27 @@ typedef struct s_parse_p
 int			is_unquoted_double_chevron(char *line, int c_index);
 int			is_unquoted_metachar(char *line, int c_index);
 int			is_unquoted(char *line, int c_index);
-t_word		**parse_words(char *line, t_env_var **globals);
+t_word		**parse_words(char *line);
 int			type_is_redir(t_word *word);
 //Environnement
 t_env_var	*get_environment(char **env);
 t_env_var	*get_env_custom(char *key_to_find, t_env_var *env);
 
 /*********Variable********/
-void		var_expansion(t_word **lst, t_env_var **g, t_env_var **e);
+void		var_expansion(t_word **lst, t_env_var **e);
 int			get_nb_quoted_words(char *str);
 char		**fill_quoted_tab(char *str, int size);
 char		**get_key_name(char *str);
 char		*values_to_str(char **tab);
-char		*get_values(char *key, t_env_var **lst, t_env_var **global);
+char		*get_values(char *key, t_env_var **lst);
 
 //Inizialiaing
-void		set_type(t_word **lst, t_env_var **globals);
+void		set_type(t_word **lst);
 
 /**********Signal*********/
 void		signal_handler(int sig);
 void		get_sig_event(int status);
-void		handle_ctrld(char *line, t_env_var *env, t_env_var *global);
+void		handle_ctrld(char *line, t_env_var *env);
 
 /*******Redirection*******/
 char		*here_doc(char *delim);
@@ -146,11 +145,11 @@ char		*recreate_new_path(char **tab, int size);
 
 /*********Execution******/
 void		ft_execve(t_to_free *f, t_env_var *path, int index, int nb_pipes);
-void		execute_line(t_word	**word, t_env_var **e, t_env_var **g, char *ln);
+void		execute_line(t_word	**word, t_env_var **env, char *line);
 t_word		**get_next_cmd(t_word **lst, t_word ***new_lst);
 char		*get_execve_path(char *cmd, t_env_var *path_var);
 char		**lst_to_string(t_word **lst);
-void		ft_unset(t_word **lst, t_env_var **env, t_env_var **global);
+void		ft_unset(t_word **lst, t_env_var **env);
 void		ft_export(t_word **lst, t_env_var **e, int forked, int n_pipe);
 int			get_nb_arg(t_word **lst);
 void		print_export(t_env_var *env);
@@ -177,9 +176,8 @@ void		handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p);
 /**********Free/Exit***********/
 void		free_all(char **str);
 void		free_word_lst(t_word **lst);
-void		init_to_free_vars(t_to_free *f, t_env_var **e, t_env_var **g);
 void		init_to_free(t_to_free *f, int nb_pipes, t_word **word, char *line);
-void		ft_free(t_env_var *env, t_env_var *global);
+void		ft_free(t_env_var *env);
 void		free_redir(t_redir **redir);
 void		free_and_exit(t_to_free f, int is_exit, int exit_status);
 void		free_tubes(int **tubes);
@@ -194,7 +192,7 @@ int			is_metachar(char c);
 char		**ft_strtok(char *str, char *charset);
 char		**resplit(char *s);
 //var
-char		*get_vars(char *str, t_env_var **env, t_env_var **global);
+char		*get_vars(char *str, t_env_var **env);
 t_redir		**get_redir(t_word **lst);
 char		*get_last_unquoted(char *str);
 char		*remove_quotes(char *str);
@@ -219,6 +217,5 @@ char		*get_var_key(char *str);
 t_env_var	*create_env_var(char *line);
 int			is_already_here(t_env_var **env, char *key);
 void		add_back_env_var(t_env_var **lst, t_env_var *new);
-int			actualize_global_var(t_env_var **globals, char *word);
 
 #endif

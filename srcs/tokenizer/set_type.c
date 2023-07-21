@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/17 16:47:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:34:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,7 @@ static void	give_meta_type(t_word **lst)
 	}
 }
 
-static void	sub_give_cmd_type(t_word *word, t_word **lst, t_env_var **globals)
-{
-	if (!word->prev && !word->next)
-	{
-		if (actualize_global_var(globals, word->word) == FAILURE)
-			add_back_env_var(globals, create_env_var(word->word));
-		clear_word_lst(lst);
-	}
-	else if (word->prev && word->prev->type == CMD)
-		word->type = ARG;
-	else if (!word->prev && word->next && word->next->type == INIT)
-	{
-		word->next->type = CMD;
-		delete_word(word, lst);
-	}
-	if (word->prev && word->prev->type == PIPE)
-	{
-		delete_word(word->prev, lst);
-		if (word->next)
-			delete_word(word, lst);
-		else
-			word->prev->next = 0;
-	}
-}
-
-static void	give_cmd_type(t_word **lst, t_env_var **globals)
+static void	give_cmd_type(t_word **lst)
 {
 	t_word	*word;
 
@@ -96,28 +71,19 @@ static void	give_cmd_type(t_word **lst, t_env_var **globals)
 	{
 		if (word->type == INIT)
 		{
-			if (ft_strrchr(word->word, '=') && word->word[0] != '=')
-			{
-				sub_give_cmd_type(word, lst, globals);
-				if (!word->prev && word->next && word->next->type == PIPE)
-				{
-					delete_word(word->next, lst);
-					delete_word(word, lst);
-				}
-			}
-			else if (!word->prev || word->prev->type == PIPE)
+			if (!word->prev || word->prev->type == PIPE)
 				word->type = CMD;
 		}
 		word = word->next;
 	}
 }
 
-void	set_type(t_word **lst, t_env_var **globals)
+void	set_type(t_word **lst)
 {
 	t_word	*current;
 
 	give_meta_type(lst);
-	give_cmd_type(lst, globals);
+	give_cmd_type(lst);
 	if (!lst || !*lst)
 		return ;
 	current = *lst;

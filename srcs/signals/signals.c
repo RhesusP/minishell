@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:26:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 18:33:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:28:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	signal_handler(int sig)
  * 
  * @param line User input. 
  */
-void	handle_ctrld(char *line, t_env_var *env, t_env_var *global)
+void	handle_ctrld(char *line, t_env_var *env)
 {
 	if (!line)
 	{
 		printf("exit\n");
-		ft_free(env, global);
+		ft_free(env);
 		exit(g_status);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/12 13:10:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:37:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**search_key(t_env_var *current, char *key)
 	return (values);
 }
 
-char	*get_values(char *key, t_env_var **lst, t_env_var **global)
+char	*get_values(char *key, t_env_var **lst)
 {
 	char	**values;
 
@@ -44,7 +44,5 @@ char	*get_values(char *key, t_env_var **lst, t_env_var **global)
 		return (ft_itoa(g_status));
 	key = &key[1];
 	values = search_key(*lst, key);
-	if (!values && *global)
-		values = search_key(*global, key);
 	return (values_to_str(values));
 }
