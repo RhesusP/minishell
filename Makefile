@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/22 23:34:25 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/22 23:36:25 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,14 +58,13 @@ SRCS	=	./srcs/main.c \
 			./srcs/builtins/pwd.c \
 			./srcs/builtins/unset.c
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_DIR	=	libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
-OBJS = ${SRCS:.c=.o}
-INCLUDES = ./includes
-CFLAGS = -g3 -Wall -Wextra -Werror
-LFLAGS = -L ./$(LIBFT_DIR) -lft -lreadline
-DIR_FLAG = --no-print-directory
+OBJS 		=	${SRCS:.c=.o}
+INCLUDES	=	./includes
+FLAGS		=	-Wall -Wextra -Werror
+DIR_FLAG	=	--no-print-directory
 
 %.o: %.c ./includes/minishell.h
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
