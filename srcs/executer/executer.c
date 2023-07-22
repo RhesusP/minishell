@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/22 16:57:09 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:57:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	wait_child_processes(t_to_free *f, int nb_pipes)
 	}
 	signal_handler(1);
 	unlink_he_files(f, nb_pipes);
+	g_gbl.already_e = 0;
 }
 
 /**

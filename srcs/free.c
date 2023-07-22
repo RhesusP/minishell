@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:14:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 16:03:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:19:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * 
  * @param env 
  */
-static void	free_env(t_env_var *env)
+void	free_env(t_env_var *env)
 {
 	t_env_var	*current;
 	t_env_var	*next;

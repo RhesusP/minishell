@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 13:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:25:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_to_free
 	int			status;
 	int			nb_pipes;
 	int			in_hd;
+	int			already_e;
 	t_redir		**redir;
 	char		**str_env;
 	char		**full_cmd;
@@ -148,6 +149,7 @@ void		ft_cd(t_word **lst, t_env_var *env);
 int			execute_non_fork_builtin(int nb_pipes);
 int			execute_builtin(t_word **lst, t_env_var **env, int nb_pipes);
 char		*recreate_new_path(char **tab, int size);
+t_env_var	*create_sorted_env_var(t_env_var *env);
 
 /*********Execution******/
 void		ft_execve(t_to_free *f, t_env_var *path, int index, int nb_pipes);
@@ -188,6 +190,7 @@ void		free_redir(t_redir **redir);
 void		free_and_exit(t_to_free *f, int is_exit, int exit_status, int u);
 void		free_tubes(int **tubes);
 void		ft_exit(t_to_free to_free);
+void		free_env(t_env_var *env);
 
 /**********Utils**********/
 char		*ft_strndup(const char *s1, unsigned int size);

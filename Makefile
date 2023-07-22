@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/22 16:49:31 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/22 18:26:38 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = ./srcs/main.c ./srcs/signals/signals.c ./srcs/signals/exec_signal.c ./src
 		./srcs/structs/environment.c \
 		./srcs/executer/get_next_cmd.c \
 		./srcs/builtins/echo.c ./srcs/builtins/env.c \
-		./srcs/builtins/export.c ./srcs/builtins/export_utils.c ./srcs/builtins/cd/cd.c ./srcs/builtins/cd/cd_utils.c  ./srcs/builtins/pwd.c \
+		./srcs/builtins/export/export.c ./srcs/builtins/export/export_utils.c ./srcs/builtins/export/sort.c ./srcs/builtins/cd/cd.c ./srcs/builtins/cd/cd_utils.c  ./srcs/builtins/pwd.c \
 		./srcs/builtins/exit.c ./srcs/builtins/unset.c ./srcs/builtins/cd/change_pwd.c ./srcs/builtins/cd/recreate_new_path.c \
 		./srcs/free.c ./srcs/redirection/redir_utils.c\
 		./srcs/structs/create_env.c \

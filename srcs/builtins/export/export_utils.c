@@ -6,11 +6,27 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:20:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/22 14:50:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:26:40 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
+
+static void	print_variable(t_env_var *current)
+{
+	int	i;
+	
+	printf("declare -x %s=\"", current->key);
+	i = 0;
+	while (current->values[i])
+	{
+		printf("%s", current->values[i]);
+		if (current->values[i + 1])
+			printf(":");
+		i++;
+	}
+	printf("\"\n");
+}
 
 /**
  * @brief Print the export syntax of the environment variables.
@@ -20,28 +36,19 @@
 void	print_export(t_env_var *env)
 {
 	t_env_var	*current;
-	int			i;
+	t_env_var	*tmp;
 
 	if (!env)
 		return ;
-	current = env;
+	tmp = create_sorted_env_var(env);
+	current = tmp;
 	while (current)
 	{
 		if (ft_strcmp("_", current->key) != 0)
-		{
-			printf("declare -x %s=\"", current->key);
-			i = 0;
-			while (current->values[i])
-			{
-				printf("%s", current->values[i]);
-				if (current->values[i + 1])
-					printf(":");
-				i++;
-			}
-			printf("\"\n");
-		}
+			print_variable(current);
 		current = current->next;
 	}
+	free_env(tmp);
 }
 
 /**
