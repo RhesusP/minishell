@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:24:33 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 15:56:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:57:44 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	print_syntax_error(char *token)
 
 /**
  * @brief Check pipe syntax issues
- * @details Check if there is a pipe at the beginning or the end of the command and if there are two consecutives pipes.
+ * @details Check if there is a pipe at the beginning or the end of the
+ * command and if there are two consecutives pipes.
  * @param current 
  * @return 1 if syntax error, 0 otherwise
  */

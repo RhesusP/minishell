@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/22 12:49:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:57:09 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 	}
 	return (NULL);
 }
-
 
 /**
  * @brief Delete null command tokens in the command chained list.
@@ -79,13 +78,11 @@ void	wait_child_processes(t_to_free *f, int nb_pipes)
 {
 	int	i;
 	int	status;
-	int	ret;
 
 	i = 0;
 	while (i <= nb_pipes)
 	{
 		status = 0;
-		ret = 0;
 		if (f && f->pids && f->pids[i] && f->pids[i] != -999)
 		{
 			waitpid(f->pids[i], &status, 0);

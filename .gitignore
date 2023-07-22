@@ -6,3 +6,4 @@ libft/*.a
 a.out
 test.c
 *.o
+minishell_tester/

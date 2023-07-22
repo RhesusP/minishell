@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/22 14:47:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:53:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	arg_is_valid(char *arg)
  * @brief Print a single argument.
  * 
  * @param current Argument to print.
- * @param has_write Boolean to know if something has been already written (to know 
- * if we need to print a space before the argument)
+ * @param has_write Boolean to know if something has been already written
+ * (to know if we need to print a space before the argument)
  */
 static void	display_echo(t_word *current, int *has_write)
 {

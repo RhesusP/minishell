@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/22 14:49:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:54:18 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	get_nb_arg(t_word **lst)
 
 /**
  * @brief Print the environment variables list or add a new variable to it.
- * @details If the command have no argument, it prints the environment variables list.
+ * @details If the command have no argument, it prints the environment variables.
  * @param lst Sub-command to execute.
  * @param e Environment variables list.
  * @param forked Boolean to know if the command is executed in a forked process.

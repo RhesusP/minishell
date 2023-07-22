@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:42:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 16:33:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:56:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	**get_var_values(char *str)
 /**
  * @brief Create a new environment variable object.
  * 
- * @param line Line of the environment file (ex: `PATH=/bin:/usr/bin:/usr/local/bin`).
+ * @param line Line of the environment file
+ * (ex: `PATH=/bin:/usr/bin:/usr/local/bin`).
  * @return t_env_var* Allocated with malloc(3) environment variable object.
  */
 t_env_var	*create_env_var(char *line)

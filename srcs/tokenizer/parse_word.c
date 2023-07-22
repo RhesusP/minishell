@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 16:24:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:55:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ static t_word	**detect_close_pipe(t_word **lst)
 
 /**
  * @brief Parse the line and create a list of words (called tokens).
- * @details Main function of the parsing part. It takes a string, split it
- * by spaces (' ', '\n', '\t'), then by metacharacters (`<`, `>`, `>>`, `<<`, `|`)
- * and it finally give a type to each token.
+ * @details Main function of the parsing part. It takes a string, split
+ * it by spaces (' ', '\n', '\t'), then by metacharacters (`<`, `>`,
+ * `>>`, `<<`, `|`) and it finally give a type to each token.
  * @param line A string to split into tokens.
  * @return t_word** A chained list of token and their type.
  */
@@ -114,7 +114,7 @@ t_word	**parse_words(char *line)
 		add_back_word(words_lst, word);
 		i++;
 	}
-	free_all(tokens);							//before: free(tokens)
+	free_all(tokens);
 	words_lst = detect_close_pipe(words_lst);
 	set_type(words_lst);
 	return (words_lst);

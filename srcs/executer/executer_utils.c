@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 17:51:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:56:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	**copy_string_array(char **tab)
 	res[i] = 0;
 	return (res);
 }
-
 
 /**
  * @brief Convert a word chained list into a string array.

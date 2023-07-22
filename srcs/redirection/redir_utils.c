@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/22 13:54:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:54:42 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	search_redir(t_word *current, t_redir **redir)
 }
 
 /**
- * @brief Allocates memory for the redir list and calls search_redir() to fill it.
+ * @brief Allocates memory for the redir list and calls search_redir()
+ * to fill it.
  * 
  * @param lst Word chained list to check for redirections.
  * @return t_redir** 
@@ -115,8 +116,8 @@ int	handle_simple_redir(t_redir *current)
 
 /**
  * @brief Handle redirections in the command.
- * @details Search for redirections in the command, handle by redirecting tubes and 
- * free the redir list.
+ * @details Search for redirections in the command, handle by redirecting
+ * tubes and free the redir list.
  * @param to_free
  * @param full_cmd Pointer to the command to execute. 
  * @param i Index of the current sub-command.

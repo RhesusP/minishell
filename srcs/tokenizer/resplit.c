@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 16:13:40 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 16:25:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:55:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ static void	sub_resplit(char *s, char **tab, int *n_word, int *i)
 
 /**
  * @brief Split a string into words, taking into account the metacharacters.
- * This function is a subfunction of the `detect_close_pipe()` `and parse_word()``
- * functions.
+ * This function is a subfunction of the `detect_close_pipe()` and 
+ * `parse_word()` functions.
  * @param s 
  * @return char** 
  */

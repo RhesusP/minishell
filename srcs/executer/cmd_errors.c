@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 00:33:42 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 17:57:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:56:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p)
 }
 
 /**
- * @brief Print appropriate error message, set the appropriate exit status, free allocated
- * memory and exit program.
+ * @brief Print appropriate error message, set the appropriate exit status,
+ * free allocated memory and exit program.
  * 
  * @param f 
  * @param cmd Current command passed in execve().

@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/21 16:40:04 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/22 16:49:31 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS = ./srcs/main.c ./srcs/signals/signals.c ./srcs/signals/exec_signal.c ./src
 		./srcs/utils.c \
 		./srcs/tokenizer/parse_word.c ./srcs/structs/word_utils.c \
 		./srcs/tokenizer/ft_strtok.c ./srcs/tokenizer/resplit.c \
-		./srcs/tokenizer/set_type.c ./srcs/tokenizer/errors.c \
+		./srcs/tokenizer/set_type.c \
 		./srcs/tokenizer/unquoted.c \
 		./srcs/executer/executer.c ./srcs/executer/executer_utils.c ./srcs/executer/ft_execve.c ./srcs/executer/cmd_errors.c \
 		./srcs/structs/environment.c \
