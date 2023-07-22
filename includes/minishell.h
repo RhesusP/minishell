@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:28:41 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/22 18:25:07 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:50:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,6 @@ void		ft_unset(t_word **lst, t_env_var **env);
 void		ft_export(t_word **lst, t_env_var **e, int forked, int n_pipe);
 int			get_nb_arg(t_word **lst);
 void		print_export(t_env_var *env);
-
-/**********Pipes*********/
-int			**create_tubes(int nb_tubes);
 int			count_pipes(t_word **word);
 
 /*********Directory******/
