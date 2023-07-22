@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:20:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/22 18:26:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/23 00:03:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	print_variable(t_env_var *current)
 {
 	int	i;
-	
+
 	printf("declare -x %s=\"", current->key);
 	i = 0;
 	while (current->values[i])
