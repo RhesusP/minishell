@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:01:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 12:18:12 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:57:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static char	*get_temp_path(char *str)
 	return (temp);
 }
 
+/**
+ * @brief Simplify the given path.
+ * @details Simplify the path by removing the '.' and '..' directories.
+ * @param str Path to simplify.
+ * @param env Environment variables list.
+ */
 void	simplify_path(char *str, t_env_var *env)
 {
 	char	*temp;

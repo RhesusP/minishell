@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:24:33 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 12:07:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 15:56:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
+/**
+ * @brief Check syntax errors like "> >" or "< <"", ...
+ * 
+ * @param word 
+ * @return 1 if syntax error, 0 otherwise
+ */
 static int	is_bad_filepath(t_word *word)
 {
 	if (word->type == FILEPATH)
@@ -25,6 +31,12 @@ static int	is_bad_filepath(t_word *word)
 	return (0);
 }
 
+/**
+ * @brief Print syntax error message
+ * 
+ * @param token The problematic token
+ * @return 1 if syntax error, 0 otherwise
+ */
 static int	print_syntax_error(char *token)
 {
 	g_gbl.status = 2;
@@ -34,6 +46,12 @@ static int	print_syntax_error(char *token)
 	return (1);
 }
 
+/**
+ * @brief Check pipe syntax issues
+ * @details Check if there is a pipe at the beginning or the end of the command and if there are two consecutives pipes.
+ * @param current 
+ * @return 1 if syntax error, 0 otherwise
+ */
 static int	check_pipe_syntax(t_word *current)
 {
 	if (current->next && current->next->type == PIPE)
@@ -45,6 +63,12 @@ static int	check_pipe_syntax(t_word *current)
 	return (0);
 }
 
+/**
+ * @brief Check syntax errors in the command line
+ * 
+ * @param lst tokenized list
+ * @return 1 if syntax error, 0 otherwise
+ */
 int	syntax_error(t_word **lst)
 {
 	t_word	*current;

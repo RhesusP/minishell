@@ -6,12 +6,17 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:46:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:34:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:11:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Set the type of the redirections ('<', '>', '>>' and '<<').
+ * 
+ * @param word 
+ */
 static void	give_redir_type(t_word *word)
 {
 	if (ft_strcmp(word->word, "<") == 0)
@@ -40,6 +45,11 @@ static void	give_redir_type(t_word *word)
 	}
 }
 
+/**
+ * @brief Set the type of the metacharaters ('<', '>', '>>', '<<' and '|').
+ * 
+ * @param lst 
+ */
 static void	give_meta_type(t_word **lst)
 {
 	t_word	*word;
@@ -60,6 +70,12 @@ static void	give_meta_type(t_word **lst)
 	}
 }
 
+/**
+ * @brief Set the type of the commands.
+ * @details A command is the first word of the list or the first word right 
+ * after a pipe. 
+ * @param lst 
+ */
 static void	give_cmd_type(t_word **lst)
 {
 	t_word	*word;
@@ -78,6 +94,14 @@ static void	give_cmd_type(t_word **lst)
 	}
 }
 
+/**
+ * @brief Scans the word list and set the type of each word.
+ * @details Browses the tokenized word list and set the type of each word.
+ * It starts with the metacharaters (because we know how they look), then
+ * the commands (they are the first untyped token in the list or the first 
+ * untyped token after a pipe) and finally the arguments (the rest).
+ * @param lst 
+ */
 void	set_type(t_word **lst)
 {
 	t_word	*current;

@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:42:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 12:20:26 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:33:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Get the key of an environment variable.
+ * @details For example, for the environeent variable
+ * `PATH=/bin:/usr/bin:/usr/local/bin`, key is `PATH`.
+ * @param str 
+ * @return char* 
+ */
 char	*get_var_key(char *str)
 {
 	char	*key;
@@ -24,6 +31,14 @@ char	*get_var_key(char *str)
 	return (key);
 }
 
+/**
+ * @brief Get the values of an environment variable.
+ * @details Split the values with ':' as a delimiter. For example, for
+ * the environeent variable `PATH=/bin:/usr/bin:/usr/local/bin`, values
+ * are `["/bin", "/usr/bin", "/usr/local/bin"]`.
+ * @param str 
+ * @return char** 
+ */
 char	**get_var_values(char *str)
 {
 	char	**values;
@@ -53,6 +68,12 @@ char	**get_var_values(char *str)
 	return (values);
 }
 
+/**
+ * @brief Create a new environment variable object.
+ * 
+ * @param line Line of the environment file (ex: `PATH=/bin:/usr/bin:/usr/local/bin`).
+ * @return t_env_var* Allocated with malloc(3) environment variable object.
+ */
 t_env_var	*create_env_var(char *line)
 {
 	t_env_var	*var;
@@ -66,6 +87,12 @@ t_env_var	*create_env_var(char *line)
 	return (var);
 }
 
+/**
+ * @brief Get the last object from the environment list.
+ * 
+ * @param lst 
+ * @return t_env_var* 
+ */
 static t_env_var	*get_last_env_var(t_env_var *lst)
 {
 	t_env_var	*current;
@@ -78,6 +105,12 @@ static t_env_var	*get_last_env_var(t_env_var *lst)
 	return (current);
 }
 
+/**
+ * @brief Add a new environment variable at the end of the list.
+ * 
+ * @param lst 
+ * @param new 
+ */
 void	add_back_env_var(t_env_var **lst, t_env_var *new)
 {
 	t_env_var	*last;

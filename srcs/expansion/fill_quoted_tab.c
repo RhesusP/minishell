@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:51:03 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:25:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:21:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Allocate a tab of size strings.
+ * 
+ * @param size Number of strings to store.
+ * @return char** The allocated tab.
+ */
 static char	**init_tab(int size)
 {
 	char	**tab;

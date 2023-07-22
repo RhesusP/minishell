@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:53:15 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 12:34:04 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:28:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ static char	**ft_fill_tab(char **tab, char *str, char *charset)
 /// @param str string to split
 /// @param charset charset
 /// @return char **tab
+
+/**
+ * @brief Extract all the words dilimited by a char in the charset
+ * and put them in a tab.
+ * @details This is an equivalent of the libc `strtok()` function.
+ * @param str String to split.
+ * @param charset Delimiters.
+ * @return Array of words.
+ */
 char	**ft_strtok(char *str, char *charset)
 {
 	char	**result;

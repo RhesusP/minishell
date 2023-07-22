@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   word_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:29:10 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 13:10:23 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:52:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
-/// @brief Create a new word and set to INIT his type
-/// @param cmd word data
-/// @return Malloc'd *t_word
+/**
+ * @brief Create a word object with the INIT default type.
+ * 
+ * @param cmd The word to store.
+ * @return t_word* 
+ */
 t_word	*create_word(char *cmd)
 {
 	t_word	*word;
@@ -29,9 +32,12 @@ t_word	*create_word(char *cmd)
 	return (word);
 }
 
-/// @brief Get last t_word from lst
-/// @param lst lst of t_word
-/// @return last t_word
+/**
+ * @brief Get the last word object of the chained list.
+ * 
+ * @param lst 
+ * @return t_word* 
+ */
 static t_word	*get_last_word(t_word *lst)
 {
 	t_word	*current;
@@ -44,9 +50,12 @@ static t_word	*get_last_word(t_word *lst)
 	return (current);
 }
 
-/// @brief Add [new] to the end of the list
-/// @param lst list
-/// @param new element to add
+/**
+ * @brief Add a word to the end of a chained list.
+ * 
+ * @param lst Chained list.
+ * @param new Element to add.
+ */
 void	add_back_word(t_word **lst, t_word *new)
 {
 	t_word	*last;
@@ -61,6 +70,12 @@ void	add_back_word(t_word **lst, t_word *new)
 	last->next = new;
 }
 
+/**
+ * @brief Clear and free the content of the word_lst object (but not the
+ * chained list itself)
+ * 
+ * @param lst 
+ */
 void	clear_word_lst(t_word **lst)
 {
 	t_word	*current;
@@ -79,6 +94,13 @@ void	clear_word_lst(t_word **lst)
 	*lst = 0;
 }
 
+/**
+ * @brief Delete a word from a chained list.
+ * @details Delete a word and re-arrange pointers in the
+ * chained list.
+ * @param word The word to delete.
+ * @param lst The chained list containing the word. 
+ */
 void	delete_word(t_word *word, t_word **lst)
 {
 	t_word	*prev;

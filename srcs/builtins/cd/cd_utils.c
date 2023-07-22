@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:51:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:09:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:55:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+/**
+ * @brief Get the $OLDPWD environment variable.
+ * 
+ * @param env 
+ * @return t_env_var* 
+ */
 t_env_var	*get_old_pwd(t_env_var *env)
 {
 	t_env_var	*current;
@@ -28,6 +34,12 @@ t_env_var	*get_old_pwd(t_env_var *env)
 	return (0);
 }
 
+/**
+ * @brief Get the $PWD environment variable.
+ * 
+ * @param env 
+ * @return t_env_var* 
+ */
 t_env_var	*get_pwd(t_env_var *env)
 {
 	t_env_var	*current;
@@ -44,6 +56,12 @@ t_env_var	*get_pwd(t_env_var *env)
 	return (0);
 }
 
+/**
+ * @brief Get the number of directories in a path.
+ * @details Example: "/home/user" -> 3.
+ * @param path 
+ * @return int 
+ */
 int	count_dir(char *path)
 {
 	int	i;

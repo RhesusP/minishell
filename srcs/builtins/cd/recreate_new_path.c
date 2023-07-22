@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:42:13 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 09:36:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:58:51 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+/**
+ * @brief Join all the tab cells with a '/' between each to create a path.
+ * 
+ * @param tab String array where each cell is a directory.
+ * @param size Size of the tab.
+ * @return char* Path created.
+ */
 static char	*join_path(char **tab, int size)
 {
 	char	*res;
@@ -45,6 +52,13 @@ static void	free_cell(char **tab, int i)
 	tab[i] = 0;
 }
 
+/**
+ * @brief Recreate the path from the tab of directories.
+ * @details Handle the '.' and '..' directories.
+ * @param tab Tab of directories.
+ * @param size Size of the tab.
+ * @return char* Path created.
+ */
 char	*recreate_new_path(char **tab, int size)
 {
 	int		i;

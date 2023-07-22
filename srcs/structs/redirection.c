@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:10:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:01:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:46:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Create a redir object
+ * @details a redir object is a pair of type (RI, RO, ARO, HE) and filepath.
+ * @param type RI, RO, ARO, HE
+ * @param path path to the file
+ * @return t_redir* 
+ */
 t_redir	*create_redir(t_type type, char *path)
 {
 	t_redir	*redir;
@@ -25,6 +32,12 @@ t_redir	*create_redir(t_type type, char *path)
 	return (redir);
 }
 
+/**
+ * @brief Get the last redir object of the chained list.
+ * 
+ * @param lst 
+ * @return t_redir* The last one.
+ */
 static t_redir	*get_last_redir(t_redir *lst)
 {
 	t_redir	*current;
@@ -37,6 +50,12 @@ static t_redir	*get_last_redir(t_redir *lst)
 	return (current);
 }
 
+/**
+ * @brief Add a redirection to the end of a chained list.
+ * 
+ * @param lst Chained list.
+ * @param new Element to add. 
+ */
 void	add_back_redir(t_redir **lst, t_redir *new)
 {
 	t_redir	*last;
@@ -50,6 +69,11 @@ void	add_back_redir(t_redir **lst, t_redir *new)
 	last->next = new;
 }
 
+/**
+ * @brief Free a redirection chained list.
+ * 
+ * @param redir 
+ */
 void	free_redir(t_redir **redir)
 {
 	t_redir	*current;
@@ -66,6 +90,12 @@ void	free_redir(t_redir **redir)
 	free(redir);
 }
 
+/**
+ * @brief Checks if a word is a redirection (>, >>, <, <<)
+ * 
+ * @param word 
+ * @return 1 if the word is a redirection, 0 otherwise.
+ */
 int	type_is_redir(t_word *word)
 {
 	if (word->type == RI || \

@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:44:42 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 09:52:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:00:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Check if a words list is null.
+ * 
+ * @param is_init 
+ * @param current 
+ * @return int 
+ */
 static int	is_lst_null(int *is_init, t_word *current)
 {
 	if (*is_init && !current)
@@ -23,6 +30,15 @@ static int	is_lst_null(int *is_init, t_word *current)
 	return (1);
 }
 
+/**
+ * @brief Get the next command in the word chained list.
+ * @details Works exactly like get_next_line() function, but with
+ * chained list.
+ * @param lst The chained list in which to search for the command.
+ * @param new_lst The chained list in which to store the command.
+ * @return t_word** new_lst containing the command or null if there
+ * is no more command.
+ */
 t_word	**get_next_cmd(t_word **lst, t_word ***new_lst)
 {
 	static t_word	*current = 0;

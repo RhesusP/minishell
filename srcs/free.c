@@ -6,12 +6,17 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:14:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:28:23 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:03:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
+/**
+ * @brief Free the env list
+ * 
+ * @param env 
+ */
 static void	free_env(t_env_var *env)
 {
 	t_env_var	*current;
@@ -37,12 +42,22 @@ static void	free_env(t_env_var *env)
 	}
 }
 
+/**
+ * @brief Free the env list and clear the history
+ * 
+ * @param env 
+ */
 void	ft_free(t_env_var *env)
 {
 	free_env(env);
 	rl_clear_history();
 }
 
+/**
+ * @brief Free the word list
+ * 
+ * @param lst 
+ */
 void	free_word_lst(t_word **lst)
 {
 	t_word	*current;

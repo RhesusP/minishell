@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 21:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 13:26:55 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 13:54:12 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Duplicate tubes to do an input redirection.
+ * 
+ * @param current 
+ * @return 1 if no error, 0 if error.
+ */
 int	input_redirection(t_redir *current)
 {
 	int	fd;
@@ -28,6 +34,12 @@ int	input_redirection(t_redir *current)
 	return (1);
 }
 
+/**
+ * @brief Duplicate tubes to do an output redirection.
+ * 
+ * @param current 
+ * @return 1 if no error, 0 if error.
+ */
 int	output_redirection(t_redir *current)
 {
 	int	fd;
@@ -44,6 +56,12 @@ int	output_redirection(t_redir *current)
 	return (1);
 }
 
+/**
+ * @brief Duplicate tubes to do an output append redirection.
+ * 
+ * @param current 
+ * @return 1 if no error, 0 if error.
+ */
 static int	output_app_redirection(t_redir *current)
 {
 	int	fd;
@@ -60,6 +78,13 @@ static int	output_app_redirection(t_redir *current)
 	return (1);
 }
 
+/**
+ * @brief Duplicate tubes to do a here document redirection.
+ *
+ * @param current
+ * @param he_file The file to write the here document.
+ * @return 1 if no error, 0 if error.
+ */
 static int	here_doc_redirection(t_redir *current, char *he_file)
 {
 	int		fd;
@@ -83,6 +108,14 @@ static int	here_doc_redirection(t_redir *current, char *he_file)
 	return (1);
 }
 
+/**
+ * @brief Handle redirections.
+ * 
+ * @param lst List of redirections.
+ * @param full_cmd Command to execute.
+ * @param he_file The file to write the here document.
+ * @return char** the new command to execute.
+ */
 char	**handle_redirection(t_redir **lst, char **full_cmd, char *he_file)
 {
 	t_redir	*current;

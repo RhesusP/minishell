@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:57:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 12:22:36 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:43:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Find an increment the $SHLVL environment variable.
+ * 
+ * @param env 
+ */
 static void	update_shlvl(t_env_var *env)
 {
 	t_env_var	*current;
@@ -33,9 +38,13 @@ static void	update_shlvl(t_env_var *env)
 	}
 }
 
-/// @brief Parse environnement to t_env_var
-/// @param env Original env
-/// @return return parsed env
+/**
+ * @brief Get the environment variable list.
+ * @details Converts the environment into a chained list containing
+ * key/values fields.
+ * @param env (envp)
+ * @return t_env_var* 
+ */
 t_env_var	*get_environment(char **env)
 {
 	int			i;

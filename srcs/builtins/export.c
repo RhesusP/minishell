@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:48:39 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 12:07:19 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:49:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Add the new variable to the environment variables list.
+ * 
+ * @param current Variable to add in the environment.
+ * @param env Environment variables list.
+ */
 static void	create_export_var(t_word *current, t_env_var **env)
 {
 	char		*key;
@@ -39,6 +45,12 @@ static void	create_export_var(t_word *current, t_env_var **env)
 	free(key);
 }
 
+/**
+ * @brief Check if the syntax of the variable to export is valid.
+ * 
+ * @param lst Sub-command to execute.
+ * @param env Environment variables list.
+ */
 static void	export_vars(t_word **lst, t_env_var **env)
 {
 	t_word	*current;
@@ -68,6 +80,12 @@ static void	export_vars(t_word **lst, t_env_var **env)
 	}
 }
 
+/**
+ * @brief Get the number of arguments in the command.
+ * 
+ * @param lst Sub-command to execute.
+ * @return int Number of arguments.
+ */
 int	get_nb_arg(t_word **lst)
 {
 	t_word	*current;
@@ -85,6 +103,14 @@ int	get_nb_arg(t_word **lst)
 	return (nb_arg);
 }
 
+/**
+ * @brief Print the environment variables list or add a new variable to it.
+ * @details If the command have no argument, it prints the environment variables list.
+ * @param lst Sub-command to execute.
+ * @param e Environment variables list.
+ * @param forked Boolean to know if the command is executed in a forked process.
+ * @param n_pipe Number of pipes in the current command.
+ */
 void	ft_export(t_word **lst, t_env_var **e, int forked, int n_pipe)
 {
 	int		nb_arg;

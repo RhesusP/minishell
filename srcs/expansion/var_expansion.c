@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:37:25 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:40:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:02:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Handle quotes in the command and expand vars if the word is unquoted or
+ * double quoted.
+ *
+ * @param str The word to check.
+ * @param env The environment variables.
+ * @return char* The word with quotes removed and vars expanded.
+ */
 char	*get_quoted(char *str, t_env_var **env)
 {
 	int		size;
@@ -41,6 +49,12 @@ char	*get_quoted(char *str, t_env_var **env)
 	return (res);
 }
 
+/**
+ * @brief Expands variables in the command.
+ * @details It is the main function of the expansion part.
+ * @param words_lst The command to check for expansion.
+ * @param e The environment variables.
+ */
 void	var_expansion(t_word **words_lst, t_env_var **e)
 {
 	t_word	*current;

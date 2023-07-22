@@ -6,12 +6,17 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:00:37 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 12:07:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:38:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Delete the environment variable passed as parameter.
+ * 
+ * @param delete
+ */
 static void	delete_single_var(t_env_var *delete)
 {
 	int	i;
@@ -27,6 +32,13 @@ static void	delete_single_var(t_env_var *delete)
 	free(delete);
 }
 
+/**
+ * @brief Get the element before the key element in the chained list.
+ * 
+ * @param env Environment variables list.
+ * @param key Key to search.
+ * @return t_env_var* Previous element.
+ */
 static t_env_var	*get_prev(t_env_var **env, char *key)
 {
 	t_env_var	*current;
@@ -47,6 +59,12 @@ static t_env_var	*get_prev(t_env_var **env, char *key)
 	return (last);
 }
 
+/**
+ * @brief Delete the key passed as parameter from the environment variables list.
+ * 
+ * @param env Environment variables list.
+ * @param key Key of the environment variable to delete.
+ */
 static void	delete_existing_key(t_env_var **env, char *key)
 {
 	t_env_var	*prev;
@@ -67,6 +85,14 @@ static void	delete_existing_key(t_env_var **env, char *key)
 	}
 }
 
+/**
+ * @brief Unset builtin. Delete the key passed as parameter from 
+ * the environment variables list.
+ * @details If the key is not found or if there is not argument,
+ * nothing happens.
+ * @param lst Sub-command to execute.
+ * @param env Environment variables list.
+ */
 void	ft_unset(t_word **lst, t_env_var **env)
 {
 	t_word		*current;

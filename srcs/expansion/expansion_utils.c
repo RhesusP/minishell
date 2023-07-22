@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 17:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/21 17:45:06 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:04:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Join a tab of strings into one string.
+ * 
+ * @param tab The tab to join.
+ * @return char* The joined string.
+ */
 char	*values_to_str(char **tab)
 {
 	int		i;
@@ -34,6 +40,12 @@ char	*values_to_str(char **tab)
 	return (res);
 }
 
+/**
+ * @brief Get the last unquoted part of a string.
+ * 
+ * @param str 
+ * @return char* 
+ */
 char	*get_last_unquoted(char *str)
 {
 	int	i;
@@ -48,6 +60,12 @@ char	*get_last_unquoted(char *str)
 	return (0);
 }
 
+/**
+ * @brief Remove quotes from a string.
+ * 
+ * @param str The string to remove quotes from.
+ * @return char* The string without quotes.
+ */
 char	*remove_quotes(char *str)
 {
 	int	len;
@@ -61,6 +79,13 @@ char	*remove_quotes(char *str)
 	return (ft_strndup(&str[1], size));
 }
 
+/**
+ * @brief Join a tab of strings into one string.
+ * 
+ * @param tab The tab to join.
+ * @param size The size of the tab.
+ * @return char* The joined string.
+ */
 char	*join_tab(char **tab, int size)
 {
 	int		i;

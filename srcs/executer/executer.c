@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:52:44 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 13:36:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 12:49:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Search the executable path for the command.
+ * 
+ * @param cmd Command to search executable.
+ * @param path_var The $PATH environment variable.
+ * @return The path, if founded, null otherwise.
+ */
 char	*get_execve_path(char *cmd, t_env_var *path_var)
 {
 	int		i;
@@ -34,6 +41,11 @@ char	*get_execve_path(char *cmd, t_env_var *path_var)
 	return (NULL);
 }
 
+
+/**
+ * @brief Delete null command tokens in the command chained list.
+ * @details delete commands equals to "" or $DOESNOTEXIST
+ */
 static void	clean_null_args(void)
 {
 	t_word	*first;
@@ -56,6 +68,13 @@ static void	clean_null_args(void)
 		first->type = CMD;
 }
 
+/**
+ * @brief Wait for all child processes and unlink temporary here
+ * document files.
+ * 
+ * @param f 
+ * @param nb_pipes Number of pipes in the current command.
+ */
 void	wait_child_processes(t_to_free *f, int nb_pipes)
 {
 	int	i;
@@ -81,6 +100,12 @@ void	wait_child_processes(t_to_free *f, int nb_pipes)
 	unlink_he_files(f, nb_pipes);
 }
 
+/**
+ * @brief Generate a unique filename.
+ * @details Filename is .tmp concatenate with the index of the current command.
+ * @param index
+ * @return char* 
+ */
 char	*generate_filename(int index)
 {
 	char	*itoa_ret;
@@ -92,6 +117,15 @@ char	*generate_filename(int index)
 	return (res);
 }
 
+/**
+ * @brief Execute line read by readline.
+ * @details Split the command in sub-commands separated by a pipe.
+ * If the sub-command is not a built-in, a fork is launched. Then, it 
+ * wait for all child processes and unlink temporary here document files.
+ * @param word Parsed and expanded word list.
+ * @param env Environment in a linked list.
+ * @param line Line read by readline.
+ */
 void	execute_line(t_word	**word, t_env_var **env, char *line)
 {
 	int			i;

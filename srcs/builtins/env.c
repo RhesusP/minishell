@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:57:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/06/22 09:30:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:44:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Check if the command have an argument.
+ * 
+ * @param lst Sub-command to execute.
+ * @return 1 if the command have an argument, 0 otherwise.
+ */
 static int	cmd_have_arg(t_word **lst)
 {
 	t_word	*current;
@@ -26,6 +32,12 @@ static int	cmd_have_arg(t_word **lst)
 	return (0);
 }
 
+/**
+ * @brief Print the environment variables list.
+ * @details If the command have an argument, it prints an error message.
+ * @param lst Sub-command to execute.
+ * @param env Environment variables list.
+ */
 void	ft_env(t_word **lst, t_env_var *env)
 {
 	t_env_var	*current;

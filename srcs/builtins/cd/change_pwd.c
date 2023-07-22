@@ -6,12 +6,17 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:26:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 12:07:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:56:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+/**
+ * @brief Change the $OLDPWD environment variable.
+ * @details It handle the case where the $OLDPWD variable doesn't exist yet.
+ * @param env 
+ */
 static void	change_old_pwd(t_env_var *env)
 {
 	t_env_var	*old_pwd;
@@ -58,6 +63,12 @@ static void	sub_change_pwd(t_env_var *env, char *new_pwd)
 	}
 }
 
+/**
+ * @brief Change the current working directory and the old one.
+ * 
+ * @param env Environment variables list.
+ * @param new_pwd New current working directory.
+ */
 void	change_pwd(t_env_var *env, char *new_pwd)
 {
 	if (chdir(new_pwd) != 0)

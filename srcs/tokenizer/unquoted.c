@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 20:49:02 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 10:54:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:06:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Check if a char is an unquoted chevron (<< or >>)
+ * 
+ * @param line The string where the char is.
+ * @param c_index The index of the char to analyze.
+ * @return 1 if the char is an unquoted chevron, 0 otherwise.
+ */
 int	is_unquoted_double_chevron(char *line, int c_index)
 {
 	int	i;
@@ -41,6 +48,13 @@ int	is_unquoted_double_chevron(char *line, int c_index)
 	return (0);
 }
 
+/**
+ * @brief Check if a char is an unquoted metacharater.
+ * 
+ * @param line The string where the char is.
+ * @param c_index The index of the char to analyze.
+ * @return 1 if the char is an unquoted metacharater, 0 otherwise.
+ */
 int	is_unquoted_metachar(char *line, int c_index)
 {
 	int	i;
@@ -67,6 +81,13 @@ int	is_unquoted_metachar(char *line, int c_index)
 	return (1);
 }
 
+/**
+ * @brief Check if a char is unquoted.
+ * 
+ * @param line The string where the char is.
+ * @param c_index The index of the char to analyze.
+ * @return 1 if the char is unquoted, 0 otherwise.
+ */
 int	is_unquoted(char *line, int c_index)
 {
 	int	i;
@@ -91,6 +112,13 @@ int	is_unquoted(char *line, int c_index)
 	return (1);
 }
 
+/**
+ * @brief Check if a char is an unquoted pipe.
+ * 
+ * @param line The string where the char is.
+ * @param c_index The index of the char to analyze.
+ * @return 1 if the char is an unquoted pipe, 0 otherwise.
+ */
 int	is_unquoted_pipe(char *line, int c_index)
 {
 	int	i;

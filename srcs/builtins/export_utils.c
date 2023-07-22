@@ -6,12 +6,17 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:20:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/06/16 11:23:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:50:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Print the export syntax of the environment variables.
+ * 
+ * @param env Environment variables list to print.
+ */
 void	print_export(t_env_var *env)
 {
 	t_env_var	*current;
@@ -39,7 +44,12 @@ void	print_export(t_env_var *env)
 	}
 }
 
-// Return 0 for bad syntax and -1 for nothing to do
+/**
+ * @brief Check if the syntax of the variable to export is valid.
+ * 
+ * @param str Variable to export.
+ * @return int 1 if the syntax is valid, 0 otherwise.
+ */
 int	is_export_syntax_valid(char *str)
 {
 	int	i;

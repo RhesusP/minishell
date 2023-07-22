@@ -6,15 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:34:17 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 16:24:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:51:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
-*	@brief Get the number of args for the execution of one programm
-**/
+ * @brief Get the length of the command with args.
+ * @details Length is the number of CMD and ARG in the chained list.
+ * @param lst 
+ * @return int 
+ */
 static int	get_exec_len(t_word **lst)
 {
 	int		len;
@@ -32,9 +35,11 @@ static int	get_exec_len(t_word **lst)
 }
 
 /**
- * @brief Counts the number of pipe that were parsed
- * @return Number of pipes counted
-**/
+ * @brief Count the number of pipes in the chained list.
+ * @details Useful to split the command into subcommands.
+ * @param word 
+ * @return int 
+ */
 int	count_pipes(t_word **word)
 {
 	int		pipe_nbr;
@@ -53,6 +58,12 @@ int	count_pipes(t_word **word)
 	return (pipe_nbr);
 }
 
+/**
+ * @brief Copy a string array.
+ * 
+ * @param tab 
+ * @return char** 
+ */
 char	**copy_string_array(char **tab)
 {
 	int		len;
@@ -77,10 +88,14 @@ char	**copy_string_array(char **tab)
 	return (res);
 }
 
+
 /**
-*	@brief Get the command with args from the parser into a char **
-*	Then we'll be able to pass the full command to execve()
-**/
+ * @brief Convert a word chained list into a string array.
+ * @details Convert only CMD and ARG types into a string array.
+ * This function is useful for execve().
+ * @param lst 
+ * @return char** 
+ */
 char	**lst_to_string(t_word **lst)
 {
 	char	**tab;
@@ -109,6 +124,12 @@ char	**lst_to_string(t_word **lst)
 	return (tab);
 }
 
+/**
+ * @brief Unlink temporary here document files and free them.
+ * 
+ * @param to_free 
+ * @param nb_pipes Number of pipes in the current command.
+ */
 void	unlink_he_files(t_to_free *to_free, int nb_pipes)
 {
 	int	i;

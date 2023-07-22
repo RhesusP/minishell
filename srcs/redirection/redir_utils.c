@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:31:55 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 13:31:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 13:54:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Search for redirections in the command and add them in the redir list.
+ * 
+ * @param current Word to check.
+ * @param redir Redir chained list to store redirections.
+ * @return 1 if no error, 0 if error.
+ */
 static int	search_redir(t_word *current, t_redir **redir)
 {
 	while (current)
@@ -26,7 +33,7 @@ static int	search_redir(t_word *current, t_redir **redir)
 			}
 			else
 			{
-				perror("syntax error ?\n");
+				perror("syntax error\n");
 				return (0);
 			}
 		}
@@ -35,6 +42,12 @@ static int	search_redir(t_word *current, t_redir **redir)
 	return (1);
 }
 
+/**
+ * @brief Allocates memory for the redir list and calls search_redir() to fill it.
+ * 
+ * @param lst Word chained list to check for redirections.
+ * @return t_redir** 
+ */
 t_redir	**get_redir(t_word **lst)
 {
 	t_word	*current;
@@ -52,6 +65,13 @@ t_redir	**get_redir(t_word **lst)
 	return (redir);
 }
 
+/**
+ * @brief Display the here document prompt and concatenate
+ * the lines until it find a delimiter.
+ * 
+ * @param delim Here document delimiter.
+ * @return char* Concatenated lines.
+ */
 char	*here_doc(char *delim)
 {
 	char	*line;
@@ -72,6 +92,12 @@ char	*here_doc(char *delim)
 	return (concat);
 }
 
+/**
+ * @brief Handle simple redirections (`>` and `<`)
+ * 
+ * @param current Current redirection.
+ * @return 1 if no error, 0 if error.
+ */
 int	handle_simple_redir(t_redir *current)
 {
 	if (current->type == RI)
@@ -87,6 +113,14 @@ int	handle_simple_redir(t_redir *current)
 	return (1);
 }
 
+/**
+ * @brief Handle redirections in the command.
+ * @details Search for redirections in the command, handle by redirecting tubes and 
+ * free the redir list.
+ * @param to_free
+ * @param full_cmd Pointer to the command to execute. 
+ * @param i Index of the current sub-command.
+ */
 void	do_exec_redir(t_to_free *to_free, char ***full_cmd, int i)
 {
 	char	**temp;

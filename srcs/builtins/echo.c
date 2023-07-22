@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:51:14 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 12:07:30 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:47:31 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Check if the "-n" option is valid.
+ * @details Accepts "-n", "-nn", "-nnn", "-n -n" etc.
+ * @param arg 
+ * @return 1 if the option is valid, 0 otherwise.
+ */
 static int	arg_is_valid(char *arg)
 {
 	int	i;
@@ -30,6 +36,13 @@ static int	arg_is_valid(char *arg)
 	return (0);
 }
 
+/**
+ * @brief Print a single argument.
+ * 
+ * @param current Argument to print.
+ * @param has_write Boolean to know if something has been already written (to know 
+ * if we need to print a space before the argument)
+ */
 static void	display_echo(t_word *current, int *has_write)
 {
 	g_gbl.status = 0;
@@ -39,6 +52,11 @@ static void	display_echo(t_word *current, int *has_write)
 	*has_write = 1;
 }
 
+/**
+ * @brief Print the arguments.
+ * @details If the first argument is "-n", it does not print a new line.
+ * @param lst Sub-command to execute.
+ */
 void	ft_echo(t_word **lst)
 {
 	t_word	*current;

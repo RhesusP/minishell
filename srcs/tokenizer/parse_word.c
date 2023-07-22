@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 01:46:22 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:43:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:24:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Check if a character is a metacharacter.
+ * 
+ * @param c
+ * @return 1 if the character is a metacharacter, 0 otherwise.
+ */
 int	is_metachar(char c)
 {
 	if (c == '|' || c == '(' || c == ')' || c == '<' || c == '>')
@@ -19,6 +25,12 @@ int	is_metachar(char c)
 	return (0);
 }
 
+/**
+ * @brief Check if a character is a metacharacter and is not quoted.
+ * 
+ * @param new_lst Pointer on the new updated list of words.
+ * @param current Current list of words to re-parse.
+ */
 static void	reparse_and_addback(t_word **new_lst, t_word *current)
 {
 	int		i;
@@ -40,6 +52,12 @@ static void	reparse_and_addback(t_word **new_lst, t_word *current)
 	free(reparse);
 }
 
+/**
+ * @brief Detect the metacharacters `<<`, `>>` and `|` and add them to the list.
+ * 
+ * @param lst 
+ * @return t_word** 
+ */
 static t_word	**detect_close_pipe(t_word **lst)
 {
 	t_word	*c;
@@ -69,23 +87,14 @@ static t_word	**detect_close_pipe(t_word **lst)
 	return (new_lst);
 }
 
-/// @brief Free unsed tokens
-/// @param tab tokens_lst
-static void	free_tokens(char **tab)
-{
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
+/**
+ * @brief Parse the line and create a list of words (called tokens).
+ * @details Main function of the parsing part. It takes a string, split it
+ * by spaces (' ', '\n', '\t'), then by metacharacters (`<`, `>`, `>>`, `<<`, `|`)
+ * and it finally give a type to each token.
+ * @param line A string to split into tokens.
+ * @return t_word** A chained list of token and their type.
+ */
 t_word	**parse_words(char *line)
 {
 	char	**tokens;
@@ -105,7 +114,7 @@ t_word	**parse_words(char *line)
 		add_back_word(words_lst, word);
 		i++;
 	}
-	free_tokens(tokens);
+	free_all(tokens);							//before: free(tokens)
 	words_lst = detect_close_pipe(words_lst);
 	set_type(words_lst);
 	return (words_lst);

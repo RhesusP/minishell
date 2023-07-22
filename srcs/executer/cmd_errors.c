@@ -6,12 +6,21 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 00:33:42 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 13:34:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:57:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Handle the case where execve() fails.
+ * @details It prints the error message, set the appropriate exit status, free
+ * allocated variables and exit program.
+ * @param f 
+ * @param cmd Current command passed in execve().
+ * @param env Environment in a string array.
+ * @param nb_p Number of pipes in the current command.
+ */
 void	handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p)
 {
 	ft_putstr_fd(cmd[0], STDERR_FILENO);
@@ -24,6 +33,15 @@ void	handle_execve_fail(t_to_free *f, char **cmd, char **env, int nb_p)
 	free_and_exit(f, 1, g_gbl.status, 0);
 }
 
+/**
+ * @brief Print appropriate error message, set the appropriate exit status, free allocated
+ * memory and exit program.
+ * 
+ * @param f 
+ * @param cmd Current command passed in execve().
+ * @param msg Error message to display.
+ * @param status Exit status to set.
+ */
 static void	exit_with_error(t_to_free *f, char **cmd, char *msg, int status)
 {
 	ft_putstr_fd(cmd[0], STDERR_FILENO);
@@ -33,6 +51,14 @@ static void	exit_with_error(t_to_free *f, char **cmd, char *msg, int status)
 	free_and_exit(f, 1, g_gbl.status, 0);
 }
 
+/**
+ * @brief Check if the path is a directory and if it is executable.
+ * 
+ * @param f 
+ * @param cmd Current command passed in execve().
+ * @param nb_pipes Number of pipes in the current command.
+ * @param path path to check.
+ */
 void	check_dir_err(t_to_free *f, char **cmd, int nb_pipes, struct stat path)
 {
 	if (S_ISDIR(path.st_mode))
@@ -50,6 +76,16 @@ void	check_dir_err(t_to_free *f, char **cmd, int nb_pipes, struct stat path)
 	}
 }
 
+/**
+ * @brief Check if a command is valid and executable. If not, set the appropriate
+ * exit status, free and exit the program.
+ * @details It checks if a command is valid by checking if the path exists,
+ * if it is a directory and if it is executable.
+ * 
+ * @param f 
+ * @param cmd Current command passed in execve().
+ * @param nb_pipes Number of pipes in the current command.
+ */
 void	check_cmd_err(t_to_free *f, char **cmd, int nb_pipes)
 {
 	struct stat	path;

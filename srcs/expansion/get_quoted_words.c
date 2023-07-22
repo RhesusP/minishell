@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:22:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/19 09:13:43 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:30:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ static int	count_words(char *str, int i, int *unquoted, int *nb)
 	return (i);
 }
 
+/**
+ * @brief Get the number of quoted words in a string.
+ * 
+ * @param str String to check.
+ * @return Number of quoted words.
+ */
 int	get_nb_quoted_words(char *str)
 {
 	int	i;

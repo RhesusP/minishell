@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 17:28:59 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 11:39:38 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:35:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Free the tab of strings.
+ * @details Free the tab with the following cells : 
+ * 0 : string before the key name.
+ * 1 : key name.
+ * 2 : string after the key name.
+ * @param tab Tab to free.
+ */
 static void	free_var_tab(char **tab)
 {
 	free(tab[0]);
@@ -55,6 +63,13 @@ static void	get_remains(char **r, char ***tab, char **res, t_env_var **env)
 	free_var_tab(*tab);
 }
 
+/**
+ * @brief Expand the variables in a string.
+ * 
+ * @param str String to expand.
+ * @param env Environment variables.
+ * @return char* The expanded string.
+ */
 char	*get_vars(char *str, t_env_var **env)
 {
 	char		**tab;

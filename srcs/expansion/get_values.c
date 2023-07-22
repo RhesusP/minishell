@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 12:06:35 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:33:08 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/minishell.h"
 
+/**
+ * @brief Get the values of the key passed as parameter.
+ * 
+ * @param current Environment variables list.
+ * @param key Key to search.
+ * @return char** Values of the key.
+ */
 static char	**search_key(t_env_var *current, char *key)
 {
 	int		stop;
@@ -31,6 +38,13 @@ static char	**search_key(t_env_var *current, char *key)
 	return (values);
 }
 
+/**
+ * @brief Get the values of the key passed as parameter.
+ * @details It handles the special keys "$" and "$?".
+ * @param key Key to search.
+ * @param lst Environment variables list.
+ * @return char* The expanded values.
+ */
 char	*get_values(char *key, t_env_var **lst)
 {
 	char	**values;

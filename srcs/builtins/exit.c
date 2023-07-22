@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:21:45 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/07/21 12:46:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:43:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Atoi for long integer.
+ * 
+ * @param str String to convert into a long integer.
+ * @return long The converted string.
+ */
 static long	ft_long_atoi(const char *str)
 {
 	long		res;
@@ -50,6 +56,12 @@ static int	ft_get_neg_long_len(long nbr)
 	return (len_nbr + 1);
 }
 
+/**
+ * @brief Check if a string is a valid long int.
+ * 
+ * @param str Number to check.
+ * @return 1 if the string is a valid long int, 0 otherwise.
+ */
 static int	ft_long_limit_error(char *str)
 {
 	int		len_str;
@@ -78,6 +90,12 @@ static int	ft_long_limit_error(char *str)
 	return (0);
 }
 
+/**
+ * @brief Print an error message and exit the shell.
+ * 
+ * @param to_free
+ * @param current 
+ */
 static void	handle_multiple_args(t_to_free to_free, t_word *current)
 {
 	if (ft_long_limit_error(current->next->word) == 0)
@@ -92,6 +110,14 @@ static void	handle_multiple_args(t_to_free to_free, t_word *current)
 	}
 }
 
+/**
+ * @brief Exit the shell.
+ * @details If no argument is passed, exit with the last command status.
+ * If a parameter is passed, exit with the parameter value % 255. If multiple
+ * parameters are passed or if the parameter if > 9223372036854775807,
+ * exit with an error.
+ * @param to_free 
+ */
 void	ft_exit(t_to_free to_free)
 {
 	int		nb_arg;

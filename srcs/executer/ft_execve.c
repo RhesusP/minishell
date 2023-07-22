@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 08:17:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 13:38:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/22 13:32:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Get the path of the command executable to execute and execute it.
+ * 
+ * @param f 
+ * @param cmd String array of the command to execute.
+ * @param path $PATH environment variable.
+ * @param nb_pipes Number of pipes in the current command.
+ */
 static void	execute_cmd(t_to_free *f, char **cmd, t_env_var *path, int nb_pipes)
 {
 	char	*exec_path;
@@ -40,6 +48,15 @@ static void	execute_cmd(t_to_free *f, char **cmd, t_env_var *path, int nb_pipes)
 	free_and_exit(f, 1, EXIT_SUCCESS, 1);
 }
 
+/**
+ * @brief Child process.
+ * @details Define a signal handler for SIGINT, handle redirections,
+ * execute the command and exit the child with the correct exit status.
+ * @param f 
+ * @param path $PATH environment variable.
+ * @param nb_pipes Number of pipes in the current command.
+ * @param i Index of the current sub-command.
+ */
 static void	child_process(t_to_free *f, t_env_var *path, int nb_pipes, int i)
 {
 	int		j;
@@ -64,6 +81,14 @@ static void	child_process(t_to_free *f, t_env_var *path, int nb_pipes, int i)
 	execute_cmd(f, g_gbl.full_cmd, path, nb_pipes);
 }
 
+/**
+ * @brief Close all pipes.
+ * 
+ * @param index Index of the current sub-command.
+ * @param nb_pipes Number of pipes in the current command.
+ * @param input_fd input file descriptor
+ * @param pipe_fd tube
+ */
 static void	close_pipes(int index, int nb_pipes, int *input_fd, int pipe_fd[2])
 {
 	if (index != 0)
@@ -75,12 +100,27 @@ static void	close_pipes(int index, int nb_pipes, int *input_fd, int pipe_fd[2])
 	}
 }
 
+/**
+ * @brief Parent process.
+ * @details Ignores the SIGINT signal and stores the pid of the child process
+ * @param to_free 
+ * @param pid Child process pid.
+ * @param index Index of the current command.
+ */
 static void	parent_process(t_to_free *to_free, int pid, int index)
 {
 	signal(SIGINT, SIG_IGN);
 	to_free->pids[index] = pid;
 }
 
+/**
+ * @brief Execute the command.
+ * 
+ * @param to_free 
+ * @param path 
+ * @param index Index of the current sub-command.
+ * @param nb_pipes Number of pipes in the current command.
+ */
 void	ft_execve(t_to_free *to_free, t_env_var *path, int index, int nb_pipes)
 {
 	static int	input_fd = STDIN_FILENO;
