@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:24:06 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/22 18:31:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/23 09:34:57 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ t_env_var	*create_sorted_env_var(t_env_var *env)
 	while (current)
 	{
 		tmp = copy_env_var(current);
+		if (!tmp)
+			return (NULL);
 		insert_element(&sorted_list, tmp);
 		current = current->next;
 	}

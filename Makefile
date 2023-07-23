@@ -6,7 +6,7 @@
 #    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/23 09:05:58 by svanmeen         ###   ########.fr        #
+#    Updated: 2023/07/23 09:28:37 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ DIR_FLAG	=	--no-print-directory
 %.o: %.c | libft ./includes/minishell.h
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
-${NAME}:  ${OBJS} ${LIBFT}
+${NAME}: ${OBJS} ${LIBFT} ./includes/minishell.h
 	cc ${OBJS} -L ./libft -lft -lreadline -o ${NAME}
 
 all: ${NAME}

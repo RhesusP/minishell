@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:20:28 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/23 00:03:17 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/23 09:40:56 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	print_export(t_env_var *env)
 	if (!env)
 		return ;
 	tmp = create_sorted_env_var(env);
+	if (!tmp)
+		return ;
 	current = tmp;
 	while (current)
 	{
