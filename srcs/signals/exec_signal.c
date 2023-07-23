@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:29:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/07/21 16:52:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/07/23 08:59:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	get_sig_event(int status)
 	}
 	if (status == 131)
 	{
-		printf("Quit (core dumped)\n");
+		// rl_on_new_line();
+		write(1, "", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+		printf("\rQuit (core dumped)\n");
 		g_gbl.status = 131;
 	}
 }
