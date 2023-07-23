@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/07/22 23:36:25 by cbernot          ###   ########.fr        #
+#    Updated: 2023/07/23 09:05:58 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,25 +58,25 @@ SRCS	=	./srcs/main.c \
 			./srcs/builtins/pwd.c \
 			./srcs/builtins/unset.c
 
-LIBFT_DIR	=	libft
-LIBFT		=	$(LIBFT_DIR)/libft.a
+LIBFT_DIR	=	libft/
+LIBFT_NAME	=	libft.a
+LIBFT		=	$(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 OBJS 		=	${SRCS:.c=.o}
 INCLUDES	=	./includes
 FLAGS		=	-Wall -Wextra -Werror
 DIR_FLAG	=	--no-print-directory
 
-%.o: %.c ./includes/minishell.h
+%.o: %.c | libft ./includes/minishell.h
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
-${NAME}: libft ${OBJS}
-	make ${DIR_FLAG} -C ./libft
+${NAME}:  ${OBJS} ${LIBFT}
 	cc ${OBJS} -L ./libft -lft -lreadline -o ${NAME}
 
 all: ${NAME}
 
 libft:
-	${MAKE} -C ${LIBFT_DIR}
+	@make -C ${LIBFT_DIR}
 
 clean:
 	make ${DIR_FLAG} clean -C ./libft
